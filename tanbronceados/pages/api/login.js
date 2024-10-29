@@ -1,10 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 const adminUsername = process.env.ADMIN_USERNAME;
-const adminPasswordHash = '$2b$10$6Trw.ICZnSpXRCEx7arwJump0vq316j/LJ05CC9H5hSIaevrAphfC'; // Inserta el hash aquí directamente
+const adminPasswordHash = '$2b$10$6Trw.ICZnSpXRCEx7arwJump0vq316j/LJ05CC9H5hSIaevrAphfC'; // esto se hizo asi por ahora, pero deberia ser un env 
 const jwtSecret = process.env.JWT_SECRET;
-
-console.log('Password hash in use:', adminPasswordHash); // Verificar que se carga correctamente
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -12,12 +10,6 @@ export default async function handler(req, res) {
   }
 
   const { username, password } = req.body;
-
-  // Logs para depuración
-  console.log('Received username:', username);
-  console.log('Expected username:', adminUsername);
-  console.log('Password hash in use:', adminPasswordHash);
-  console.log('Received password:', password);
 
   // Verificación de username
   if (username !== adminUsername) {

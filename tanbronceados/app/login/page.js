@@ -1,15 +1,18 @@
-'use client';
+'use client';// Indica que este archivo es un componente cliente en Next.js
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 function LoginPage() {
-  const router = useRouter();
+  const router = useRouter(); // Instancia de router para redirigir a otras rutas
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Previene el comportamiento predeterminado de recargar la página
+    
+    // Realiza una solicitud a la API de inicio de sesión
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -18,8 +21,8 @@ function LoginPage() {
 
     if (res.ok) {
       const { token } = await res.json();
-      localStorage.setItem('token', token);
-      router.push('/homeAdmin'); // Redirige a la página de inicio o a la ruta que prefieras
+      localStorage.setItem('token', token); // Extrae el token de la respuesta JSON y lo almacena en el almacenamiento local
+      router.push('/homeAdmin');
     } else {
       setError('Invalid credentials');
     }
@@ -47,4 +50,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LoginPage; // Exporta el componente LoginPage para su uso en otras partes de la aplicación
