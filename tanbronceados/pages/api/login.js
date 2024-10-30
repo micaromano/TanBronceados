@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-const adminUsername = process.env.ADMIN_USERNAME;
-const adminPasswordHash = '$2b$10$6Trw.ICZnSpXRCEx7arwJump0vq316j/LJ05CC9H5hSIaevrAphfC'; // esto se hizo asi por ahora, pero deberia ser un env 
+import User from '../../models/User';  // Importa el modelo de usuario
+import db from '../../config/db';      // Importa la configuración de la base de datos
+
 const jwtSecret = process.env.JWT_SECRET;
 
 export default async function handler(req, res) {
@@ -11,18 +12,24 @@ export default async function handler(req, res) {
 
   const { username, password } = req.body;
 
-  // Verificación de username
-  if (username !== adminUsername) {
-    console.error('Username does not match');
-    return res.status(401).json({ error: 'Invalid credentials' });
-  }
-
-  // Comparación de la contraseña directamente con el hash en claro
   try {
-    const isMatch = await bcrypt.compare(password, adminPasswordHash);
+    // Conecta a la base de datos si aún no está conectada
+    await db.authenticate();
+
+    // Busca el usuario en la base de datos
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      console.error('User not found');
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Verifica la contraseña
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
     console.log('Password match result:', isMatch);
 
     if (isMatch) {
+      // Crea un token JWT
       const token = jwt.sign({ username }, jwtSecret, { expiresIn: '1h' });
       return res.status(200).json({ token });
     } else {
@@ -30,7 +37,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
   } catch (error) {
-    console.error('Error during password comparison:', error);
+    console.error('Error during login:', error);
     return res.status(500).json({ error: 'Server error' });
   }
 }
