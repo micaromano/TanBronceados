@@ -21,7 +21,8 @@ function LoginPage() {
 
     if (res.ok) {
       const { token } = await res.json();
-      localStorage.setItem('token', token); // Extrae el token de la respuesta JSON y lo almacena en el almacenamiento local
+      //TODO: se puede poner en una cookie porque es medio inseguro hacer en el local store o session store para que cuando cierre el browser se borre
+      localStorage.setItem('token', token); // Extrae el token de la respuesta JSON y lo almacena en el almacenamiento local 
       router.push('/homeAdmin');
     } else {
       setError('Invalid credentials');

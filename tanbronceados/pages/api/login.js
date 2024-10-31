@@ -1,11 +1,15 @@
+//TODO: cambiar imports por requires
+
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../../models/User';  // Importa el modelo de usuario
 import db from '../../config/db';      // Importa la configuración de la base de datos
 
-const jwtSecret = process.env.JWT_SECRET;
+const globals  = require('../../config/globals')
 
-export default async function handler(req, res) {
+const jwtSecret = globals.jwt_secret;
+
+async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -24,8 +28,8 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Verifica la contraseña
-    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    // Verifica la contraseña TODO: compare tiene encuenta los ataques de tiempo
+    const isMatch = await bcrypt.compare(password, user.passwordHash); //busco el hash con la bd y con el hash que acabo de hacer que puso la persona
     console.log('Password match result:', isMatch);
 
     if (isMatch) {
@@ -41,3 +45,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server error' });
   }
 }
+module.exports = handler;

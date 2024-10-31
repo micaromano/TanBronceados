@@ -1,0 +1,12 @@
+
+require('dotenv').config();
+
+module.exports = {
+    db_name: process.env.DB_NAME,
+    db_user: process.env.DB_USER,
+    db_password: process.env.DB_PASSWORD,
+    db_host: process.env.DB_HOST,
+    jwt_secret: process.env.JWT_SECRET,
+};
+
+// todo lugar donde necesite usar la base de datos debo hacer un require de config/globals.js

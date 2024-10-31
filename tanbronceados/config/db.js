@@ -1,9 +1,12 @@
-// (configuración de Sequelize)
-import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, { // Crea una nueva instancia de Sequelize con las credenciales de la base de datos
-  host: process.env.DB_HOST,
+const { Sequelize } = require('sequelize')
+const globals  = require('./globals'); // Importa la librería dotenv para poder acceder a las variables de entorno
+
+const sequelize = new Sequelize(globals.db_name, globals.db_user, globals.db_password, { // Crea una nueva instancia de Sequelize con las credenciales de la base de datos
+  host: globals.db_host,
   dialect: 'mysql',
 });
 
-export default sequelize;
+
+module.exports = sequelize;
+//crear una base de datos vacia para qie el cree las tablas
