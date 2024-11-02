@@ -1,6 +1,8 @@
 
 require('dotenv').config();
 
+console.log('Loaded environment variables:', process.env); // <-- Agrega esta línea temporalmente para depurar
+
 module.exports = {
     db_name: process.env.DB_NAME,
     db_user: process.env.DB_USER,

@@ -1,11 +1,8 @@
-//TODO: cambiar imports por requires
-
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import User from '../../models/User';  // Importa el modelo de usuario
-import db from '../../config/db';      // Importa la configuración de la base de datos
-
-const globals  = require('../../config/globals')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const User = require('../../models/User');  // Asegúrate de que la ruta es correcta
+const db = require('../../config/db');
+const globals = require('../../config/globals');
 
 const jwtSecret = globals.jwt_secret;
 
@@ -17,24 +14,25 @@ async function handler(req, res) {
   const { username, password } = req.body;
 
   try {
-    // Conecta a la base de datos si aún no está conectada
+    console.log('Connecting to database...');
     await db.authenticate();
+    console.log('Database connected.');
 
-    // Busca el usuario en la base de datos
-    const user = await User.findOne({ where: { username } });
+    console.log(`Searching for user: ${username}`);
+    const user = await User.findOne({ where: { Username: username } });
 
     if (!user) {
       console.error('User not found');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Verifica la contraseña TODO: compare tiene encuenta los ataques de tiempo
-    const isMatch = await bcrypt.compare(password, user.passwordHash); //busco el hash con la bd y con el hash que acabo de hacer que puso la persona
+    console.log('User found. Verifying password...');
+    const isMatch = await bcrypt.compare(password, user.PasswordHash);
     console.log('Password match result:', isMatch);
 
     if (isMatch) {
-      // Crea un token JWT
-      const token = jwt.sign({ username }, jwtSecret, { expiresIn: '1h' });
+      const token = jwt.sign({ username: user.Username }, jwtSecret, { expiresIn: '1h' });
+      console.log('Token created successfully.');
       return res.status(200).json({ token });
     } else {
       console.error('Password does not match');
@@ -45,4 +43,5 @@ async function handler(req, res) {
     return res.status(500).json({ error: 'Server error' });
   }
 }
+
 module.exports = handler;
