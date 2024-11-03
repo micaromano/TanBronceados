@@ -1,12 +1,16 @@
+const {Sequelize} = require('sequelize');
+const globals = require('./globals');
 
-const { Sequelize } = require('sequelize')
-const globals  = require('./globals'); // Importa la librería dotenv para poder acceder a las variables de entorno
-
-const sequelize = new Sequelize(globals.db_name, globals.db_user, globals.db_password, { // Crea una nueva instancia de Sequelize con las credenciales de la base de datos
+console.log('db_name-------', globals.db_name);
+const sequelize = new Sequelize(globals.db_name, globals.db_user, globals.db_password, {
   host: globals.db_host,
-  dialect: 'mysql',
+  dialect: 'mssql',
+  port: globals.db_port,
+  dialectOptions: {
+    options: {
+      encrypt: true, // Para usar autenticación de SQL Server
+    },
+  },
 });
 
-
 module.exports = sequelize;
-//crear una base de datos vacia para qie el cree las tablas

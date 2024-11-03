@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../../models/User');  // Asegúrate de que la ruta es correcta
+const UserModel = require('../../models/UserModel'); // Asegúrate de que la ruta es correcta
 const db = require('../../config/db');
 const globals = require('../../config/globals');
 
@@ -14,12 +14,13 @@ async function handler(req, res) {
   const { username, password } = req.body;
 
   try {
-    console.log('Connecting to database...');
+    console.log('Connecting to database...------------------------------------------------------------------------');
     await db.authenticate();
-    console.log('Database connected.');
+    console.log('Database connected.------------------------------------------------------------------------');
 
     console.log(`Searching for user: ${username}`);
-    const user = await User.findOne({ where: { Username: username } });
+    // Cambiar User.findOne a UserModel.raw.findOne
+    const user = await UserModel.raw.findOne({ where: { Username: username } });
 
     if (!user) {
       console.error('User not found');
