@@ -1,4 +1,4 @@
-'use client';// Indica que este archivo es un componente cliente en Next.js
+'use client';// Indica que este archivo es un componente cliente en Next.js c
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
