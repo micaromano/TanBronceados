@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
-class UserModel {
+class AdminModel {
   #rawModel;
 
   constructor() {
@@ -10,8 +10,8 @@ class UserModel {
   }
 
   #initModel() {
-    this.#rawModel = db.define('User', {
-      UserID: {
+    this.#rawModel = db.define('Admin', {
+      AdminID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -34,23 +34,8 @@ class UserModel {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      Celular: DataTypes.STRING,
-      Instagram: DataTypes.STRING,
-      Rol: {
-        type: DataTypes.STRING,
-        validate: {
-          isIn: [['Cliente', 'Administrador']],
-        },
-      },
-      FechaNacimiento: DataTypes.DATE,
-      Genero: {
-        type: DataTypes.STRING,
-        validate: {
-          isIn: [['Femenino', 'Masculino', 'Otro']],
-        },
-      },
     }, {
-      tableName: 'Users',  // Nombre de la tabla
+      tableName: 'Admins',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
       freezeTableName: true,
     });
@@ -61,7 +46,7 @@ class UserModel {
   }
 }
 
-module.exports = new UserModel();
+module.exports = new AdminModel();
 
 
 //   // Método de asociación, si necesitas relacionarlo con otros modelos
