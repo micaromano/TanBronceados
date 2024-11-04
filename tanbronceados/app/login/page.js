@@ -4,6 +4,7 @@
 import LoginForm from '../../components/LoginForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 function LoginPage() {
   const [state, setState] = useState({
@@ -27,7 +28,8 @@ function LoginPage() {
 
     if (res.ok) {
       const { token } = await res.json();
-      localStorage.setItem('token', token);
+     // Guardar el token en una cookie en lugar de localStorage
+     Cookies.set('token', token, { expires: 1, sameSite: 'strict' }); //Cookies.remove('token'); cuando el usuario cierre sesion agregar secure: true despues
       router.push('/homeAdmin');
     } else {
       setState({ ...state, error: 'Invalid credentials' });
@@ -46,4 +48,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
