@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const UserModel = require('../../models/UserModel'); // Asegúrate de que la ruta es correcta
+const AdminModel = require('../../models/AdminModel'); // Asegúrate de que la ruta es correcta
 const db = require('../../config/db');
 const globals = require('../../config/globals');
 
@@ -18,21 +18,21 @@ async function handler(req, res) {
     await db.authenticate();
     console.log('Database connected.------------------------------------------------------------------------');
 
-    console.log(`Searching for user: ${username}`);
-    // Cambiar User.findOne a UserModel.raw.findOne
-    const user = await UserModel.raw.findOne({ where: { Username: username } });
+    console.log(`Searching for admin: ${username}`);
+    // Cambiar admin.findOne a AdminModel.raw.findOne
+    const admin = await AdminModel.raw.findOne({ where: { Username: username } });
 
-    if (!user) {
-      console.error('User not found');
+    if (!admin) {
+      console.error('admin not found');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    console.log('User found. Verifying password...');
-    const isMatch = await bcrypt.compare(password, user.PasswordHash);
+    console.log('admin found. Verifying password...');
+    const isMatch = await bcrypt.compare(password, admin.PasswordHash);
     console.log('Password match result:', isMatch);
 
     if (isMatch) {
-      const token = jwt.sign({ username: user.Username }, jwtSecret, { expiresIn: '1h' });
+      const token = jwt.sign({ username: admin.Username }, jwtSecret, { expiresIn: '1h' });
       console.log('Token created successfully.');
       return res.status(200).json({ token });
     } else {
