@@ -26,7 +26,7 @@ async function handler(req, res) {
 
     if (!admin) {
       console.error('admin not found');
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Usuario y/o contraseña invalido' });
     }
 
     console.log('admin found. Verifying password...');
@@ -50,12 +50,12 @@ async function handler(req, res) {
       return res.status(200).json({ message: 'Login successful' });
     } else {
       console.error('Password does not match');
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: '' });
     }
 
   } catch (error) {
     console.error('Error during login:', error);
-    return res.status(500).json({ error: 'Server error' });
+    return res.status(500).json({ error: 'Error del servidor' });
   }
 }
 

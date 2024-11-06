@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 
-function LoginForm({ username, password, onChange, onSubmit, error }) {
+function LoginForm({ username, password, onChange, onSubmit, onBlur, error, errors }) {
   return (
     <Container>
       <Row className="justify-content-center">
@@ -20,7 +20,12 @@ function LoginForm({ username, password, onChange, onSubmit, error }) {
                     placeholder="Usuario"
                     value={username}
                     onChange={e => onChange(e, 'username')}
+                    onBlur={() => onBlur('username')}
+                    isInvalid={!!errors.username}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Contraseña</Form.Label>
@@ -29,18 +34,24 @@ function LoginForm({ username, password, onChange, onSubmit, error }) {
                     placeholder="Contraseña"
                     value={password}
                     onChange={e => onChange(e, 'password')}
+                    onBlur={() => onBlur('password')}
+                    isInvalid={!!errors.password}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
                 </Form.Group>
+
+                {error && <div className="text-danger mb-3 text-center">{error}</div>}
 
                 <Button
                   variant="primary"
                   type="submit"
-                  disabled={!username || !password}
+                  disabled={!username.trim() || !password.trim()}
                   className="w-100"
                 >
                   Continuar
                 </Button>
-                {error && <div className="error">{error}</div>}
               </Form>
             </Card.Body>
           </Card>
