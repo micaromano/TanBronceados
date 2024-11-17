@@ -1,0 +1,88 @@
+
+
+.header {
+  background-color: var(--color-blanco)
+}
+
+.headerImage {
+  max-width: 100%; /* Imagen fluida */
+  height: auto; /* Mantiene proporción */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+
+.coverTitle {
+  font-size: 4rem; /* Tamaño para destacar el título */
+  margin: 0;
+  color: var(--color-negro);  
+}
+
+.coverSubtitle {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  font-weight: 300;
+  color: var(--color-marron);
+}
+
+.main {
+  padding: 40px 20px;
+}
+
+.section {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.sectionH2 { 
+  font-size: 2em;
+  margin-bottom: 20px; /* Espaciado inferior */
+  color: var(--color-marron);
+}
+
+.sectionP {
+  font-size: 1.1rem; /* Texto claro y legible */
+  line-height: 1.6; /* Espaciado entre líneas */
+  color: var(--color-negro); /* Negro */
+}
+
+
+.address {
+  font-style: normal;
+  line-height: 1.5;
+  margin-top: 20px;
+  color: var(--color-negro);
+}
+
+.addressP {
+  font-size: 1.1rem; /* Texto claro y legible */
+  line-height: 1.6; /* Espaciado entre líneas */
+  color: var(--color-negro); /* Negro */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .header {
+    padding: 100px 10px; /* Menor padding en pantallas pequeñas */
+    height: auto; /* Ajusta la altura según el contenido */
+  }
+
+  .cover {
+    padding-right: 10%; /* Reduce el desplazamiento hacia la derecha */
+  }
+
+  .coverTitle {
+    font-size: 3rem; /* Título más pequeño */
+  }
+
+  .coverSubtitle {
+    font-size: 1.2rem; /* Subtítulo más pequeño */
+  }
+
+  .section {
+    padding: 20px 10px; /* Menor padding en secciones */
+  }
+}
+
+
