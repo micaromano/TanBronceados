@@ -145,7 +145,7 @@ function RegisterPage() {
 
       if (res.ok) {
         alert('Captcha verificado y formulario enviado correctamente');
-        await router.push('/login');
+        await router.push('/loginAdmin');
         alert('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
       } else {
         setState({ ...state, error: 'Fallo en la verificación de captcha o envío de registro' });

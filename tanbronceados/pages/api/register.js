@@ -6,7 +6,7 @@ const globals = require('../../config/globals');
 const nodemailer = require('nodemailer');
 
 const jwtSecret = globals.jwt_secret;
-const secretKey = globals.secretKey;
+const secretKey = globals.secret_key;
 const emailUser = globals.email_user;
 const passUser = globals.pass_user;
 
@@ -183,10 +183,10 @@ async function handler(req, res) {
     //     Gender: gender,
     //   });
 
-      const [results, metadata] = await db.query(`
-        INSERT INTO Clients (FullName, Email, PasswordHash, Phone, Instagram, Birthdate, Gender, createdAt, updatedAt) 
-        VALUES ('${fullName}', '${email}', '${PasswordHash}', '${phone}', '${instagram}', '${new Date(birthdate).toISOString().split('T')[0]}', '${gender}', '${new Date().toISOString()}', '${new Date().toISOString()}');
-      `);
+      // const [results, metadata] = await db.query(`
+      //   INSERT INTO Clients (FullName, Email, PasswordHash, Phone, Instagram, Birthdate, Gender, createdAt, updatedAt) 
+      //   VALUES ('${fullName}', '${email}', '${PasswordHash}', '${phone}', '${instagram}', '${new Date(birthdate).toISOString().split('T')[0]}', '${gender}', '${new Date().toISOString()}', '${new Date().toISOString()}');
+      // `);
 
       return res.status(201).json({ message: 'Cliente registrado exitosamente' });
       //return res.status(201).json({ message: 'Cliente registrado exitosamente' , client: newClient });

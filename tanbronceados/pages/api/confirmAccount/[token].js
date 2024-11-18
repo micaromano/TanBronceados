@@ -4,7 +4,7 @@ const globals = require('../../../config/globals');
 
 const jwtSecret = globals.jwt_secret;
 
-async function handler(req, res) {l
+async function handler(req, res) {
     if (req.method !== 'GET') {
       return res.status(405).json({ error: 'Method Not Allowed' });
     }
