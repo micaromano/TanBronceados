@@ -5,7 +5,7 @@ import styles from '../../styles/IndexClient.module.css';
 
 export default function HomeClient() {
   return (
-    <div>
+    <Container>
       <Navbar />
 
       {/* Header */}
@@ -83,6 +83,25 @@ export default function HomeClient() {
           </section>
         </Container>
       </main>
-    </div>
+
+      <footer className="bg-light py-4">
+        <Container fluid>
+          <Row className="justify-content-center">
+            <Col xs="auto" className="text-center">
+              <a href="https://www.instagram.com/tan.bronceado/?hl=es" target="_blank" rel="noopener noreferrer">
+                <img
+                  src="/images/instagram.png"
+                  alt="Logo de Instagram"
+                  title="Link a Instagram"
+                  style={{ width: "40px", height: "auto" }}
+                />
+              </a>
+            </Col>
+          </Row>
+        </Container>  
+      </footer>
+    </Container>
+
+    
   );
 }

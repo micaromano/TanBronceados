@@ -79,6 +79,19 @@
   .coverSubtitle {
     font-size: 1.2rem; /* Subtítulo más pequeño */
   }
+
+  .footer {
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    text-align: center;
+  }
+  
+  /* Estilo para la imagen */
+  .footer img {
+    display: block;
+    margin: 0 auto; /* Centrado horizontal */
+  }
 }
 
 
