@@ -10,6 +10,11 @@ module.exports = {
     db_host: process.env.DB_HOST,
     db_port: process.env.DB_PORT,
     jwt_secret: process.env.JWT_SECRET,
+    google_OAuth_Client_Id: process.env.GOOGLE_OAUTH_CLIENT_ID,
+    google_OAuth_Client_Secret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+    google_OAuth_Callback: process.env.GOOGLE_OAUTH_CALLBACK_URL,
+    nextauth_Secret: process.env.NEXTAUTH_SECRET,
+
 };
 
 // todo lugar donde necesite usar la base de datos debo hacer un require de config/globals.js
