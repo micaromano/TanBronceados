@@ -1,18 +1,21 @@
 
 
 .header {
-  background-color: var(--color-blanco)
+  background-image: url('/images/portadaTanOk.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  height: 100vh;
 }
 
-.headerImage {
-  max-width: 100%; /* Imagen fluida */
-  height: auto; /* Mantiene proporción */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+.header .cover {
+  text-align: left; /* Alineación del texto */
 }
 
-
-.coverTitle {
-  font-size: 4rem; /* Tamaño para destacar el título */
+.header .coverTitle {
+  font-size: 3.5rem; /* Tamaño para destacar el título */
   margin: 0;
   color: var(--color-negro);  
 }
@@ -24,47 +27,44 @@
   color: var(--color-marron);
 }
 
-.main {
-  padding: 40px 20px;
+.header .btnComprar {
+  background-color: var(--color-marron); /* Color de fondo del botón */
+  color: white; /* Texto del botón en blanco */
+  border: none; /* Sin bordes */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  margin-top: 20px; /* Espaciado superior */
+  font-size: 1.2rem; /* Tamaño de la fuente */
+  border-radius: 5px; /* Bordes redondeados */
+  text-transform: uppercase; /* Texto en mayúsculas */
+}
+
+.header .btnComprar:hover {
+  background-color: darken(var(--color-marron), 10%); /* Color más oscuro al pasar el mouse */
+  text-decoration: none; /* Sin subrayado */
 }
 
 .section {
-  padding: 40px 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: justify;
+  width: 100%; /* Asegura que las secciones ocupen todo el ancho */
+  padding: 50px 20px; /* Espaciado interno */
+  background-color: #f9f9f9; /* Fondo claro */
 }
 
-.sectionH2 { 
-  font-size: 2em;
+.section h2 {
+  font-size: 2.5rem; /* Tamaño grande para títulos */
   margin-bottom: 20px; /* Espaciado inferior */
-  color: var(--color-marron);
+  color: #333; /* Color del título */
 }
 
-.sectionP {
-  font-size: 1.1rem; /* Texto claro y legible */
-  line-height: 1.6; /* Espaciado entre líneas */
-  color: var(--color-negro); /* Negro */
-}
-
-
-.address {
-  font-style: normal;
-  line-height: 1.5;
-  margin-top: 20px;
-  color: var(--color-negro);
-}
-
-.addressP {
-  font-size: 1.1rem; /* Texto claro y legible */
-  line-height: 1.6; /* Espaciado entre líneas */
-  color: var(--color-negro); /* Negro */
+.section p {
+  font-size: 1.2rem; /* Tamaño legible */
+  line-height: 1.8; /* Espaciado entre líneas */
+  text-align: justify; /* Alineación justificada */
 }
 
 /* Responsividad */
 @media (max-width: 768px) {
   .header {
-    padding: 100px 10px; /* Menor padding en pantallas pequeñas */
+    padding: 50px 10px; /* Menor padding en pantallas pequeñas */
     height: auto; /* Ajusta la altura según el contenido */
   }
 
@@ -78,10 +78,6 @@
 
   .coverSubtitle {
     font-size: 1.2rem; /* Subtítulo más pequeño */
-  }
-
-  .section {
-    padding: 20px 10px; /* Menor padding en secciones */
   }
 }
 
