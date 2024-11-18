@@ -183,13 +183,15 @@ async function handler(req, res) {
     //     Gender: gender,
     //   });
 
-      // const [results, metadata] = await db.query(`
-      //   INSERT INTO Clients (FullName, Email, PasswordHash, Phone, Instagram, Birthdate, Gender, createdAt, updatedAt) 
-      //   VALUES ('${fullName}', '${email}', '${PasswordHash}', '${phone}', '${instagram}', '${new Date(birthdate).toISOString().split('T')[0]}', '${gender}', '${new Date().toISOString()}', '${new Date().toISOString()}');
-      // `);
+    const isActive = false;
 
-      return res.status(201).json({ message: 'Cliente registrado exitosamente' });
-      //return res.status(201).json({ message: 'Cliente registrado exitosamente' , client: newClient });
+    const [results, metadata] = await db.query(`
+        INSERT INTO Clients (FullName, Email, PasswordHash, Phone, Instagram, Birthdate, Gender, isActive, createdAt, updatedAt) 
+        VALUES ('${fullName}', '${email}', '${PasswordHash}', '${phone}', '${instagram}', '${new Date(birthdate).toISOString().split('T')[0]}', '${gender}', '${isActive}', '${new Date().toISOString()}', '${new Date().toISOString()}');
+      `);
+
+    return res.status(201).json({ message: 'Cliente registrado exitosamente' });
+    //return res.status(201).json({ message: 'Cliente registrado exitosamente' , client: newClient });
 
   } catch (error) {
     console.error('Error during client register:', error);
