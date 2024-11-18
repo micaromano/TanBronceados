@@ -10,6 +10,10 @@ module.exports = {
     db_host: process.env.DB_HOST,
     db_port: process.env.DB_PORT,
     jwt_secret: process.env.JWT_SECRET,
+    site_key: process.env.SITE_KEY,
+    secret_key: process.env.SECRET_KEY,
+    email_user: process.env.EMAIL_USER,
+    pass_user: process.env.PASS_USER,
 };
 
 // todo lugar donde necesite usar la base de datos debo hacer un require de config/globals.js
