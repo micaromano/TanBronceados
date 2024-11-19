@@ -1,0 +1,38 @@
+
+.nav {
+  background-color: var(--color-blanco);
+  padding: 20px;
+  text-align: center;
+}
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+.nav li {
+  margin: 0 10px;
+}
+
+.nav a {
+  color: var(--color-marron);
+  text-decoration: none;
+  font-size: medium;
+}
+
+.nav a:hover {
+  color: var(--color-negro);
+}
+
+/* Estilo específico para el enlace LOGIN */
+.loginLink a {
+  background-color: var(--color-celeste); 
+  color: var(--color-blanco); /* Asegura un buen contraste */
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.loginLink a:hover {
+  background-color: var(--color-marron); /* Color al pasar el cursor */
+}

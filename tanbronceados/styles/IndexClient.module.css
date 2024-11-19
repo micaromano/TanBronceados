@@ -1,0 +1,102 @@
+
+
+.header {
+  background-image: url('/images/portadaTanOk.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+.header .cover {
+  text-align: left; /* Alineación del texto */
+}
+
+.coverText {
+  position: relative;
+  left: 6rem;
+  margin-top: 25rem;
+}
+
+.header .coverTitle {
+  font-size: 3.5rem; /* Tamaño para destacar el título */
+  margin: 0;
+  color: var(--color-negro);  
+}
+
+.coverSubtitle {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  font-weight: 300;
+  color: var(--color-marron);
+}
+
+#servicios {
+  background-color: var(--color-beige);
+  padding: 0rem;
+}
+
+.header .btnComprar {
+  background-color: var(--color-marron); /* Color de fondo del botón */
+  color: white; /* Texto del botón en blanco */
+  border: none; /* Sin bordes */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  margin-top: 20px; /* Espaciado superior */
+  font-size: 1.2rem; /* Tamaño de la fuente */
+  border-radius: 5px; /* Bordes redondeados */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  text-decoration: none; /* Sin subrayado */
+}
+
+.header .btnComprar:hover {
+  background-color: var(--color-marron-oscuro); /* Color más oscuro al pasar el mouse */
+  text-decoration: none; /* Sin subrayado */
+}
+
+.section {
+  padding: 6rem 10rem; /* Espaciado interno */
+}
+
+.sectionRow {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  /* flex-wrap: wrap; /* Asegura que los elementos se ajusten en pantallas pequeñas */
+  align-items: center; /* Centra verticalmente la imagen y el texto */
+}
+
+.section h2 {
+  font-size: 2.5rem; /* Tamaño grande para títulos */
+  margin-bottom: 20px; /* Espaciado inferior */
+  color: #333; /* Color del título */
+}
+
+.section p {
+  font-size: 1.05rem; /* Tamaño legible */
+  line-height: 1.8; /* Espaciado entre líneas */
+  text-align: justify; /* Alineación justificada */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .header {
+    padding: 50px 10px; /* Menor padding en pantallas pequeñas */
+    height: auto; /* Ajusta la altura según el contenido */
+  }
+
+  .cover {
+    padding-right: 10%; /* Reduce el desplazamiento hacia la derecha */
+  }
+
+  .coverTitle {
+    font-size: 3rem; /* Título más pequeño */
+  }
+
+  .coverSubtitle {
+    font-size: 1.2rem; /* Subtítulo más pequeño */
+  }
+}
+
+
