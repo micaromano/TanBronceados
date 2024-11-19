@@ -4,7 +4,8 @@
   --color-celeste: #ADD8E6; /* Celeste claro */
   --color-negro: #000000;
   --color-marron: #8B4513; /* Marrón oscuro */
-  --color-beige: Beige; /* Beige suave */
+  --color-marron-oscuro: #53290b;
+  --color-beige: #E3DBD0; /* Beige suave */
 }
 
 /* Estilo general del cuerpo */
@@ -14,8 +15,28 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+}
+
+@media (min-width: 768px) {
+  body {
+    display: block; /* Cambia a layout normal en pantallas más grandes */
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-marron);
+}
+
+footer {
+  display: flex;
+  gap: 15px;
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  text-align: center;
+}
+
+footer img {
+  display: block;
+  margin: 0 auto; /* Centrado horizontal */
 }

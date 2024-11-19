@@ -1,34 +1,31 @@
 import Navbar from '../../components/Navbar.js';
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Image, Container, Row, Col, Button } from 'react-bootstrap';
 import styles from '../../styles/IndexClient.module.css';
 
 export default function HomeClient() {
   return (
-    <Container>
+    <Container fluid className="p-0">
       <Navbar />
 
       {/* Header */}
-      <header className={`${styles.header}`}>
-        <Container className="px-3 px-md-5">
-          <Row className="text-center text-md-start">
-            <Col xs={12} md={6}>
-              <h1 className={`${styles.coverTitle} display-1`}>tan.</h1>
-              <h2 className={`${styles.coverSubtitle} lead`}>Bronceado orgánico</h2>
-              <Button href="#comprar" variant="primary" size="lg" className={styles.btnComprar}>
-                Obtener Sesiones
-              </Button>
-            </Col>
-          </Row>
-        </Container>
-      </header>
+      <Container fluid className={`${styles.header} text-center text-md-start py-5`}>
+        <Row className="px-3 px-md-5 align-items-center">
+          <Col className={`${styles.coverText}`} xs={12} md={6}>
+            <h1 className={`${styles.coverTitle} display-1`}>tan.</h1>
+            <h2 className={`${styles.coverSubtitle} lead`}>Bronceado orgánico</h2>
+            <Button href="#comprar" variant="primary" size="lg" className={styles.btnComprar}>
+              Obtener Sesiones
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+    
 
-      {/* Main Content */}
-      <main className="py-5">
-        <Container fluid className="p-0">
+      <Container fluid className="py-5 font-family-base">
           {/* Sección Nosotras */}
-          <section id="nosotras" className="section mb-5">
-            <Row>
+          <Container id={`${styles.nosotras}`} className={`${styles.section} mb-5 text-justify`}>
+            <Row className={`${styles.sectionRow}`}>
               <Col>
                 <h2 className="h1 mb-4">Sobre Nosotras</h2>
                 <p className="lead">
@@ -41,11 +38,17 @@ export default function HomeClient() {
                 </p>
               </Col>
             </Row>
-          </section>
+          </Container>
 
           {/* Sección Servicios */}
-          <section id="servicios" className="mb-5">
-            <Row>
+          <Container id={`${styles.servicios}`} className={`${styles.section}`} >
+            <Row className={`${styles.sectionRow}`}>
+             <Col style={{ display: "flex" }}>
+                <Image fluid 
+                  src='/images/copiaPruebaRecorte.jpg' 
+                  style={{ width: "auto", height: "600px", paddingRight: "40px" }}
+                />
+              </Col>
               <Col>
                 <h2 className="h1 mb-4">Servicios</h2>
                 <p className="lead">
@@ -62,11 +65,11 @@ export default function HomeClient() {
                 </p>
               </Col>
             </Row>
-          </section>
+          </Container>
 
           {/* Sección Contacto */}
-          <section id="contacto" className="mb-5">
-            <Row>
+          <Container id={`${styles.contacto}`} className={`${styles.section} mb-5 text-justify`}>
+            <Row className={`${styles.sectionRow}`}>
               <Col>
                 <h2 className="h1 mb-4">Contacto</h2>
                 <p className="lead">¡Estamos aquí para ayudarte! Contáctanos para consultas</p>
@@ -80,26 +83,24 @@ export default function HomeClient() {
                 </address>
               </Col>
             </Row>
-          </section>
+          </Container>
         </Container>
-      </main>
 
-      <footer className="bg-light py-4">
-        <Container fluid>
+      <Container fluid as="footer" className="bg-light py-4">
           <Row className="justify-content-center">
             <Col xs="auto" className="text-center">
               <a href="https://www.instagram.com/tan.bronceado/?hl=es" target="_blank" rel="noopener noreferrer">
-                <img
+                <Image
                   src="/images/instagram.png"
                   alt="Logo de Instagram"
                   title="Link a Instagram"
                   style={{ width: "40px", height: "auto" }}
+                  fluid
                 />
               </a>
             </Col>
-          </Row>
-        </Container>  
-      </footer>
+          </Row>  
+      </Container>
     </Container>
 
     
