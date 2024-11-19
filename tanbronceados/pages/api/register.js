@@ -43,7 +43,7 @@ const enviarCorreoConfirmacion = async (emailCliente, token) => {
     attachments: [
       {
         filename: 'TAN.png', // El nombre de la imagen
-        path: 'C:/Users/Martin/Desktop/Pry/TAN.png', // Ruta local a la imagen
+        path: 'public/TAN.png', // Ruta local a la imagen
         cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
       }
     ]
