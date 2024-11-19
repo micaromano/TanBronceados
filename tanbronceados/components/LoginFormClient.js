@@ -36,67 +36,78 @@ function LoginForm({ email, password, onChange, onSubmit, onBlur, error, errors 
             <Col xs={6}>
             <Card>
                 <Card.Body>
-                <Form onSubmit={onSubmit}>
-                    <h3>Login Cliente</h3>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Usuario</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Usuario"
-                        value={email}
-                        onChange={e => onChange(e, 'email')}
-                        onBlur={() => onBlur('email')}
-                        isInvalid={!!errors.email}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.email}
-                    </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Contraseña</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Contraseña"
-                        value={password}
-                        onChange={e => onChange(e, 'password')}
-                        onBlur={() => onBlur('password')}
-                        isInvalid={!!errors.password}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.password}
-                    </Form.Control.Feedback>
-                    </Form.Group>
+                    <Form onSubmit={onSubmit}>
+                        <h3>Login Cliente</h3>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Usuario</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Usuario"
+                            value={email}
+                            onChange={e => onChange(e, 'email')}
+                            onBlur={() => onBlur('email')}
+                            isInvalid={!!errors.email}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.email}
+                        </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Contraseña"
+                            value={password}
+                            onChange={e => onChange(e, 'password')}
+                            onBlur={() => onBlur('password')}
+                            isInvalid={!!errors.password}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {errors.password}
+                        </Form.Control.Feedback>
+                        </Form.Group>
 
-                    {error && <div className="text-danger mb-3 text-center">{error}</div>}
+                        {error && <div className="text-danger mb-3 text-center">{error}</div>}
 
+                        <Button
+                        variant="primary"
+                        type="submit"
+                        disabled={!email.trim() || !password.trim()}
+                        className="w-100" style={{ marginBottom: '20px' }}
+                        >
+                        Continuar
+                        </Button>
+                    </Form>
+                    
+                    {/* Botón para iniciar sesión con Google */}
                     <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={!email.trim() || !password.trim()}
-                    className="w-100"
+                    variant="danger"
+                    onClick={() => signIn('google', {callbackUrl:'http://localhost:3000/'})} 
+                    className="w-100" style={{ marginTop: '8px' }}
                     >
-                    Continuar
+                        {/* TODO:cambiar callbackUrl a home de cliente */}
+                    {/* <img
+                        src="/google-icon.png"
+                        alt="Google logo"
+                        style={{ width: '20px', marginRight: '8px' }}
+                    /> */}
+                    Iniciar sesión con Google
                     </Button>
-
-       
-
-                </Form>
+                    <Button
+                    variant="success"
+                    onClick={() => signIn('instagram', {callbackUrl:'http://localhost:3000/'})} 
+                    className="w-100" style={{ marginTop: '8px' }}
+                    >
+                        {/* TODO:cambiar callbackUrl a home de cliente */}
+                    {/* <img
+                        src="/google-icon.png"
+                        alt="Google logo"
+                        style={{ width: '20px', marginRight: '8px' }}
+                    /> */}
+                    Iniciar sesión con Instagram
+                    </Button>
                 </Card.Body>
             </Card>
-                         {/* Botón para iniciar sesión con Google */}
-                <Button
-                  variant="danger"
-                  onClick={() => signIn('google', {callbackUrl:'http://localhost:3000/'})} 
-                  className="w-100"
-                >
-                    {/* TODO:cambiar callbackUrl a home de cliente */}
-                  {/* <img
-                    src="/google-icon.png"
-                    alt="Google logo"
-                    style={{ width: '20px', marginRight: '8px' }}
-                  /> */}
-                  Iniciar sesión con Google
-                </Button>
             </Col>
         </Row>
         <ToastContainer position="bottom-center" />
