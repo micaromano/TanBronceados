@@ -24,45 +24,45 @@ const transporter = nodemailer.createTransport({
 
 //Función para enviar el correo
 const enviarCorreoConfirmacion = async (emailCliente, token) => {
-    const linkConfirmacion = `http://localhost:3000/api/confirmAccount/${token}`;
-  
-    const opcionesCorreo = {
-      from: emailUser,
-      to: emailCliente,
-      subject: 'Confirmación de cuenta TANBronceados',
-      // html: `<p>Gracias por registrarte. Haz clic en el siguiente enlace para confirmar tu cuenta:</p>
-      //        <a href="${linkConfirmacion}">Confirmar Cuenta</a>`
-      html: `<div align="center">
+  const linkConfirmacion = `http://localhost:3000/api/confirmAccount/${token}`;
+
+  const opcionesCorreo = {
+    from: emailUser,
+    to: emailCliente,
+    subject: 'Confirmación de cuenta TANBronceados',
+    // html: `<p>Gracias por registrarte. Haz clic en el siguiente enlace para confirmar tu cuenta:</p>
+    //        <a href="${linkConfirmacion}">Confirmar Cuenta</a>`
+    html: `<div align="center">
               <img src="cid:imagenUnica"/>
               <h1>¡Bienvenido a Tan. Bronceado orgánico!</h1></br>
               <p>Gracias por registrarte. Estás a solo un clic de comenzar con Tan bronceado orgánico. Todo lo que necesita hacer es verificar su dirección de correo electrónico para activar su cuenta de Tan.</p>
               <p>Haz clic en este enlace de confirmación: </p><a href="${linkConfirmacion}">Confirmar cuenta</a>.
               <p>Una vez activada su cuenta, puede comenzar a utilizar todas las funciones de Tan para la gestion de agenda del servicio.</p><p>Estás recibiendo este correo electrónico porque recientemente creaste una nueva cuenta de Tan o agregaste una nueva dirección de correo electrónico. Si no eres tú, ignora este correo electrónico.</p>
               </div>`
-       ,
-     attachments: [
-       {
-         filename: 'TAN.png', // El nombre de la imagen
-         path: 'C:/Users/quartinom/Desktop/Pry/TAN.png', // Ruta local a la imagen
-         cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
-       }
-     ]
-    };
-  
-    try {
-      await transporter.sendMail(opcionesCorreo);
-      console.log('Correo de confirmación enviado');
-    } catch (error) {
-      console.error('Error al enviar el correo:', error);
-    }
+    ,
+    attachments: [
+      {
+        filename: 'TAN.png', // El nombre de la imagen
+        path: 'C:/Users/Martin/Desktop/Pry/TAN.png', // Ruta local a la imagen
+        cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
+      }
+    ]
   };
+
+  try {
+    await transporter.sendMail(opcionesCorreo);
+    console.log('Correo de confirmación enviado');
+  } catch (error) {
+    console.error('Error al enviar el correo:', error);
+  }
+};
 
 //************PRUEBAS***************
 //Crear cuenta en Ethereal
 // async function crearTransporter() {
 //     // Crear cuenta en Ethereal (solo para pruebas locales)
 //     let cuentaPrueba = await nodemailer.createTestAccount();
-  
+
 //     const transporter = nodemailer.createTransport({
 //       host: 'smtp.ethereal.email',
 //       port: 587,
@@ -71,46 +71,46 @@ const enviarCorreoConfirmacion = async (emailCliente, token) => {
 //         pass: cuentaPrueba.pass  // Contraseña generada automáticamente
 //       }
 //     });
-  
+
 //     return transporter;
 //   }
-  //************PRUEBAS***************
+//************PRUEBAS***************
 
 
-  //************PRUEBAS***************
-  //Envío de un correo de prueba
-  // async function enviarCorreoPrueba(emailCliente) {
-  //   const transporter = await crearTransporter();
-  
-  //   const opcionesCorreo = {
-  //     from: 'noreply@miapp.com',
-  //     to: emailCliente,
-  //     subject: 'Confirmación de cuenta TANBronceados',
-  //     text: 'Este es un correo de prueba para la confirmación de cuenta.',
-  //     html: `<div align="center">
-  //            <img src="cid:imagenUnica"/>
-  //            <h1>¡Bienvenido a Tan. Bronceado orgánico!</h1></br>
-  //            <p>Gracias por registrarte. Estás a solo un clic de comenzar con Tan bronceado orgánico. Todo lo que necesita hacer es verificar su dirección de correo electrónico para activar su cuenta de Tan.</p>
-  //            <p>Haz clic en este nlace de confirmación: </p><a href="#">Confirmar mi email</a>.
-  //            <p>Una vez activada su cuenta, puede comenzar a utilizar todas las funciones de Tan para la gestion de agenda del servicio.</p><p>Estás recibiendo este correo electrónico porque recientemente creaste una nueva cuenta de Tan o agregaste una nueva dirección de correo electrónico. Si no eres tú, ignora este correo electrónico.</p>
-  //            </div>`
-  //     ,
-  //   attachments: [
-  //     {
-  //       filename: 'TAN.png', // El nombre de la imagen
-  //       path: 'C:/Users/quartinom/Desktop/Pry/TAN.png', // Ruta local a la imagen
-  //       cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
-  //     }
-  //   ]
-  //   };
-  
-  //   const info = await transporter.sendMail(opcionesCorreo);
-  //   console.log('Correo enviado:', info.messageId);
-  //   console.log('URL de vista previa:', nodemailer.getTestMessageUrl(info));
-  // }
-  
-  // // Llamar a la función
-  // enviarCorreoPrueba('cliente@ejemplo.com').catch(console.error);
+//************PRUEBAS***************
+//Envío de un correo de prueba
+// async function enviarCorreoPrueba(emailCliente) {
+//   const transporter = await crearTransporter();
+
+//   const opcionesCorreo = {
+//     from: 'noreply@miapp.com',
+//     to: emailCliente,
+//     subject: 'Confirmación de cuenta TANBronceados',
+//     text: 'Este es un correo de prueba para la confirmación de cuenta.',
+//     html: `<div align="center">
+//            <img src="cid:imagenUnica"/>
+//            <h1>¡Bienvenido a Tan. Bronceado orgánico!</h1></br>
+//            <p>Gracias por registrarte. Estás a solo un clic de comenzar con Tan bronceado orgánico. Todo lo que necesita hacer es verificar su dirección de correo electrónico para activar su cuenta de Tan.</p>
+//            <p>Haz clic en este nlace de confirmación: </p><a href="#">Confirmar mi email</a>.
+//            <p>Una vez activada su cuenta, puede comenzar a utilizar todas las funciones de Tan para la gestion de agenda del servicio.</p><p>Estás recibiendo este correo electrónico porque recientemente creaste una nueva cuenta de Tan o agregaste una nueva dirección de correo electrónico. Si no eres tú, ignora este correo electrónico.</p>
+//            </div>`
+//     ,
+//   attachments: [
+//     {
+//       filename: 'TAN.png', // El nombre de la imagen
+//       path: 'C:/Users/quartinom/Desktop/Pry/TAN.png', // Ruta local a la imagen
+//       cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
+//     }
+//   ]
+//   };
+
+//   const info = await transporter.sendMail(opcionesCorreo);
+//   console.log('Correo enviado:', info.messageId);
+//   console.log('URL de vista previa:', nodemailer.getTestMessageUrl(info));
+// }
+
+// // Llamar a la función
+// enviarCorreoPrueba('cliente@ejemplo.com').catch(console.error);
 
 //************PRUEBAS***************
 
@@ -136,20 +136,21 @@ async function handler(req, res) {
     // console.log('Database connected.------------------------------------------------------------------------');
 
     const response = await fetch(`https://www.google.com/recaptcha/api/siteverify`,
-        {method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            //body: JSON.stringify({ fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken }),
-            body: JSON.stringify({ secret: secretKey, response: captchaToken }),
-        });
-        // {
-        //   params: {
-        //     secret: 'secretKey,
-        //     response: captchaToken
-        //   }
-        // }
-      
-    
-      //const { success } = response.data;
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        //body: JSON.stringify({ fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken }),
+        body: JSON.stringify({ secret: secretKey, response: captchaToken }),
+      });
+    // {
+    //   params: {
+    //     secret: 'secretKey,
+    //     response: captchaToken
+    //   }
+    // }
+
+
+    //const { success } = response.data;
 
     console.log('response', response);
     if (response.ok) {
@@ -163,11 +164,11 @@ async function handler(req, res) {
     // Encripta la contraseña antes de guardarla
     const PasswordHash = await bcrypt.hash(password, 10);
     console.log('PasswordHash', PasswordHash);
-    
+
     //Generar y almacenar el token
     const token = jwt.sign({ email: email }, jwtSecret, { expiresIn: '1h' });
     console.log('Token created successfully.');
-    
+
     enviarCorreoConfirmacion(email, token);
 
     // enviarCorreoPrueba(email);
