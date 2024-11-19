@@ -18,7 +18,7 @@
 .nav a {
   color: var(--color-marron);
   text-decoration: none;
-  font-size: large;
+  font-size: medium;
 }
 
 .nav a:hover {

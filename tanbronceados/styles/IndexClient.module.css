@@ -17,7 +17,7 @@
 .coverText {
   position: relative;
   left: 6rem;
-  margin-top: 32.4rem;
+  margin-top: 25rem;
 }
 
 .header .coverTitle {
@@ -74,7 +74,7 @@
 }
 
 .section p {
-  font-size: 1.2rem; /* Tamaño legible */
+  font-size: 1.05rem; /* Tamaño legible */
   line-height: 1.8; /* Espaciado entre líneas */
   text-align: justify; /* Alineación justificada */
 }

@@ -24,7 +24,7 @@ export default function HomeClient() {
 
       <Container fluid className="py-5 font-family-base">
           {/* Sección Nosotras */}
-          <Container id={`${styles.nosotras}`} className={`${styles.section} mb-5 text-justify`}>
+          <Container id={`${styles.nosotras}`} className={`${styles.section}`}>
             <Row className={`${styles.sectionRow}`}>
               <Col>
                 <h2 className="h1 mb-4">Sobre Nosotras</h2>
@@ -68,7 +68,7 @@ export default function HomeClient() {
           </Container>
 
           {/* Sección Contacto */}
-          <Container id={`${styles.contacto}`} className={`${styles.section} mb-5 text-justify`}>
+          <Container id={`${styles.contacto}`} className={`${styles.section}`}>
             <Row className={`${styles.sectionRow}`}>
               <Col>
                 <h2 className="h1 mb-4">Contacto</h2>
@@ -89,12 +89,12 @@ export default function HomeClient() {
       <Container fluid as="footer" className="bg-light py-4">
           <Row className="justify-content-center">
             <Col xs="auto" className="text-center">
-              <a href="https://www.instagram.com/tan.bronceado/?hl=es" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/tan.bronceado/?hl=es" target="_blank">
                 <Image
                   src="/images/instagram.png"
                   alt="Logo de Instagram"
                   title="Link a Instagram"
-                  style={{ width: "40px", height: "auto" }}
+                  style={{ width: "50px", height: "auto" }}
                   fluid
                 />
               </a>
