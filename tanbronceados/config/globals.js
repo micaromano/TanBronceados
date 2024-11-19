@@ -14,6 +14,10 @@ module.exports = {
     google_OAuth_Client_Secret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
     google_OAuth_Callback: process.env.GOOGLE_OAUTH_CALLBACK_URL,
     nextauth_Secret: process.env.NEXTAUTH_SECRET,
+    site_key: process.env.SITE_KEY,
+    secret_key: process.env.SECRET_KEY,
+    email_user: process.env.EMAIL_USER,
+    pass_user: process.env.PASS_USER,
 
 };
 
