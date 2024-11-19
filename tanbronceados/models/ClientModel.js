@@ -38,7 +38,7 @@ class ClientModel {
         allowNull: true,
       },
       Birthdate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       Gender: {
