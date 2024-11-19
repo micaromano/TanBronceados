@@ -24,7 +24,7 @@ export default function HomeClient() {
 
       <Container fluid className="py-5 font-family-base">
           {/* Sección Nosotras */}
-          <Container id={`${styles.nosotras}`} className={`${styles.section}`}>
+          <Container id="nosotras" className={`${styles.section}`}>
             <Row className={`${styles.sectionRow}`}>
               <Col>
                 <h2 className="h1 mb-4">Sobre Nosotras</h2>
@@ -41,7 +41,7 @@ export default function HomeClient() {
           </Container>
 
           {/* Sección Servicios */}
-          <Container id={`${styles.servicios}`} className={`${styles.section}`} >
+          <Container id="servicios" className={`${styles.section}`} >
             <Row className={`${styles.sectionRow}`}>
              <Col style={{ display: "flex" }}>
                 <Image fluid 
@@ -68,15 +68,15 @@ export default function HomeClient() {
           </Container>
 
           {/* Sección Contacto */}
-          <Container id={`${styles.contacto}`} className={`${styles.section}`}>
+          <Container id="contacto" className={`${styles.section}`}>
             <Row className={`${styles.sectionRow}`}>
               <Col>
                 <h2 className="h1 mb-4">Contacto</h2>
                 <p className="lead">¡Estamos aquí para ayudarte! Contáctanos para consultas</p>
                 <address>
-                  <p className="lead">
+                  {/* <p className="lead">
                     <strong>Email: </strong>tan.bronceadoorganico@gmail.com
-                  </p>
+                  </p> */}
                   <p className="lead">
                     <strong>Teléfono: </strong>092900303
                   </p>
