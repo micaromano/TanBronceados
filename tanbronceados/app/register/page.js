@@ -11,47 +11,47 @@ function RegisterPage() {
   const [state, setState] = useState({
     fullName: '',
     password: '',
-	  email: '',
-	  phone: '',
-	  instagram: '',	
-	  birthdate: null, // Inicializa birthdate como null para DatePicker
+    email: '',
+    phone: '',
+    instagram: '',
+    birthdate: null, // Inicializa birthdate como null para DatePicker
     gender: '',
     captchaToken: null, // Inicializa captchaToken como null para el reCaptcha
     //siteKey: siteKey,
-	  error: '',
+    error: '',
     errors: {}
   });
   const router = useRouter();
 
   const handleChange = (e, field) => {
     let campo = e;
-    if(field != 'birthdate' && field != 'captchaToken'){
-        campo = e.target.value;
+    if (field != 'birthdate' && field != 'captchaToken') {
+      campo = e.target.value;
     }
-    setState({ 
-        ...state, 
-        [field]: campo,
-        errors: {
-            ...state.errors,
-            [field]: '' // Limpiar el error al cambiar el valor
-        }
+    setState({
+      ...state,
+      [field]: campo,
+      errors: {
+        ...state.errors,
+        [field]: '' // Limpiar el error al cambiar el valor
+      }
     });
   };
 
   const handleBlur = (field) => {
     let errorMessage = '';
-  
+
     // Validaciones específicas por campo
     switch (field) {
       case 'fullName':
         if (!state.fullName.trim()) {
-          errorMessage = 'El campo de nombre es obligatorio';
-        } 
+          errorMessage = 'El campo de nombre completo es obligatorio';
+        }
         else if (state.fullName.length < 3) {
-          errorMessage = 'El nombre debe tener al menos 3 caracteres';
+          errorMessage = 'El nombre completo debe tener al menos 3 caracteres';
         }
         break;
-  
+
       case 'password':
         if (!state.password.trim()) {
           errorMessage = 'El campo de contraseña es obligatorio';
@@ -62,11 +62,11 @@ function RegisterPage() {
         } else if (!/[0-9]/.test(state.password)) {
           errorMessage = 'La contraseña debe tener al menos un número';
         } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(state.password)) {
-            errorMessage = 'La contraseña debe tener al menos un carácter especial';
+          errorMessage = 'La contraseña debe tener al menos un carácter especial';
         }
 
         break;
-  
+
       case 'email':
         if (!state.email.trim()) {
           errorMessage = 'El campo de email es obligatorio';
@@ -74,23 +74,23 @@ function RegisterPage() {
           errorMessage = 'El formato del email es inválido';
         }
         break;
-  
+
       case 'phone':
         if (!state.phone.trim()) {
           errorMessage = 'El campo de teléfono es obligatorio';
         } else if (!/^\d+$/.test(state.phone)) {
-          errorMessage = 'El teléfono solo debe contener valores numéricos';         
-        } else if (!/^\d{10}$/.test(state.phone)) {
-          errorMessage = 'El teléfono debe contener 10 dígitos';
+          errorMessage = 'El teléfono solo debe contener valores numéricos';
+        } else if (!/^\d{9}$/.test(state.phone)) {
+          errorMessage = 'El teléfono debe contener 9 dígitos';
         }
         break;
-  
+
       case 'instagram':
         if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
           errorMessage = 'El usuario de Instagram debe empezar con @ y solo puede contener letras, números, puntos y guiones bajos';
         }
         break;
-  
+
       case 'birthdate':
         if (!state.birthdate) {
           errorMessage = 'El campo de fecha de nacimiento es obligatorio';
@@ -103,17 +103,17 @@ function RegisterPage() {
           }
         }
         break;
-  
-    //   case 'gender':
-    //     if (!state.gender.trim()) {
-    //       errorMessage = 'El campo de género es obligatorio';
-    //     }
-    //     break;
-  
+
+      //   case 'gender':
+      //     if (!state.gender.trim()) {
+      //       errorMessage = 'El campo de género es obligatorio';
+      //     }
+      //     break;
+
       default:
         break;
     }
-  
+
     // Actualizar el estado solo si hay un mensaje de error
     setState((prevState) => ({
       ...prevState,
@@ -125,15 +125,15 @@ function RegisterPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();  
-    
-    console.log({fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken});
+    e.preventDefault();
+
+    console.log({ fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken });
     let captchaToken = state.captchaToken;
     if (!captchaToken) {
-        alert("Por favor complete el reCAPTCHA");
-        return;
-      }
-    
+      alert("Por favor complete el reCAPTCHA");
+      return;
+    }
+
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -150,25 +150,25 @@ function RegisterPage() {
       } else {
         setState({ ...state, error: 'Fallo en la verificación de captcha o envío de registro' });
       }
-   } catch (error) {
-     console.error('Error en la solicitud:', error);
-     setState({
-       ...state,
-       error: 'Error del servidor. Inténtalo de nuevo más tarde.',
-       errors: {}
-     });
-   }   
-};
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setState({
+        ...state,
+        error: 'Error del servidor. Inténtalo de nuevo más tarde.',
+        errors: {}
+      });
+    }
+  };
 
   return (
     <RegisterForm
       fullName={state.fullName}
       password={state.password}
-	    email={state.email} 
-	    phone={state.phone} 
-	    instagram={state.instagram}
-	    birthdate={state.birthdate}
-	    gender={state.gender}
+      email={state.email}
+      phone={state.phone}
+      instagram={state.instagram}
+      birthdate={state.birthdate}
+      gender={state.gender}
       onChange={handleChange}
       onSubmit={handleSubmit}
       onBlur={handleBlur}
