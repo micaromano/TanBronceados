@@ -1,0 +1,26 @@
+body {
+  background: #ebe1dc;
+}
+
+.btnLogin {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  background-color: #795D4F;
+  color:whitesmoke;
+}
+
+.btnLogin:hover {
+  background-color: #a1877a;
+  color:whitesmoke;
+}
+
+.btnGoogle {
+  color: white !important;
+  background-color: #4b3429;
+}
+
+.btnInstagram {
+  color: white !important;
+  background-color: #4b3429;
+}
