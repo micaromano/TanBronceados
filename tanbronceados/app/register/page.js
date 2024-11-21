@@ -4,22 +4,22 @@
 import RegisterForm from '../../components/RegisterForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// const globals = require('../../config/globals');
-// const siteKey = globals.site_key;
+import { toast } from 'react-toastify';
 
 function RegisterPage() {
   const [state, setState] = useState({
     fullName: '',
     password: '',
+    password2: '',
     email: '',
     phone: '',
     instagram: '',
     birthdate: null, // Inicializa birthdate como null para DatePicker
     gender: '',
     captchaToken: null, // Inicializa captchaToken como null para el reCaptcha
-    //siteKey: siteKey,
     error: '',
-    errors: {}
+    errors: {},
+    message: ''
   });
   const router = useRouter();
 
@@ -45,70 +45,77 @@ function RegisterPage() {
     switch (field) {
       case 'fullName':
         if (!state.fullName.trim()) {
-          errorMessage = 'El campo de nombre completo es obligatorio';
+          errorMessage = 'El nombre completo es obligatorio.';
         }
         else if (state.fullName.length < 3) {
-          errorMessage = 'El nombre completo debe tener al menos 3 caracteres';
+          errorMessage = 'El nombre completo debe tener al menos 3 caracteres.';
         }
         break;
 
       case 'password':
         if (!state.password.trim()) {
-          errorMessage = 'El campo de contraseña es obligatorio';
+          errorMessage = 'La contraseña es obligatoria.';
         } else if (state.password.length < 8) {
-          errorMessage = 'La contraseña debe tener al menos 8 caracteres';
+          errorMessage = 'La contraseña debe tener al menos 8 caracteres.';
         } else if (!/[A-Z]/.test(state.password)) {
-          errorMessage = 'La contraseña debe tener al menos una letra mayúscula';
+          errorMessage = 'La contraseña debe tener al menos una letra mayúscula.';
         } else if (!/[0-9]/.test(state.password)) {
-          errorMessage = 'La contraseña debe tener al menos un número';
+          errorMessage = 'La contraseña debe tener al menos un número.';
         } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(state.password)) {
-          errorMessage = 'La contraseña debe tener al menos un carácter especial';
+          errorMessage = 'La contraseña debe tener al menos un carácter especial.';
         }
+        break;
 
+      case 'password2':
+        if (state.password != state.password2) {
+          errorMessage = 'Ambas contraseñas deben ser iguales.';
+        }
         break;
 
       case 'email':
         if (!state.email.trim()) {
-          errorMessage = 'El campo de email es obligatorio';
+          errorMessage = 'El email es obligatorio.';
         } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(state.email)) {
-          errorMessage = 'El formato del email es inválido';
+          errorMessage = 'El formato del email es inválido.';
         }
         break;
 
       case 'phone':
         if (!state.phone.trim()) {
-          errorMessage = 'El campo de teléfono es obligatorio';
+          errorMessage = 'El teléfono es obligatorio.';
         } else if (!/^\d+$/.test(state.phone)) {
-          errorMessage = 'El teléfono solo debe contener valores numéricos';
+          errorMessage = 'El teléfono solo debe contener valores numéricos.';
         } else if (!/^\d{9}$/.test(state.phone)) {
-          errorMessage = 'El teléfono debe contener 9 dígitos';
+          errorMessage = 'El teléfono debe contener 9 dígitos.';
+        } else if (!/^09/.test(state.phone)) {
+          errorMessage = 'El teléfono debe comenzar con "09".';
         }
         break;
 
       case 'instagram':
-        if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
-          errorMessage = 'El usuario de Instagram debe empezar con @ y solo puede contener letras, números, puntos y guiones bajos';
+        if (!state.instagram.startsWith('@')) {
+          errorMessage = 'El usuario de Instagram debe empezar con @.';
+        } else if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
+          errorMessage = 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.';
         }
         break;
 
       case 'birthdate':
         if (!state.birthdate) {
-          errorMessage = 'El campo de fecha de nacimiento es obligatorio';
+          errorMessage = 'La fecha de nacimiento es obligatoria.';
         } else {
-          // const birthdate = new Date(state.birthdate);
-          // console.log('birthdate', birthdate);
           const age = new Date().getFullYear() - state.birthdate.getFullYear();
           if (age < 18) {
-            errorMessage = 'Debes ser mayor de 18 años';
+            errorMessage = 'Debes ser mayor de 18 años.';
           }
         }
         break;
 
-      //   case 'gender':
-      //     if (!state.gender.trim()) {
-      //       errorMessage = 'El campo de género es obligatorio';
-      //     }
-      //     break;
+      case 'gender':
+        if (!state.gender) {
+          errorMessage = 'El género es obligatorio.';
+        }
+        break;
 
       default:
         break;
@@ -126,14 +133,15 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log({ fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken });
     let captchaToken = state.captchaToken;
+
+    // Se verifica que el token existe
     if (!captchaToken) {
-      alert("Por favor complete el reCAPTCHA");
+      toast("Por favor complete el reCAPTCHA");
       return;
     }
 
+    // Se envía solicitud de registro con los datos del formulario
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -141,14 +149,14 @@ function RegisterPage() {
         body: JSON.stringify({ fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken }),
       });
 
-      console.log('res', res)
 
       if (res.ok) {
-        alert('Captcha verificado y formulario enviado correctamente');
-        await router.push('/login');
-        alert('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
+        const mess = await res.json();
+        setState({ ...state, message: mess.message });
+        await toast('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
       } else {
-        setState({ ...state, error: 'Fallo en la verificación de captcha o envío de registro' });
+        const error = await res.json();
+        setState({ ...state, error: error.error });
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
@@ -164,6 +172,7 @@ function RegisterPage() {
     <RegisterForm
       fullName={state.fullName}
       password={state.password}
+      password2={state.password2}
       email={state.email}
       phone={state.phone}
       instagram={state.instagram}
@@ -172,9 +181,9 @@ function RegisterPage() {
       onChange={handleChange}
       onSubmit={handleSubmit}
       onBlur={handleBlur}
-      //siteKey={state.siteKey}
       error={state.error}
       errors={state.errors}
+      message={state.message}
     />
   );
 }

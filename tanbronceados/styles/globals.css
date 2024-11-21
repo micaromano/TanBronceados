@@ -2135,7 +2135,9 @@
 		padding: 0.75em 1em;
 	}
 
-	input[type="checkbox"],
+	/* TODO: arreglar */
+
+	/* input[type="checkbox"],
 	input[type="radio"] {
 		-moz-appearance: none;
 		-webkit-appearance: none;
@@ -2209,13 +2211,13 @@
 
 	input[type="checkbox"] + label:before {
 		border-radius: 6px;
-	}
+	} */
 
 	input[type="radio"] + label:before {
 		border-radius: 100%;
 	}
 
-	::-webkit-input-placeholder {
+	/* ::-webkit-input-placeholder {
 		color: #999 !important;
 		opacity: 1.0;
 	}
@@ -2233,7 +2235,7 @@
 	:-ms-input-placeholder {
 		color: #999 !important;
 		opacity: 1.0;
-	}
+	} */
 
 /* Box */
 
