@@ -80,7 +80,7 @@ function LoginForm({ email, password, onChange, onSubmit, onBlur, error, errors 
                                             type="button"
                                             onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000/' })}
                                         >
-                                            <i className="fab fa-google me-2"></i> Ingrese con Google
+                                            <i className="fab fa-google me-2"  style={{ fontSize: '1.4rem' }}></i> Ingrese con Google
                                         </button>
                                     </div>
                                     <div className="d-grid">
@@ -89,7 +89,7 @@ function LoginForm({ email, password, onChange, onSubmit, onBlur, error, errors 
                                             type="button"
                                             onClick={() => signIn('Instagram', { callbackUrl: 'http://localhost:3000/' })}
                                         >
-                                            <i className="fab fa-instagram me-2"></i> Ingrese con Instagram
+                                            <i className="fab fa-instagram me-2"  style={{ fontSize: '1.7rem' }}></i> Ingrese con Instagram
                                         </button>
                                     </div>
                                 </form>
