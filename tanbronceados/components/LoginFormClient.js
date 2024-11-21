@@ -1,117 +1,105 @@
 // components/LoginForm.js
-// import { signIn, useSession, signOut } from 'next-auth/react';
-import { signIn} from 'next-auth/react';
-
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-
-import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
+// Importaciones necesarias
+import { signIn } from 'next-auth/react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { ToastContainer } from "react-toastify";
+import Head from 'next/head';
+import styles from '../styles/login.module.css';
 
 function LoginForm({ email, password, onChange, onSubmit, onBlur, error, errors }) {
-    // const { data: session, status } = useSession();
-    
-    // if (session) {
-    //     // Si el usuario ya está autenticado
-    //     return (
-    //       <Container>
-    //         <Row className="justify-content-center">
-    //           <Col xs={6}>
-    //             <Card>
-    //               <Card.Body>
-    //                 <h2>Bienvenido, {session.user.name}</h2>
-    //                 <Button variant="danger" onClick={() => signOut()} className="w-100">
-    //                   Cerrar Sesión
-    //                 </Button>
-    //               </Card.Body>
-    //             </Card>
-    //           </Col>
-    //         </Row>
-    //       </Container>
-    //     );
-    //   }
-
     return (
-        <Container>
-        <Row className="justify-content-center">
-            <Col xs={6}>
-            <Card>
-                <Card.Body>
-                    <Form onSubmit={onSubmit}>
-                        <h3>Login Cliente</h3>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Usuario</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Usuario"
-                            value={email}
-                            onChange={e => onChange(e, 'email')}
-                            onBlur={() => onBlur('email')}
-                            isInvalid={!!errors.email}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.email}
-                        </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Contraseña"
-                            value={password}
-                            onChange={e => onChange(e, 'password')}
-                            onBlur={() => onBlur('password')}
-                            isInvalid={!!errors.password}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.password}
-                        </Form.Control.Feedback>
-                        </Form.Group>
-
-                        {error && <div className="text-danger mb-3 text-center">{error}</div>}
-
-                        <Button
-                        variant="primary"
-                        type="submit"
-                        disabled={!email.trim() || !password.trim()}
-                        className="w-100" style={{ marginBottom: '20px' }}
-                        >
-                        Continuar
-                        </Button>
-                    </Form>
-                    
-                    {/* Botón para iniciar sesión con Google */}
-                    <Button
-                    variant="danger"
-                    onClick={() => signIn('google', {callbackUrl:'http://localhost:3000/'})} 
-                    className="w-100" style={{ marginTop: '8px' }}
-                    >
-                        {/* TODO:cambiar callbackUrl a home de cliente */}
-                    {/* <img
-                        src="/google-icon.png"
-                        alt="Google logo"
-                        style={{ width: '20px', marginRight: '8px' }}
-                    /> */}
-                    Iniciar sesión con Google
-                    </Button>
-                    <Button
-                    variant="success"
-                    onClick={() => signIn('instagram', {callbackUrl:'http://localhost:3000/'})} 
-                    className="w-100" style={{ marginTop: '8px' }}
-                    >
-                        {/* TODO:cambiar callbackUrl a home de cliente */}
-                    {/* <img
-                        src="/google-icon.png"
-                        alt="Google logo"
-                        style={{ width: '20px', marginRight: '8px' }}
-                    /> */}
-                    Iniciar sesión con Instagram
-                    </Button>
-                </Card.Body>
-            </Card>
-            </Col>
-        </Row>
-        <ToastContainer position="bottom-center" />
-        </Container>
+        <>
+            {/* Header */}
+            <header id="header" className="alt" style={{ backgroundColor: '#795D4F'}}>
+            <nav id="nav">
+              <ul>
+                <li><a href="/register">Registrarse</a></li>
+                <li><a href="/">Inicio</a></li>
+              </ul>
+            </nav>
+          </header>
+            <Head>
+                <title>log in</title>
+            </Head>
+            <div className={styles.container}>
+                <div className="row">
+                    <div className="col-sm-9 col-md-7 col-lg-5 mx-auto mt-5">
+                        <div className="card border-0 shadow rounded-3 my-5">
+                            <div className="card-body p-4 p-sm-5">
+                                <h5 className="card-title text-center mb-5 fw-light fs-5">Ingresar</h5>
+                                <form onSubmit={onSubmit}>
+                                    <div className="form-floating mb-3">
+                                        <input 
+                                            type="email" 
+                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
+                                            id="floatingInput" 
+                                            placeholder="name@example.com"
+                                            value={email}
+                                            onChange={e => onChange(e, 'email')}
+                                            onBlur={() => onBlur('email')}
+                                        />
+                                        <label htmlFor="floatingInput">Correo electronico</label>
+                                        {errors.email && (
+                                            <div className="invalid-feedback d-block">
+                                                {errors.email}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="form-floating mb-3">
+                                        <input 
+                                            type="password" 
+                                            className={`form-control ${errors.password ? 'is-invalid' : ''}`} 
+                                            id="floatingPassword" 
+                                            placeholder="Password"
+                                            value={password}
+                                            onChange={e => onChange(e, 'password')}
+                                            onBlur={() => onBlur('password')}
+                                        />
+                                        <label htmlFor="floatingPassword">Contraseña</label>
+                                        {errors.password && (
+                                            <div className="invalid-feedback d-block">
+                                                {errors.password}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="d-grid">
+                                        <button 
+                                            className={`btn ${styles.btnLogin} text-uppercase fw-bold`} 
+                                            type="submit"
+                                            disabled={!email.trim() || !password.trim()}
+                                        >
+                                            Ingresar
+                                        </button>
+                                    </div>
+                                    {error && <div className="text-danger mb-3 text-center mt-3">{error}</div>}
+                                    <hr className="my-4" />
+                                    <div className="d-grid mb-2">
+                                        <button 
+                                            className={`btn ${styles.btnGoogle} ${styles.btnLogin} text-uppercase fw-bold`} 
+                                            type="button"
+                                            onClick={() => signIn('google', { callbackUrl: 'http://localhost:3000/' })}
+                                        >
+                                            <i className="fab fa-google me-2"></i> Ingrese con Google
+                                        </button>
+                                    </div>
+                                    <div className="d-grid">
+                                        <button 
+                                            className={`btn ${styles.btnInstagram} ${styles.btnLogin} text-uppercase fw-bold`} 
+                                            type="button"
+                                            onClick={() => signIn('Instagram', { callbackUrl: 'http://localhost:3000/' })}
+                                        >
+                                            <i className="fab fa-instagram me-2"></i> Ingrese con Instagram
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ToastContainer position="bottom-center" />
+            </div>
+        </>
     );
 }
 
