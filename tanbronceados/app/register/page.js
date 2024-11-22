@@ -82,13 +82,13 @@ function RegisterPage() {
 
       case 'phone':
         if (!state.phone.trim()) {
-          errorMessage = 'El teléfono es obligatorio.';
+          errorMessage = 'El celular es obligatorio.';
         } else if (!/^\d+$/.test(state.phone)) {
-          errorMessage = 'El teléfono solo debe contener valores numéricos.';
+          errorMessage = 'El celular solo debe contener valores numéricos.';
         } else if (!/^\d{9}$/.test(state.phone)) {
-          errorMessage = 'El teléfono debe contener 9 dígitos.';
+          errorMessage = 'El celular debe contener 9 dígitos.';
         } else if (!/^09/.test(state.phone)) {
-          errorMessage = 'El teléfono debe comenzar con "09".';
+          errorMessage = 'El celular debe comenzar con "09".';
         }
         break;
 

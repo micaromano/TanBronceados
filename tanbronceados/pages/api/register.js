@@ -47,13 +47,13 @@ async function handler(req, res) {
 
   // phone
   if (!phone.trim()) {
-    return res.status(404).json({ error: 'El teléfono es obligatorio.' });
+    return res.status(404).json({ error: 'El celular es obligatorio.' });
   } else if (!/^\d+$/.test(phone)) {
-    return res.status(404).json({ error: 'El teléfono solo debe contener valores numéricos.' });
+    return res.status(404).json({ error: 'El celular solo debe contener valores numéricos.' });
   } else if (!/^\d{9}$/.test(phone)) {
-    return res.status(404).json({ error: 'El teléfono debe contener 9 dígitos.' });
+    return res.status(404).json({ error: 'El celular debe contener 9 dígitos.' });
   } else if (!/^09/.test(phone)) {
-    return res.status(404).json({ error: 'El teléfono debe comenzar con "09".' });
+    return res.status(404).json({ error: 'El celular debe comenzar con "09".' });
   }
 
   // instagram
