@@ -16,6 +16,68 @@ async function handler(req, res) {
 
   const { fullName, password, email, phone, instagram, birthdate, gender, captchaToken } = req.body;
 
+  // Se validan campos antes de procesarlos
+  // fullName
+  if (!fullName.trim()) {
+    return res.status(404).json({ error: 'El nombre completo es obligatorio.' });
+  }
+  else if (fullName.length < 3) {
+    return res.status(404).json({ error: 'El nombre completo debe tener al menos 3 caracteres.' });
+  }
+
+  // password
+  if (!password.trim()) {
+    return res.status(404).json({ error: 'La contraseña es obligatoria.' });
+  } else if (password.length < 8) {
+    return res.status(404).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
+  } else if (!/[A-Z]/.test(password)) {
+    return res.status(404).json({ error: 'La contraseña debe tener al menos una letra mayúscula.' });
+  } else if (!/[0-9]/.test(password)) {
+    return res.status(404).json({ error: 'La contraseña debe tener al menos un número.' });
+  } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return res.status(404).json({ error: 'La contraseña debe tener al menos un carácter especial.' });
+  }
+
+  // email
+  if (!email.trim()) {
+    return res.status(404).json({ error: 'El email es obligatorio.' });
+  } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    return res.status(404).json({ error: 'El formato del email es inválido.' });
+  }
+
+  // phone
+  if (!phone.trim()) {
+    return res.status(404).json({ error: 'El celular es obligatorio.' });
+  } else if (!/^\d+$/.test(phone)) {
+    return res.status(404).json({ error: 'El celular solo debe contener valores numéricos.' });
+  } else if (!/^\d{9}$/.test(phone)) {
+    return res.status(404).json({ error: 'El celular debe contener 9 dígitos.' });
+  } else if (!/^09/.test(phone)) {
+    return res.status(404).json({ error: 'El celular debe comenzar con "09".' });
+  }
+
+  // instagram
+  if (!instagram.startsWith('@')) {
+    return res.status(404).json({ error: 'El usuario de Instagram debe empezar con @.' });
+  } else if (!/^@[a-zA-Z0-9_.]+$/.test(instagram)) {
+    return res.status(404).json({ error: 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.' });
+  }
+
+  // birthdate
+  if (!birthdate) {
+    return res.status(404).json({ error: 'La fecha de nacimiento es obligatoria.' });
+  } else {
+    const age = new Date().getFullYear() - new Date(birthdate).getFullYear();
+    if (age < 18) {
+      return res.status(404).json({ error: 'Debes ser mayor de 18 años.' });
+    }
+  }
+
+  // gender
+  if (!gender) {
+    return res.status(404).json({ error: 'El género es obligatorio.' });
+  }
+
   // Se verifica que el usuario no exista
   const [results, metadata] = await db.query(
     'SELECT * FROM Clients WHERE Email = :email',
@@ -52,7 +114,7 @@ async function handler(req, res) {
     // Encripta la contraseña antes de guardarla
     const PasswordHash = await bcrypt.hash(password, 10);
 
-    // Generar y almacenar el token
+    // Genera y almacena el token
     const token = jwt.sign({ email: email }, jwtSecret, { expiresIn: '1h' });
 
     enviarCorreoConfirmacion(email, token);

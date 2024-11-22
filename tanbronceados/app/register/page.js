@@ -82,13 +82,13 @@ function RegisterPage() {
 
       case 'phone':
         if (!state.phone.trim()) {
-          errorMessage = 'El teléfono es obligatorio.';
+          errorMessage = 'El celular es obligatorio.';
         } else if (!/^\d+$/.test(state.phone)) {
-          errorMessage = 'El teléfono solo debe contener valores numéricos.';
+          errorMessage = 'El celular solo debe contener valores numéricos.';
         } else if (!/^\d{9}$/.test(state.phone)) {
-          errorMessage = 'El teléfono debe contener 9 dígitos.';
+          errorMessage = 'El celular debe contener 9 dígitos.';
         } else if (!/^09/.test(state.phone)) {
-          errorMessage = 'El teléfono debe comenzar con "09".';
+          errorMessage = 'El celular debe comenzar con "09".';
         }
         break;
 
@@ -131,13 +131,21 @@ function RegisterPage() {
     }));
   };
 
+  const clearMessages = () => {
+    setState((prevState) => ({
+      ...prevState,
+      error: '',
+      message: '',
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let captchaToken = state.captchaToken;
 
     // Se verifica que el token existe
     if (!captchaToken) {
-      toast("Por favor complete el reCAPTCHA");
+      toast("Por favor complete el reCAPTCHA.");
       return;
     }
 
@@ -154,9 +162,21 @@ function RegisterPage() {
         const mess = await res.json();
         setState({ ...state, message: mess.message });
         await toast('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
+
+        // Limpiar mensajes después de un tiempo
+        setTimeout(() => {
+          clearMessages();
+        }, 5000); // Limpia después de 5 segundos
+
       } else {
         const error = await res.json();
         setState({ ...state, error: error.error });
+
+        // Limpia el mensaje de error después de un tiempo
+        setTimeout(() => {
+          clearMessages();
+        }, 5000); // Limpia después de 5 segundos
+
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
