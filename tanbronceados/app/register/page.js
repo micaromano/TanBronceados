@@ -93,10 +93,12 @@ function RegisterPage() {
         break;
 
       case 'instagram':
-        if (!state.instagram.startsWith('@')) {
-          errorMessage = 'El usuario de Instagram debe empezar con @.';
-        } else if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
-          errorMessage = 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.';
+        if (state.instagram) {
+          if (!state.instagram.startsWith('@')) {
+            errorMessage = 'El usuario de Instagram debe empezar con @.';
+          } else if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
+            errorMessage = 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.';
+          }
         }
         break;
 

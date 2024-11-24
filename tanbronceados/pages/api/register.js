@@ -58,10 +58,12 @@ async function handler(req, res) {
   }
 
   // instagram
-  if (!instagram.startsWith('@')) {
-    return res.status(404).json({ error: 'El usuario de Instagram debe empezar con @.' });
-  } else if (!/^@[a-zA-Z0-9_.]+$/.test(instagram)) {
-    return res.status(404).json({ error: 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.' });
+  if (instagram) {
+    if (!instagram.startsWith('@')) {
+      return res.status(404).json({ error: 'El usuario de Instagram debe empezar con @.' });
+    } else if (!/^@[a-zA-Z0-9_.]+$/.test(instagram)) {
+      return res.status(404).json({ error: 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.' });
+    }
   }
 
   // birthdate
@@ -78,8 +80,6 @@ async function handler(req, res) {
   if (!gender) {
     return res.status(404).json({ error: 'El género es obligatorio.' });
   }
-
-
 
   // Se verifica que el usuario no exista
   const [results, metadata] = await db.query(
