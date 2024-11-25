@@ -219,7 +219,6 @@ function RegisterForm({
                     !password2.trim() ||
                     !email.trim() ||
                     !phone.trim() ||
-                    !instagram.trim() ||
                     !birthdate ||
                     !gender.trim()
                   }

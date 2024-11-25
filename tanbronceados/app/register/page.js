@@ -93,10 +93,12 @@ function RegisterPage() {
         break;
 
       case 'instagram':
-        if (!state.instagram.startsWith('@')) {
-          errorMessage = 'El usuario de Instagram debe empezar con @.';
-        } else if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
-          errorMessage = 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.';
+        if (state.instagram) {
+          if (!state.instagram.startsWith('@')) {
+            errorMessage = 'El usuario de Instagram debe empezar con @.';
+          } else if (!/^@[a-zA-Z0-9_.]+$/.test(state.instagram)) {
+            errorMessage = 'El usuario de Instagram solo puede contener letras, números, puntos y guiones bajos.';
+          }
         }
         break;
 
@@ -157,27 +159,21 @@ function RegisterPage() {
         body: JSON.stringify({ fullName: state.fullName, password: state.password, email: state.email, phone: state.phone, instagram: state.instagram, birthdate: state.birthdate, gender: state.gender, captchaToken: state.captchaToken }),
       });
 
-
       if (res.ok) {
         const mess = await res.json();
         setState({ ...state, message: mess.message });
         await toast('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
 
-        // Limpiar mensajes después de un tiempo
-        setTimeout(() => {
-          clearMessages();
-        }, 5000); // Limpia después de 5 segundos
-
       } else {
         const error = await res.json();
         setState({ ...state, error: error.error });
-
-        // Limpia el mensaje de error después de un tiempo
-        setTimeout(() => {
-          clearMessages();
-        }, 5000); // Limpia después de 5 segundos
-
       }
+
+      // Limpia el mensaje de error después de 3 segundos
+      setTimeout(() => {
+        clearMessages();
+      }, 3000);
+
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setState({
