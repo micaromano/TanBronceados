@@ -1,4 +1,4 @@
-// components/LoginForm.js
+// components/RegisterForm.js
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,7 +13,7 @@ import { Slide } from "react-toastify";
 function RegisterForm({
   fullName,
   password,
-  password2,
+  confirmPassword,
   email,
   phone,
   instagram,
@@ -79,19 +79,19 @@ function RegisterForm({
 
                 <Form.Group
                   className="form-floating mb-3"
-                  controlId="formBasicPassword2"
+                  controlId="formBasicConfirmPassword"
                 >
                   <Form.Control
                     type="password"
                     placeholder="Repetir contraseña"
-                    value={password2}
-                    onChange={(e) => onChange(e, "password2")}
-                    onBlur={() => onBlur("password2")}
-                    isInvalid={!!errors.password2}
+                    value={confirmPassword}
+                    onChange={(e) => onChange(e, "confirmPassword")}
+                    onBlur={() => onBlur("confirmPassword")}
+                    isInvalid={!!errors.confirmPassword}
                   />
                   <Form.Label>Repetir contraseña</Form.Label>
                   <Form.Control.Feedback type="invalid">
-                    {errors.password2}
+                    {errors.confirmPassword}
                   </Form.Control.Feedback>
                 </Form.Group>
 
@@ -216,7 +216,7 @@ function RegisterForm({
                   disabled={
                     !fullName.trim() ||
                     !password.trim() ||
-                    !password2.trim() ||
+                    !confirmPassword.trim() ||
                     !email.trim() ||
                     !phone.trim() ||
                     !birthdate ||

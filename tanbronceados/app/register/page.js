@@ -10,7 +10,7 @@ function RegisterPage() {
   const [state, setState] = useState({
     fullName: '',
     password: '',
-    password2: '',
+    confirmPassword: '',
     email: '',
     phone: '',
     instagram: '',
@@ -66,8 +66,8 @@ function RegisterPage() {
         }
         break;
 
-      case 'password2':
-        if (state.password != state.password2) {
+      case 'confirmPassword':
+        if (state.password != state.confirmPassword) {
           errorMessage = 'Ambas contraseñas deben ser iguales.';
         }
         break;
@@ -188,7 +188,7 @@ function RegisterPage() {
     <RegisterForm
       fullName={state.fullName}
       password={state.password}
-      password2={state.password2}
+      confirmPassword={state.confirmPassword}
       email={state.email}
       phone={state.phone}
       instagram={state.instagram}
