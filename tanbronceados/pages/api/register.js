@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const ClientModel = require('../../models/ClientModel');
 const db = require('../../config/db');
 const globals = require('../../config/globals');
 const nodemailer = require('nodemailer');
@@ -82,17 +83,9 @@ async function handler(req, res) {
   }
 
   // Se verifica que el usuario no exista
-  const [results, metadata] = await db.query(
-    'SELECT * FROM Clients WHERE Email = :email',
-    {
-      replacements: { email: email },
-      type: db.QueryTypes.SELECT,
-    }
-  );
+  const client = await ClientModel.raw.findOne({ where: { Email: email } });
 
-  const cliente = results;
-
-  if (cliente) {
+  if (client) {
     return res.status(404).json({ error: 'Este email ya se encuentra registrado.' });
   }
 
@@ -103,7 +96,7 @@ async function handler(req, res) {
 
   // Procesa la solicitud si el captcha es válido
   try {
-    const response = await fetch(`https://www.google.com/recaptcha/api/siteverify`,
+    const captchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -113,34 +106,44 @@ async function handler(req, res) {
         }),
       });
 
-    const data = await response.json();
+    const captchaData = await captchaResponse.json();
 
-    if (!data.success) {
+    if (!captchaData.success) {
       return res.status(400).json({ error: 'Captcha inválido o no verificado.' });
     }
 
     // Encripta la contraseña antes de guardarla
-    const PasswordHash = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Genera y almacena el token
     const token = jwt.sign({ email: email }, jwtSecret, { expiresIn: '1h' });
 
-    enviarCorreoConfirmacion(email, token);
+    //Crea el servicio en la base de datos
+    const newClient = await ClientModel.raw.create({
+      FullName: fullName,
+      Email: email,
+      PasswordHash: hashedPassword,
+      Phone: phone,
+      Instagram: instagram,
+      Birthdate: new Date(birthdate).toISOString().split('T')[0],
+      Gender: gender,
+      isActive: false, // cliente inactivo
+    });
 
-    // Indica que el cliente se encuentra inactivo por defecto
-    const isActive = false;
+    // Notificar éxito del registro al cliente
+    res.status(201).json({ message: 'Registro enviado correctamente.' });
 
-    // Crea el cliente en la base de datos
-    const [results, metadata] = await db.query(`
-      INSERT INTO Clients (FullName, Email, PasswordHash, Phone, Instagram, Birthdate, Gender, isActive, createdAt, updatedAt) 
-      VALUES ('${fullName}', '${email}', '${PasswordHash}', '${phone}', '${instagram}', '${new Date(birthdate).toISOString().split('T')[0]}', '${gender}', '${isActive}', '${new Date().toISOString()}', '${new Date().toISOString()}');
-      `);
-
-    return res.status(201).json({ message: 'Registro enviado correctamente.' });
+    // Enviar el correo después de completar el registro
+    try {
+      await enviarCorreoConfirmacion(email, token);
+    } catch (correoError) {
+      console.error('Error al enviar el correo de confirmación:', correoError);
+      // No se interrumpe el proceso ni se envía error al cliente
+    }
 
   } catch (error) {
-    console.error('Error during client register:', error);
-    return res.status(500).json({ error: 'Error del servidor al registrar usuario.' });
+    console.error('Error en el registro de usuario:', error);
+    return res.status(500).json({ error: 'Ocurrió un error interno en el servidor.' });
   }
 }
 
