@@ -44,6 +44,16 @@ class AdminModel {
   get raw() {
     return this.#rawModel;
   }
+
+  associate(models) {
+    // Relacion con Service Creado
+    this.hasMany(models.ServiceModel.raw, { as: 'CreatedServices', foreignKey: 'CreateByID' });
+    // Relacion con Service Editado
+    this.belongsToMany(models.ServiceModel.raw, { through: 'Modifications', as: 'ModifiedServices', foreignKey: 'AdminID' });
+    // Relacion con Service Dado de baja
+    this.hasMany(models.ServiceModel.raw, { as: 'ServicesTerminated', foreignKey: 'DischargedID' });
+  }
+
 }
 
 module.exports = new AdminModel();

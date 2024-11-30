@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
-class ClientModel {
+class DiscountCouponModel {
   #rawModel;
 
   constructor() {
@@ -10,47 +10,40 @@ class ClientModel {
   }
 
   #initModel() {
-    this.#rawModel = db.define('Client', {
-      ClientID: {
+    this.#rawModel = db.define('DiscountCoupon', {
+      DiscountCouponID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      FullName: {
+      Code: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      Email: {
+      CampaignName: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
       },
-      PasswordHash: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      Phone: {
+      DiscountPercentage: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      Instagram: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      Birthdate: {
-        type: DataTypes.DATEONLY,
+      type: {
+        type: DataTypes.ENUM('Unico', 'Multiple'),
         allowNull: false,
       },
-      Gender: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      // Campo adicional solo para "Unico"
+      ExpirationDate: {
+        type: DataTypes.DATE,
+        allowNull: true, // Solo se usa si el tipo es 'Unico'
       },
       isActive: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false, // La cuenta estará inactiva por defecto
+        defaultValue: false, // El cupón estará inactivo por defecto
       },
     }, {
-      tableName: 'Clients',  // Nombre de la tabla
+      tableName: 'DiscountCoupons',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
       freezeTableName: true,
     });
@@ -61,9 +54,8 @@ class ClientModel {
   }
 
   associate(models) {
-    // Relacion con Booking
-    this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'ClientID', as: 'bookings' });
-    this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'ClientID', as: 'sessions' });
+    // Relacion con Payment
+    this.raw.hasMany(models.PaymentModel.raw, { foreignKey: 'DiscountCouponID', as: 'payments' });
   }
 
 }
@@ -76,4 +68,4 @@ class ClientModel {
 //   }
 // }
 
-module.exports = new ClientModel();
+module.exports = new DiscountCouponModel();
