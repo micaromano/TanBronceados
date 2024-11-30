@@ -1,8 +1,8 @@
 import Head from "next/head";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Navbar from '../components/Navbar.js';
+import Navbar from '../../components/Navbar.js';
 
-export default function Home() {
+export default function ClientHome() {
   return (
     <>
       <div className="landing is-preload">
@@ -15,7 +15,7 @@ export default function Home() {
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic" />
         </Head>
         <div id="page-wrapper">
-          <Navbar />
+          <Navbar />     
 
           {/* Banner */}
           <section id="banner" className="banner">
