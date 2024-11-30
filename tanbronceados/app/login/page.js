@@ -71,7 +71,7 @@ function LoginPageClient() {
       if (res.ok) {
         const { token } = await res.json();
       // Guardar el token en una cookie en lugar de localStorage
-      Cookies.set('token', token, { expires: 1, sameSite: 'strict' }); //TODO: Cookies.remove('token'); cuando el usuario cierre sesion agregar secure: true despues
+      ; //TODO: Cookies.remove('token'); cuando el usuario cierre sesion agregar secure: true despues
         router.push('/'); //TODO: ver a donde lo redirijimos
       } else {
         const data = await res.json();
