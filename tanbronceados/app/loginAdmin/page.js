@@ -70,8 +70,8 @@ function LoginPage() {
 
       if (res.ok) {
         const { token } = await res.json();
-      // Guardar el token en una cookie en lugar de localStorage
-      Cookies.set('token', token, { expires: 1, sameSite: 'strict' }); //Cookies.remove('token'); cuando el usuario cierre sesion agregar secure: true despues
+        // Guardar el token en una cookie en lugar de localStorage
+        Cookies.set('token', token, { expires: 1, sameSite: 'strict' }); //Cookies.remove('token'); cuando el usuario cierre sesion agregar secure: true despues
         router.push('/homeAdmin');
       } else {
         const data = await res.json();

@@ -1,3 +1,5 @@
+"use client"
+
 import Head from "next/head";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Navbar from '../components/Navbar.js';
@@ -5,9 +7,28 @@ import Banner from "@/components/Banner.js";
 import Footer from "@/components/Footer.js";
 import Main from "@/components/Main.js";
 import CallToActionRegister from "@/components/CallToActionRegister.js";
+import { useState, useEffect } from 'react';
 
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Solicita al backend que valide el token
+    fetch('/api/utils/validate-token', {
+      method: 'GET',
+      credentials: 'include', // Incluye cookies en la solicitud
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Respuesta de validación:', data); // Debug
+        setIsLoggedIn(data.isLoggedIn);
+      })
+      .catch((error) => {
+        console.error('Error al validar el token:', error);
+      });
+  }, []);
+
   return (
     <>
       <div className="landing is-preload">
@@ -20,11 +41,21 @@ export default function Home() {
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic" />
         </Head>
         <div id="page-wrapper">
-          <Navbar />
+          {/* Pasamos el estado al Navbar para personalizar los enlaces */}
+          <Navbar isLoggedIn={isLoggedIn}/>
           <Banner />
-          <Main />
-          <CallToActionRegister />
-
+          {/* Mostrar componentes condicionales */}
+          {isLoggedIn ? (
+            <div>
+              <Main />
+            </div>
+          ) : (
+            <div>
+              <Main />
+              <CallToActionRegister />
+            </div>
+            
+          )}
           <Footer />
         </div>
       </div>

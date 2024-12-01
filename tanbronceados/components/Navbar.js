@@ -4,7 +4,7 @@ import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { usePathname } from 'next/navigation'; // Importa usePathname de next/navigation
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }) => {
   const pathname = usePathname(); // Obtén la ruta actual
 
   return (
@@ -14,32 +14,27 @@ const Navbar = () => {
       </h1>
       <nav id="nav">
         <ul>
-          
-
-          {pathname === '/clientHome' && (
-            <>  
+          {/* Enlaces dinámicos a la izquierda si está logueado */}
+          {isLoggedIn && (
+            <>
               <li><a href="/misSesiones">Mis Sesiones</a></li>
               <li><a href="/reservas">Reservas</a></li>
             </>
           )}
 
-          {/* Enlaces comunes a todas las páginas */}
+          {/* Enlaces fijos visibles para todos */}
           <li><a href="#nosotras">Nosotras</a></li>
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#contacto">Contacto</a></li>
 
-          {/* Enlaces condicionales */}
-          {pathname === '/' && (
-            <>  
+          {/* Botón de Login o Logout */}
+          {isLoggedIn ? (
+            <li><a href="/logout" className="button">Logout</a></li>
+          ) : (
+            <>
               <li><a href="/register">Registrarse</a></li>
               <li><a href="/loginAdmin">Acceso Admin</a></li>
               <li><a href="/login" className="button">Login</a></li>
-            </>
-          )}
-
-          {pathname === '/clientHome' && (
-            <> 
-              <li><a href="/logout" className="button">Logout</a></li>
             </>
           )}
           
