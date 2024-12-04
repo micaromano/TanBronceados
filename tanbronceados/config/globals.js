@@ -18,6 +18,9 @@ module.exports = {
     secret_key: process.env.SECRET_KEY,
     email_user: process.env.EMAIL_USER,
     pass_user: process.env.PASS_USER,
+    mercado_pago_access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+    mercado_pago_public_key: process.env.MERCADOPAGO_PUBLIC_KEY,
+    url: process.env.NEXT_PUBLIC_BASE_URL,
 
 };
 
