@@ -147,7 +147,7 @@ function RegisterPage() {
 
     // Se verifica que el token existe
     if (!captchaToken) {
-      toast("Por favor complete el reCAPTCHA.");
+      toast.error("Por favor complete el reCAPTCHA.");
       return;
     }
 
@@ -162,7 +162,7 @@ function RegisterPage() {
       if (res.ok) {
         const mess = await res.json();
         setState({ ...state, message: mess.message });
-        await toast('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
+        await toast.success('¡Tu cuenta está casi lista! Por favor, confirma tu correo antes de iniciar sesión.');
 
       } else {
         const error = await res.json();
