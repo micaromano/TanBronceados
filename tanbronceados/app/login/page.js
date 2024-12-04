@@ -5,6 +5,7 @@ import LoginFormClient from '../../components/LoginFormClient';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { signIn } from 'next-auth/react';
 
 function LoginPageClient() {
   const [state, setState] = useState({

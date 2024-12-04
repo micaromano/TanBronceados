@@ -8,6 +8,7 @@ import Footer from "@/components/Footer.js";
 import Main from "@/components/Main.js";
 import CallToActionRegister from "@/components/CallToActionRegister.js";
 import { useState, useEffect } from 'react';
+import MisSesiones from "@/components/MisSesiones.js";
 
 
 export default function Home() {
@@ -43,10 +44,11 @@ export default function Home() {
         <div id="page-wrapper">
           {/* Pasamos el estado al Navbar para personalizar los enlaces */}
           <Navbar isLoggedIn={isLoggedIn}/>
-          <Banner />
+          <Banner isLoggedIn={isLoggedIn}/>
           {/* Mostrar componentes condicionales */}
           {isLoggedIn ? (
             <div>
+              <MisSesiones />
               <Main />
             </div>
           ) : (

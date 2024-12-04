@@ -1,11 +1,21 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { usePathname } from 'next/navigation'; // Importa usePathname de next/navigation
+import { handleLogout } from '../pages/api/utils/authLogout';
+
 
 const Navbar = ({ isLoggedIn }) => {
-  const pathname = usePathname(); // Obtén la ruta actual
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true); // Marca el cliente como montado
+  }, []);
+
+  if (!mounted) {
+    return null; // Evitar renderizado hasta que el cliente esté listo
+  }
+  
 
   return (
     <header id="header" className="alt" style={{ backgroundColor: '#795D4F' }}>
@@ -17,8 +27,8 @@ const Navbar = ({ isLoggedIn }) => {
           {/* Enlaces dinámicos a la izquierda si está logueado */}
           {isLoggedIn && (
             <>
-              <li><a href="/misSesiones">Mis Sesiones</a></li>
-              <li><a href="/reservas">Reservas</a></li>
+              <li><a href="#mis-sesiones">Mis Sesiones</a></li>
+              <li><a href="/agendar">Agendar Cita</a></li>
             </>
           )}
 
@@ -29,7 +39,7 @@ const Navbar = ({ isLoggedIn }) => {
 
           {/* Botón de Login o Logout */}
           {isLoggedIn ? (
-            <li><a href="/logout" className="button">Logout</a></li>
+            <li><a className="button" onClick={() => handleLogout()}>Logout</a></li>
           ) : (
             <>
               <li><a href="/register">Registrarse</a></li>
@@ -37,8 +47,6 @@ const Navbar = ({ isLoggedIn }) => {
               <li><a href="/login" className="button">Login</a></li>
             </>
           )}
-          
-          
         </ul>
       </nav>
     </header>

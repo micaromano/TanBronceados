@@ -4,17 +4,18 @@ const bcrypt = require('bcrypt');
 const ClientModel = require('../../models/ClientModel'); // Asegúrate de que la ruta es correcta
 const db = require('../../config/db');
 const globals = require('../../config/globals');
-const cookie = require('cookie'); // Para manejar las cookies en la respuesta
 import { setTokenCookie } from './utils/auth';
 
 const jwtSecret = globals.jwt_secret;
 
 async function handler(req, res) {
+  console.log('Received request:', { method: req.method, body: req.body });
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   const { email, password } = req.body;
+  console.log('Login attempt with:', { email });
 
   try {
     await db.authenticate();
@@ -53,4 +54,4 @@ async function handler(req, res) {
   }
 }
 
-module.exports = handler;
+export default handler;

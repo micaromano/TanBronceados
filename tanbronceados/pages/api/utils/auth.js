@@ -22,3 +22,16 @@ export function setTokenCookie(res, user) {
   );
 }
 
+export function clearTokenCookie(res) {
+  res.setHeader(
+    'Set-Cookie',
+    cookie.serialize('token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      expires: new Date(0), // Fecha pasada para eliminar la cookie
+      sameSite: 'strict',
+      path: '/',
+    })
+  );
+}
+

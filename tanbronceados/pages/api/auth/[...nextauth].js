@@ -4,6 +4,7 @@ const globals = require('../../../config/globals');
 import { setTokenCookie } from '../utils/auth.js';
 
 
+
 export default async function authHandler(req, res) {
   // Guarda el contexto de respuesta en `global`
   global.res = res;
