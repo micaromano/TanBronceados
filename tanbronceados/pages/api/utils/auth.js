@@ -4,7 +4,10 @@ import cookie from 'cookie';
 const jwtSecret = process.env.JWT_SECRET;
 
 export function setTokenCookie(res, user) {
-  const token = jwt.sign({ id: user.id, email: user.email }, jwtSecret, {
+  // Extraer la primera palabra del fullName
+  const name = user.fullName.split(' ')[0]; // Divide el string por espacios y toma el primer elemento
+
+  const token = jwt.sign({ id: user.id, email: user.email, fullName: user.fullName, name: name }, jwtSecret, {
     expiresIn: '1h',
   });
 

@@ -9,10 +9,12 @@ import Main from "@/components/Main.js";
 import CallToActionRegister from "@/components/CallToActionRegister.js";
 import { useState, useEffect } from 'react';
 import MisSesiones from "@/components/MisSesiones.js";
+import MisReservas from "@/components/MisReservas.js";
 
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     // Solicita al backend que valide el token
@@ -24,6 +26,7 @@ export default function Home() {
       .then((data) => {
         console.log('Respuesta de validación:', data); // Debug
         setIsLoggedIn(data.isLoggedIn);
+        setUser(data.user);
       })
       .catch((error) => {
         console.error('Error al validar el token:', error);
@@ -44,11 +47,12 @@ export default function Home() {
         <div id="page-wrapper">
           {/* Pasamos el estado al Navbar para personalizar los enlaces */}
           <Navbar isLoggedIn={isLoggedIn}/>
-          <Banner isLoggedIn={isLoggedIn}/>
+          <Banner isLoggedIn={isLoggedIn} user={user} />
           {/* Mostrar componentes condicionales */}
           {isLoggedIn ? (
             <div>
               <MisSesiones />
+              <MisReservas />
               <Main />
             </div>
           ) : (

@@ -28,6 +28,7 @@ const Navbar = ({ isLoggedIn }) => {
           {isLoggedIn && (
             <>
               <li><a href="#mis-sesiones">Mis Sesiones</a></li>
+              <li><a href="#mis-reservas">Mis Reservas</a></li>
               <li><a href="/agendar">Agendar Cita</a></li>
             </>
           )}

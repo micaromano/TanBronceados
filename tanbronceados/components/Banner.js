@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Banner = ({ isLoggedIn }) => {
+const Banner = ({ isLoggedIn, user }) => {
   return (
     <section id="banner" className="banner">
       {/*TODO falta agregar el nombre del cliente logueado*/ }
-      <h2>{isLoggedIn ? `Bienvenido` : "TAN Bronceados"}</h2> 
+      <h2>{isLoggedIn ? `Hola ${user.name} !` : "TAN Bronceados"}</h2> 
       {!isLoggedIn && <p>Bronceado Orgánico</p>}
       <ul className="actions special">
         {isLoggedIn ? (

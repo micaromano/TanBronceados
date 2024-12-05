@@ -37,13 +37,8 @@ async function handler(req, res) {
       return res.status(401).json({ error: 'Usuario y/o contraseña inválido' });
     }
 
-    // Genera token JWT
-    const tokenPayload = { id: client.id, email: client.Email }; // Incluye ID y email
-    const token = jwt.sign(tokenPayload, jwtSecret, { expiresIn: '1h' });
-    console.log('Token created successfully.');
-
     // Configura la cookie usando la función centralizada
-    setTokenCookie(res, { id: client.id, email: client.Email });
+    setTokenCookie(res, { id: client.id, email: client.Email, fullName: client.FullName });
 
     // Enviar respuesta exitosa
     return res.status(200).json({ message: 'Login successful' });

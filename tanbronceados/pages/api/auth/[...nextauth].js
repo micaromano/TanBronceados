@@ -36,12 +36,7 @@ export default async function authHandler(req, res) {
       async signIn({ user, profile }) {
         console.log('Evento signIn activado:', { user, profile }); // Verifica que `signIn` se ejecuta
         
-        console.log('Credenciales:', global.res); // Verifica que `signIn` se ejecuta
-
-        setTokenCookie(global.res, {
-          id: user.id || profile?.sub, // ID del usuario o de Google
-          email: user.email,
-        });
+        setTokenCookie(global.res, { id: user.id, email: user.email, fullName: user.name });
       },
     },
   });
