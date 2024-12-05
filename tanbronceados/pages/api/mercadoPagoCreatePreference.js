@@ -33,16 +33,17 @@ export default async function handler(req, res) {
           title: item.title,
           quantity: item.quantity,
           unit_price: item.unit_price,
+          currency_id: "UYU",
       })),
       payer: {
           email: clientEmail,
       },
       back_urls: {
-          success: `${url}/success`, // Cambiar URL en producción
-          failure: `${url}/failure`, // Cambiar URL en producción
-          pending: `${url}/pending`, // Cambiar URL en producción
+          success: `https://www.google.com/`, // Cambiar URL en producción
+          failure: `https://www.google.com/`, // Cambiar URL en producción
+          pending: `https://www.google.com/`, // Cambiar URL en producción
       },
-      notification_url: `${url}/api/webhook`, // URL del webhook en Next.js
+      //notification_url: `${url}/api/webhook`, // URL del webhook en Next.js
       auto_return: 'approved',
       },
     });
