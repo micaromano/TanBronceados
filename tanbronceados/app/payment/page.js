@@ -40,13 +40,8 @@ function PaymentPage() {
             clientEmail: "cliente.ficticio@example.com",
             items: [
               {
-                title: "Bronceado Individual",
-                unit_price: 50,
-                quantity: 2,
-              },
-              {
-                title: "Cuponera de Bronceados",
-                unit_price: 200,
+                title: "Sesión Individual", //TODO: Hacer que esto sea dinamico
+                unit_price: 1050,
                 quantity: 1,
               }
             ]

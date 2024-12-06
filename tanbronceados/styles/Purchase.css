@@ -1,0 +1,56 @@
+.compra-servicio-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f6f0e7;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-selection, .purchase-type-selection {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    appearance: none;
+    background-image: none;
+}
+
+.purchase-summary {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #b39b81;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #a3886e;
+}
+
+.proceed-to-summary-button, .proceed-to-booking-button {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+}
