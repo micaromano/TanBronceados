@@ -11,7 +11,7 @@ class BookingModel {
 
   #initModel() {
     this.#rawModel = db.define('Booking', {
-      ClientID: {
+      BookingID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,

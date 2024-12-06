@@ -34,8 +34,19 @@ class ServiceModel {
       },
       isActive: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false, // El servicio estará inactivo por defecto
+        defaultValue: true, // El servicio estará activo por defecto
       },
+      createdAt: {
+        type: DataTypes.DATE, // Se asegura usar un tipo DATE sin zona horaria
+        allowNull: false,
+        defaultValue: db.literal('GETDATE()'), // Usa la fecha actual del servidor
+      },
+      updatedAt: {
+        type: DataTypes.DATE, // Se asegura usar un tipo DATE sin zona horaria
+        allowNull: false,
+        defaultValue: db.literal('GETDATE()'), // Usa la fecha actual del servidor
+      },
+
     }, {
       tableName: 'BusinessServices',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
@@ -48,17 +59,17 @@ class ServiceModel {
   }
 
   associate(models) {
-      //Relacion con Session
-      this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'ServiceID', as: 'sessions' });
-      //Relacion con Service Creado
-      this.raw.belongsTo(models.AdminModel.raw, { foreignKey: 'CreateByID', as: 'creator' });
-      //Relacion con Service Editado
-      this.belongsToMany(models.AdminModel.raw, { through: 'Modifications', foreignKey: 'ServiceID', as: 'modifierAdministrators' });
-      //Relacion con Service Dado de baja
-      this.belongsTo(models.AdminModel.raw, { foreignKey: 'DischargedID', as: 'administratorDischarge' });
+    //Relacion con Session
+    this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'ServiceID', as: 'sessions' });
+    //Relacion con Service Creado
+    this.raw.belongsTo(models.AdminModel.raw, { foreignKey: 'CreateByID', as: 'creator' });
+    //Relacion con Service Editado
+    this.belongsToMany(models.AdminModel.raw, { through: 'Modifications', foreignKey: 'ServiceID', as: 'modifierAdministrators' });
+    //Relacion con Service Dado de baja
+    this.belongsTo(models.AdminModel.raw, { foreignKey: 'DischargedID', as: 'administratorDischarge' });
 
-  }
-
+}
+   
 }
 
 
