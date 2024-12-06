@@ -29,7 +29,7 @@ function ComprarServicio() {
     };
 
     const handleProceedToBooking = () => {
-        router.push('/'); // Navega a la página de reserva (RF7) TODO: Ver si cambiar a /book o a que
+        router.push('/payment'); // Navega a la página de reserva (RF7) TODO: Ver si cambiar a /book o a que
     };
 
     const getPrice = () => {
