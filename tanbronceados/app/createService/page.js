@@ -87,6 +87,15 @@ function ServicePage() {
     }));
   };
 
+  const clearMessages = () => {
+    setState((prevState) => ({
+      ...prevState,
+      error: '',
+      message: '',
+    }));
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -105,12 +114,22 @@ function ServicePage() {
       if (res.ok) {
         const mess = await res.json();
         setState({ ...state, message: mess.message });
-        toast.success('¡Servicio creado exitosamente!');
-        setTimeout(() => router.push('/servicesList'), 3000);
+        await toast.success('¡Se ha dado de alta un servicio!');
+
       } else {
         const error = await res.json();
         setState({ ...state, error: error.error });
       }
+
+      // Limpia el mensaje de error después de 3 segundos
+      setTimeout(() => {
+        clearMessages();
+      }, 3000);
+
+      setTimeout(() => {
+        router.push('/servicesList');
+      }, 5000);
+
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setState({
