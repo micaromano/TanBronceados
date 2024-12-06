@@ -1,9 +1,7 @@
 // components/ServiceForm.js
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
-import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
-import { Slide } from "react-toastify";
+import { Slide } from 'react-toastify';
 
 function ServiceForm({
   name,
@@ -19,112 +17,138 @@ function ServiceForm({
   title,
 }) {
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col xs={6}>
-          <Card>
-            <Card.Body>
-              <Form onSubmit={onSubmit}>
-                <h4 align='center' style={{ color: '#4e4e4e' }}>{title}</h4>
-                <br></br>
-                <Form.Group
-                  className="form-floating mb-3"
-                  controlId="formBasicName"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="Nombre"
-                    value={name || ''}
-                    onChange={(e) => onChange(e, "name")}
-                    onBlur={() => onBlur("name")}
-                    isInvalid={!!errors.name}
-                  />
-                  <Form.Label>Nombre</Form.Label>
-                  <Form.Control.Feedback type="invalid">
-                    {errors.name}
-                  </Form.Control.Feedback>
-                </Form.Group>
+    <div
+      className="card shadow border-0 p-4"
+      style={{
+        maxWidth: '500px',
+        width: '100%',
+        borderRadius: '10px',
+        backgroundColor: '#FFF',
+      }}
+    >
+      <h5
+        className="text-center mb-4"
+        style={{ color: '#795D4F', fontWeight: 'bold' }}
+      >
+        {title}
+      </h5>
+      <form onSubmit={onSubmit}>
+        {/* Name Field */}
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+            placeholder="Nombre"
+            value={name || ''}
+            onChange={(e) => onChange(e, 'name')}
+            onBlur={() => onBlur('name')}
+            style={{
+              backgroundColor: '#F9F9F9',
+              borderColor: '#D6D6D6',
+              borderRadius: '8px',
+            }}
+          />
+          <label>Nombre</label>
+          {errors.name && (
+            <div className="invalid-feedback d-block">{errors.name}</div>
+          )}
+        </div>
 
-                <Form.Group
-                  className="form-floating mb-3"
-                  controlId="formBasicDescription"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="Descripcion"
-                    value={description || ''}
-                    onChange={(e) => onChange(e, "description")}
-                    onBlur={() => onBlur("description")}
-                    isInvalid={!!errors.description}
-                  />
-                  <Form.Label>Descripcion</Form.Label>
-                  <Form.Control.Feedback type="invalid">
-                    {errors.description}
-                  </Form.Control.Feedback>
-                </Form.Group>
+        {/* Description Field */}
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className={`form-control ${
+              errors.description ? 'is-invalid' : ''
+            }`}
+            placeholder="Descripción"
+            value={description || ''}
+            onChange={(e) => onChange(e, 'description')}
+            onBlur={() => onBlur('description')}
+            style={{
+              backgroundColor: '#F9F9F9',
+              borderColor: '#D6D6D6',
+              borderRadius: '8px',
+            }}
+          />
+          <label>Descripción</label>
+          {errors.description && (
+            <div className="invalid-feedback d-block">
+              {errors.description}
+            </div>
+          )}
+        </div>
 
-                <Form.Group
-                  className="form-floating mb-3"
-                  controlId="formBasicPrice"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="Precio"
-                    value={price || ''}
-                    onChange={(e) => onChange(e, "price")}
-                    onBlur={() => onBlur("price")}
-                    isInvalid={!!errors.price}
-                  />
-                  <Form.Label>Precio</Form.Label>
-                  <Form.Control.Feedback type="invalid">
-                    {errors.price}
-                  </Form.Control.Feedback>
-                </Form.Group>
+        {/* Price Field */}
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+            placeholder="Precio"
+            value={price || ''}
+            onChange={(e) => onChange(e, 'price')}
+            onBlur={() => onBlur('price')}
+            style={{
+              backgroundColor: '#F9F9F9',
+              borderColor: '#D6D6D6',
+              borderRadius: '8px',
+            }}
+          />
+          <label>Precio</label>
+          {errors.price && (
+            <div className="invalid-feedback d-block">{errors.price}</div>
+          )}
+        </div>
 
-                <Form.Group
-                  className="form-floating mb-3"
-                  controlId="formBasicDuration"
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="Duracion"
-                    value={duration || ''}
-                    onChange={(e) => onChange(e, "duration")}
-                    onBlur={() => onBlur("duration")}
-                    isInvalid={!!errors.duration}
-                  />
-                  <Form.Label>Duracion</Form.Label>
-                  <Form.Control.Feedback type="invalid">
-                    {errors.duration}
-                  </Form.Control.Feedback>
-                </Form.Group>
+        {/* Duration Field */}
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className={`form-control ${errors.duration ? 'is-invalid' : ''}`}
+            placeholder="Duración"
+            value={duration || ''}
+            onChange={(e) => onChange(e, 'duration')}
+            onBlur={() => onBlur('duration')}
+            style={{
+              backgroundColor: '#F9F9F9',
+              borderColor: '#D6D6D6',
+              borderRadius: '8px',
+            }}
+          />
+          <label>Duración</label>
+          {errors.duration && (
+            <div className="invalid-feedback d-block">{errors.duration}</div>
+          )}
+        </div>
 
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={
-                    !name.trim() ||
-                    !description.trim() ||
-                    !price ||
-                    !duration
-                  }
-                  className="w-100"
-                >
-                  Confirmar
-                </Button>
+        {/* Submit Button */}
+        <div className="d-grid">
+          <button
+            type="submit"
+            className="btn"
+            style={{
+              backgroundColor: '#795D4F',
+              color: '#FFF',
+              borderRadius: '8px',
+            }}
+            disabled={
+              !name.trim() || !description.trim() || !price || !duration
+            }
+          >
+            Confirmar
+          </button>
+        </div>
 
-                <br></br>
-                <br></br>
-                {error && <div className="invalid-feedback d-block">{error}</div>}
-                {message && <div className="valid-feedback d-block">{message}</div>}
-
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+        {/* Error and Success Messages */}
+        {error && (
+          <div className="text-danger text-center mt-3">{error}</div>
+        )}
+        {message && (
+          <div className="text-success text-center mt-3">{message}</div>
+        )}
+      </form>
       <ToastContainer theme="dark" transition={Slide} position="bottom-center" />
-    </Container >
+    </div>
   );
 }
 
