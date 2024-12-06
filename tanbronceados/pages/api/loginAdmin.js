@@ -21,6 +21,7 @@ async function handler(req, res) {
     console.log('Database connected.------------------------------------------------------------------------');
 
     console.log(`Searching for admin: ${username}`);
+    console.log(`Searching for admin: ${password}`);
     // Cambiar admin.findOne a AdminModel.raw.findOne
     const admin = await AdminModel.raw.findOne({ where: { Username: username } });
 
