@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
+const ServiceModel = require('./ServiceModel');
 
 class SessionModel {
   #rawModel;
@@ -16,6 +17,10 @@ class SessionModel {
         primaryKey: true,
         autoIncrement: true,
       },
+      SessionName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       SessionPurchaseDate: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -25,10 +30,12 @@ class SessionModel {
         allowNull: false,
       },
     }, {
-      tableName: 'Session',  // Nombre de la tabla
+      tableName: 'SessionServices',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
       freezeTableName: true,
     });
+    // Relacion con Service
+    this.raw.belongsTo(ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
   }
 
   get raw() {
@@ -39,7 +46,7 @@ class SessionModel {
       // Relacion con Client
       this.raw.belongsTo(models.ClientModel.raw, { foreignKey: 'ClientID', as: 'client' });
       // Relacion con Service
-      this.raw.belongsTo(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
+      //this.raw.belongsTo(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
       // Relacion con Payment
       this.raw.belongsTo(models.PaymentModel.raw, { foreignKey: 'SessionID', as: 'payment' });
       // Relacion con Booking
