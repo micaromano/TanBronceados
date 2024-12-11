@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '../styles/Service.module.css';
 
-function Service({ ServiceID, ServiceName, ServiceDescription, Price, Duration, onEdit, onChange, stateName }) {
+function Service({ ServiceID, ServiceName, ServiceDescription, Price, Duration, onEdit, onChange, action }) {
     const [hoverEdit, setHoverEdit] = useState(false);
     const [hoverDelete, setHoverDelete] = useState(false);
 
@@ -49,9 +49,9 @@ function Service({ ServiceID, ServiceName, ServiceDescription, Price, Duration, 
                     }}
                     onMouseEnter={() => setHoverDelete(true)}
                     onMouseLeave={() => setHoverDelete(false)}
-                    onClick={() => onChange(ServiceID, stateName)}
+                    onClick={() => onChange(ServiceID, action)}
                     >                
-                        {stateName}
+                        {action}
                     </Button>
                 </td>
             </tr>

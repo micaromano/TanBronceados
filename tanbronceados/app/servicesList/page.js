@@ -13,41 +13,40 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const ServicesList = () => {
+  const [updateList, setUpdateList] = useState();
   const [activeServices, setActiveServices] = useState([]);
   const [inactiveServices, setInactiveServices] = useState([]);
   const router = useRouter();
   const [hoverCreate, setHoverCreate] = useState(false);
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch('/api/getServicesList');
-        if (!response.ok) {
-          throw new Error(`Error en la solicitud: ${response.statusText}`);
-        }
-        const dataServices = await response.json();
-        setActiveServices(dataServices.filter((s) => s.isActive == 1));
-        setInactiveServices(dataServices.filter((s) => s.isActive == 0));
-      } catch (error) {
-        console.error('Error al obtener servicios:', error);
+  const fetchServices = async () => {
+    try {
+      const response = await fetch('/api/getServicesList');
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
-    };
+      const dataServices = await response.json();
+      setActiveServices(dataServices.filter((s) => s.isActive == 1));
+      setInactiveServices(dataServices.filter((s) => s.isActive == 0));
+    } catch (error) {
+      console.error('Error al obtener servicios:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    fetchServices();
+  }, [updateList]);
 
   const handleEdit = (ServiceID) => {
     router.push(`/editService/${ServiceID}`);
   };
 
-  const confirmServiceState = (ServiceID, stateName) => {
-    setServiceChange(true);
-    let message = '';
-    if (stateName == "Deshabilitar"){
-      message = '¿Estás seguro de que deseas deshabilitar este servicio?';
-    } else {
-      message = '¿Estás seguro de que deseas habilitar este servicio?';
-    }
+  const confirmServiceState = (ServiceID, action) => {
+    const message = `¿Estás seguro de que deseas ${action.toLowerCase()} este servicio?`;
     Swal.fire({
       title: message,
       //text: "No podrás revertir esta acción",
@@ -60,11 +59,11 @@ const ServicesList = () => {
       confirmButtonText: 'Sí, confirmar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
-        if (result.isConfirmed && stateName == "Deshabilitar") {
+        if (result.isConfirmed && action == "Deshabilitar") {
           handleDeactivate(ServiceID);
           Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
         }
-        if (result.isConfirmed && stateName == "Habilitar") {
+        if (result.isConfirmed && action == "Habilitar") {
           handleActivate(ServiceID);
           Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
         }
@@ -78,6 +77,7 @@ const ServicesList = () => {
         method: 'PUT',
       });
       if (response.ok) {
+        setUpdateList(true);
         setActiveServices((prevServices) =>
           prevServices.filter((s) => s.ServiceID !== ServiceID)
         );
@@ -99,6 +99,7 @@ const ServicesList = () => {
         method: 'PUT',
       });
       if (response.ok) {
+        setUpdateList(false);
         setInactiveServices((prevServices) =>
           prevServices.filter((s) => s.ServiceID !== ServiceID)
         );
@@ -120,26 +121,24 @@ const ServicesList = () => {
   return (
     <>
       <Head>
-
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic" />
       </Head>
+      { activeServices.length > 0 && inactiveServices.length > 0 ? 
       <div className="d-flex flex-column min-vh-100">
       
         <div className="flex-grow-1 container mt-5">
           <h2 className="text-center mb-4 pt-5">Gestión de Servicios</h2>
           <Services
             services={activeServices}
-            title={"Lista de servicios disponibles"}
-            stateName={"Deshabilitar"}
+            text={{title: "Lista de servicios disponibles", action: "Deshabilitar", noServices: 'No hay servicios disponibles'}}
             onEdit={handleEdit}
             onChange={confirmServiceState}
           />
           <Services
             services={inactiveServices}
-            title={"Lista de servicios deshabilitados"}
-            stateName={"Habilitar"}
+            text={{title: "Lista de servicios deshabilitados", action: "Habilitar", noServices: 'No hay servicios deshabilitados'}}
             onEdit={handleEdit}
             onChange={confirmServiceState}
           />
@@ -164,7 +163,8 @@ const ServicesList = () => {
         </div>
         <ToastContainer transition={Slide} position="bottom-center" />
         <Footer />
-      </div>
+      </div> : <div></div>
+      }
     </>
   );
 };

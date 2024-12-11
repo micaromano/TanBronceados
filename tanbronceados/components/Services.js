@@ -5,8 +5,7 @@ import { Container, Row } from "react-bootstrap";
 
 function Services({
     services,
-    title,
-    stateName,   
+    text,  
     onEdit,
     onChange,
 }) {
@@ -14,7 +13,7 @@ function Services({
         <>
             <div className="container mt-4">
                 <div className="text-center mb-4">
-                    <h4 className="text-secondary">{title}</h4>
+                    <h4 className="text-secondary">{text.title}</h4>
                 </div>
                 {services.length > 0 ? (
                     <Container>
@@ -37,7 +36,7 @@ function Services({
                                             {...service}
                                             onEdit={onEdit}
                                             onChange={onChange}
-                                            stateName={stateName}
+                                            action={text.action}
                                         />
                                     ))}
                                 </tbody>
@@ -46,7 +45,7 @@ function Services({
                     </Container>
                 ) : (
                     <div className="text-center my-5">
-                        <h5 className="text-muted">No hay servicios disponibles</h5>
+                        <h5 className="text-muted">{text.noServices}</h5>
                     </div>
                 )}
             </div>
