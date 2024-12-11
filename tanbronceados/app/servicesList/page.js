@@ -14,8 +14,8 @@ import { useRouter } from 'next/navigation';
 
 const ServicesList = () => {
   const [updateList, setUpdateList] = useState();
-  const [activeServices, setActiveServices] = useState([]);
-  const [inactiveServices, setInactiveServices] = useState([]);
+  const [activeServices, setActiveServices] = useState();
+  const [inactiveServices, setInactiveServices] = useState();
   const router = useRouter();
   const [hoverCreate, setHoverCreate] = useState(false);
 
@@ -26,6 +26,7 @@ const ServicesList = () => {
         throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
       const dataServices = await response.json();
+      console.log('dataServices', dataServices);
       setActiveServices(dataServices.filter((s) => s.isActive == 1));
       setInactiveServices(dataServices.filter((s) => s.isActive == 0));
     } catch (error) {
@@ -59,13 +60,13 @@ const ServicesList = () => {
       confirmButtonText: 'Sí, confirmar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
-        if (result.isConfirmed && action == "Deshabilitar") {
-          handleDeactivate(ServiceID);
-          Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
-        }
-        if (result.isConfirmed && action == "Habilitar") {
-          handleActivate(ServiceID);
-          Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
+        if (result.isConfirmed) {
+          if(action == "Deshabilitar"){
+            handleDeactivate(ServiceID);
+          } else {
+            handleActivate(ServiceID);
+          }
+        Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
         }
     });
   }
@@ -125,20 +126,21 @@ const ServicesList = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic" />
       </Head>
-      { activeServices.length > 0 && inactiveServices.length > 0 ? 
+      {/* { activeServices.length > 0 && inactiveServices.length > 0 ?  */}
+      { activeServices != undefined && inactiveServices != undefined ? 
       <div className="d-flex flex-column min-vh-100">
       
         <div className="flex-grow-1 container mt-5">
           <h2 className="text-center mb-4 pt-5">Gestión de Servicios</h2>
           <Services
             services={activeServices}
-            text={{title: "Lista de servicios disponibles", action: "Deshabilitar", noServices: 'No hay servicios disponibles'}}
+            text={{title: "Lista de servicios activos", action: "Deshabilitar", noServices: 'No hay servicios activos'}}
             onEdit={handleEdit}
             onChange={confirmServiceState}
           />
           <Services
             services={inactiveServices}
-            text={{title: "Lista de servicios deshabilitados", action: "Habilitar", noServices: 'No hay servicios deshabilitados'}}
+            text={{title: "Lista de servicios inactivos", action: "Habilitar", noServices: 'No hay servicios inactivos'}}
             onEdit={handleEdit}
             onChange={confirmServiceState}
           />
