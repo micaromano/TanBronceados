@@ -125,11 +125,26 @@ const ServicesList = () => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic" />
+        <title>Gestión de Servicios</title>
       </Head>
-      {/* { activeServices.length > 0 && inactiveServices.length > 0 ?  */}
+      <div
+        className="d-flex flex-column min-vh-100"
+        style={{ backgroundColor: '#F5EDE8' }}
+      >
+        {/* Header */}
+        <header
+          className="py-3"
+          style={{ backgroundColor: '#795D4F', color: '#FFF' }}
+        >
+          <div className="container d-flex justify-content-between">
+            <a href="/homeAdmin" className="text-white text-decoration-none">
+              Volver
+            </a>
+          </div>
+        </header>
+
       { activeServices != undefined && inactiveServices != undefined ? 
-      <div className="d-flex flex-column min-vh-100">
-      
+      <div className="d-flex flex-column min-vh-100">  
         <div className="flex-grow-1 container mt-5">
           <h2 className="text-center mb-4 pt-5">Gestión de Servicios</h2>
           <Services
@@ -167,6 +182,7 @@ const ServicesList = () => {
         <Footer />
       </div> : <div></div>
       }
+      </div>
     </>
   );
 };

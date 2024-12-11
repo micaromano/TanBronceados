@@ -11,10 +11,19 @@ function Services({
 }) {
     return (
         <>
-            <div className="container mt-4">
-                <div className="text-center mb-4">
-                    <h4 className="text-secondary">{text.title}</h4>
-                </div>
+            <div
+                className="card shadow border-0 p-4"
+                style={{
+                width: '100%',
+                borderRadius: '10px',
+                backgroundColor: '#FFF',
+                }}
+            >
+            <h5 className="text-center mb-4"
+                style={{ color: '#795D4F', fontWeight: 'bold' }}
+            >
+                {text.title}
+            </h5>
                 {services.length > 0 ? (
                     <Container>
                         <Row className="justify-content-center">
