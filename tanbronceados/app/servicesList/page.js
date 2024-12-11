@@ -1,18 +1,20 @@
 'use client';
 
+import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import Head from 'next/head';
 //import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Services from '../../components/Services';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 
 const ServicesList = () => {
-  const [services, setServices] = useState([]);
+  const [activeServices, setActiveServices] = useState([]);
+  const [inactiveServices, setInactiveServices] = useState([]);
   const router = useRouter();
   const [hoverCreate, setHoverCreate] = useState(false);
 
@@ -24,7 +26,8 @@ const ServicesList = () => {
           throw new Error(`Error en la solicitud: ${response.statusText}`);
         }
         const dataServices = await response.json();
-        setServices(dataServices);
+        setActiveServices(dataServices.filter((s) => s.isActive == 1));
+        setInactiveServices(dataServices.filter((s) => s.isActive == 0));
       } catch (error) {
         console.error('Error al obtener servicios:', error);
       }
@@ -37,26 +40,75 @@ const ServicesList = () => {
     router.push(`/editService/${ServiceID}`);
   };
 
-  const handleDeactivate = async (ServiceID) => {
-    if (!confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
-      return;
+  const confirmServiceState = (ServiceID, stateName) => {
+    setServiceChange(true);
+    let message = '';
+    if (stateName == "Deshabilitar"){
+      message = '¿Estás seguro de que deseas deshabilitar este servicio?';
+    } else {
+      message = '¿Estás seguro de que deseas habilitar este servicio?';
     }
+    Swal.fire({
+      title: message,
+      //text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      //confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#795D4F',
+      //cancelButtonColor: '#d33',
+      cancelButtonColor: '#b39b8e',
+      confirmButtonText: 'Sí, confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed && stateName == "Deshabilitar") {
+          handleDeactivate(ServiceID);
+          Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
+        }
+        if (result.isConfirmed && stateName == "Habilitar") {
+          handleActivate(ServiceID);
+          Swal.fire('¡Confirmado!', 'Tu acción fue realizada.', 'success');
+        }
+    });
+  }
+
+  const handleDeactivate = async (ServiceID) => {
 
     try {
       const response = await fetch(`/api/deactivateService/${ServiceID}`, {
         method: 'PUT',
       });
       if (response.ok) {
-        setServices((prevServices) =>
+        setActiveServices((prevServices) =>
           prevServices.filter((s) => s.ServiceID !== ServiceID)
         );
-        toast.success('Servicio eliminado con éxito');
+        toast.success('Servicio deshabilitado con éxito');
       } else {
         const error = await response.json();
-        toast.error(`Error al eliminar servicio: ${error.error}`);
+        toast.error(`Error al deshabilitar servicio: ${error.error}`);
       }
     } catch (error) {
-      console.error('Error al eliminar servicio:', error);
+      console.error('Error al deshabilitar servicio:', error);
+      toast.error('Error del servidor. Intenta nuevamente.');
+    }
+  };
+
+  const handleActivate = async (ServiceID) => {
+
+    try {
+      const response = await fetch(`/api/activateService/${ServiceID}`, {
+        method: 'PUT',
+      });
+      if (response.ok) {
+        setInactiveServices((prevServices) =>
+          prevServices.filter((s) => s.ServiceID !== ServiceID)
+        );
+        toast.success('Servicio habilitado con éxito');
+      } else {
+        const error = await response.json();
+        toast.error(`Error al habilitar servicio: ${error.error}`);
+      }
+    } catch (error) {
+      console.error('Error al habilitar servicio:', error);
       toast.error('Error del servidor. Intenta nuevamente.');
     }
   };
@@ -78,9 +130,18 @@ const ServicesList = () => {
         <div className="flex-grow-1 container mt-5">
           <h2 className="text-center mb-4 pt-5">Gestión de Servicios</h2>
           <Services
-            services={services}
+            services={activeServices}
+            title={"Lista de servicios disponibles"}
+            stateName={"Deshabilitar"}
             onEdit={handleEdit}
-            onDeactivate={handleDeactivate}
+            onChange={confirmServiceState}
+          />
+          <Services
+            services={inactiveServices}
+            title={"Lista de servicios deshabilitados"}
+            stateName={"Habilitar"}
+            onEdit={handleEdit}
+            onChange={confirmServiceState}
           />
         <div className="mt-5 text-center">
             <h4 className="mb-3" style={{ color: '#795D4F' }}>
@@ -101,8 +162,8 @@ const ServicesList = () => {
             </button>
           </div>
         </div>
+        <ToastContainer transition={Slide} position="bottom-center" />
         <Footer />
-        <ToastContainer position="bottom-center" />
       </div>
     </>
   );

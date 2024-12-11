@@ -2,18 +2,15 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Head from 'next/head';
 import Footer from '../../../components/Footer';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { use } from 'react';
+import ServiceForm from '../../../components/ServiceForm';
 
 function EditServicePage({ params }) {
-  const { id } = use(params);
-  const router = useRouter();
-  const [hover, setHover] = useState(false);
-
   const [state, setState] = useState({
     id: '',
     name: '',
@@ -24,6 +21,11 @@ function EditServicePage({ params }) {
     errors: {},
     message: '',
   });
+
+  const { id } = use(params);
+  const router = useRouter();
+  const title = 'Editar Servicio';
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -91,20 +93,20 @@ function EditServicePage({ params }) {
       case 'price':
         if (!state.price) {
           errorMessage = 'El precio es obligatorio.';
-        } else if (!/^\d+$/.test(state.price)) {
-          errorMessage = 'El precio debe ser un valor númerico.';
         } else if (parseFloat(state.price) <= 0) {
           errorMessage = 'El precio debe ser mayor que cero.';
+        } else if (!/^\d+$/.test(state.price)) {
+          errorMessage = 'El precio debe ser un valor númerico.';
         }
         break;
 
       case 'duration':
-        if (!state.duration.trim()) {
+        if (!state.duration) {
           errorMessage = 'La duración es obligatoria.';
-        } else if (!/^\d+$/.test(state.duration)) {
-          errorMessage = 'La duración debe ser un valor númerico.';
         } else if (parseFloat(state.duration) <= 0) {
           errorMessage = 'La duración debe ser mayor que cero.';
+        } else if (!/^\d+$/.test(state.duration)) {
+          errorMessage = 'La duración debe ser un valor númerico.';
         }
         break;
 
@@ -130,7 +132,9 @@ function EditServicePage({ params }) {
     }));
   };
 
-
+  const handleHover = (state) => {
+    setHover(state);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -200,80 +204,24 @@ function EditServicePage({ params }) {
 
         {/* Main Content */}
         <div className="container d-flex flex-grow-1 align-items-center justify-content-center">
-          <div
-            className="card shadow border-0 p-4"
-            style={{
-              maxWidth: '500px',
-              width: '100%',
-              borderRadius: '10px',
-              backgroundColor: '#FFF',
-            }}
-          >
-            <h5
-              className="text-center mb-4"
-              style={{ color: '#795D4F', fontWeight: 'bold' }}
-            >
-              Editar Servicio
-            </h5>
-            <form onSubmit={handleSubmit}>
-              {['name', 'description', 'price', 'duration'].map((field) => (
-                <div className="form-floating mb-3" key={field}>
-                  <input
-                    type="text"
-                    className={`form-control ${
-                      state.errors[field] ? 'is-invalid' : ''
-                    }`}
-                    placeholder={field}
-                    value={state[field]}
-                    onChange={(e) => handleChange(e, field)}
-                    onBlur={() => handleBlur(field)}
-                    style={{
-                      backgroundColor: '#F9F9F9',
-                      borderColor: '#D6D6D6',
-                      borderRadius: '8px',
-                    }}
-                  />
-                  <label htmlFor={field}>
-                    {field.charAt(0).toUpperCase() + field.slice(1)}
-                  </label>
-                  {state.errors[field] && (
-                    <div className="invalid-feedback d-block">
-                      {state.errors[field]}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <div className="d-grid">
-                <button
-                  type="submit"
-                  className="btn"
-                  style={{
-                    backgroundColor: hover ? '#92766A' : '#795D4F',
-                    color: '#FFF',
-                    borderRadius: '8px',
-                  }}
-                  onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)}
-                >
-                  Guardar Cambios
-                </button>
-              </div>
-              {state.error && (
-                <div className="text-danger text-center mt-3">
-                  {state.error}
-                </div>
-              )}
-              {state.message && (
-                <div className="text-success text-center mt-3">
-                  {state.message}
-                </div>
-              )}
-            </form>
-          </div>
+          <ServiceForm
+            name={state.name}
+            description={state.description}
+            price={state.price}
+            duration={state.duration}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            onBlur={handleBlur}
+            onHover={handleHover}
+            hover={hover}
+            error={state.error}
+            errors={state.errors}
+            message={state.message}
+            title={title}
+          />
         </div>
 
         <Footer />
-        <ToastContainer position="bottom-center" />
       </div>
     </>
   );

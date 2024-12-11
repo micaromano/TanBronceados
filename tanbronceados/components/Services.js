@@ -2,20 +2,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Service from '../components/Service';
 import Table from 'react-bootstrap/Table';
 import { Container, Row } from "react-bootstrap";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-import { Slide } from "react-toastify";
 
 function Services({
     services,
+    title,
+    stateName,   
     onEdit,
-    onDeactivate,
+    onChange,
 }) {
     return (
         <>
             <div className="container mt-4">
                 <div className="text-center mb-4">
-                    <h4 className="text-secondary">Lista de servicios disponibles</h4>
+                    <h4 className="text-secondary">{title}</h4>
                 </div>
                 {services.length > 0 ? (
                     <Container>
@@ -37,7 +36,8 @@ function Services({
                                             key={service.ServiceID}
                                             {...service}
                                             onEdit={onEdit}
-                                            onDeactivate={onDeactivate}
+                                            onChange={onChange}
+                                            stateName={stateName}
                                         />
                                     ))}
                                 </tbody>
@@ -50,7 +50,6 @@ function Services({
                     </div>
                 )}
             </div>
-            <ToastContainer theme="dark" transition={Slide} position="bottom-center" />
         </>
     );
 }
