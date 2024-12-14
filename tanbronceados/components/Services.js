@@ -2,21 +2,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Service from '../components/Service';
 import Table from 'react-bootstrap/Table';
 import { Container, Row } from "react-bootstrap";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-import { Slide } from "react-toastify";
 
 function Services({
     services,
+    text,  
     onEdit,
-    onDeactivate,
+    onChange,
 }) {
     return (
         <>
-            <div className="container mt-4">
-                <div className="text-center mb-4">
-                    <h4 className="text-secondary">Lista de servicios disponibles</h4>
-                </div>
+            <div
+                className="card shadow border-0 p-4"
+                style={{
+                width: '100%',
+                borderRadius: '10px',
+                backgroundColor: '#FFF',
+                }}
+            >
+            <h5 className="text-center mb-4"
+                style={{ color: '#795D4F', fontWeight: 'bold' }}
+            >
+                {text.title}
+            </h5>
                 {services.length > 0 ? (
                     <Container>
                         <Row className="justify-content-center">
@@ -37,7 +44,8 @@ function Services({
                                             key={service.ServiceID}
                                             {...service}
                                             onEdit={onEdit}
-                                            onDeactivate={onDeactivate}
+                                            onChange={onChange}
+                                            action={text.action}
                                         />
                                     ))}
                                 </tbody>
@@ -46,11 +54,10 @@ function Services({
                     </Container>
                 ) : (
                     <div className="text-center my-5">
-                        <h5 className="text-muted">No hay servicios disponibles</h5>
+                        <h5 className="text-muted">{text.noServices}</h5>
                     </div>
                 )}
             </div>
-            <ToastContainer theme="dark" transition={Slide} position="bottom-center" />
         </>
     );
 }
