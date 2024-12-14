@@ -11,7 +11,7 @@ async function handler(req, res) {
     console.log('ServiceID', ServiceID);
     try{
 
-    // Se busca el servicio que se quiere dar de baja
+    // Se busca el servicio que se quiere dar de alta
     const service = await ServiceModel.raw.findOne({ where: { ServiceID: ServiceID } });
     console.log('service', service);
 
@@ -19,21 +19,21 @@ async function handler(req, res) {
       return res.status(404).json({ error: 'Servicio no encontrado.' });
     }
 
-    // Deshabilitar el servicio
+    // Habilitar el servicio
     const result = await ServiceModel.raw.update(
-    { isActive: false }, // Cambiar estado a desactivado
+    { isActive: true }, // Cambiar estado a activado
     { where: { ServiceID: ServiceID } } // Condición para encontrar el servicio
     );
     
     if (result[0] === 0) {
-      return res.status(400).json({ error: 'No se pudo deshabilitar el servicio.' });
+      return res.status(400).json({ error: 'No se pudo habilitar el servicio.' });
     }
 
-    return res.status(201).json({ message: 'Servicio deshabilitado correctamente.' });
+    return res.status(201).json({ message: 'Servicio habilitado correctamente.' });
 
     } catch (error) {
-      console.error('Error during deactivate service:', error);
-      return res.status(500).json({ error: 'Error del servidor al deshabilitar el servicio.' });
+    console.error('Error during enable service:', error);
+    return res.status(500).json({ error: 'Error del servidor al habilitar el servicio.' });
     }
   }
   

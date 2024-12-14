@@ -2,14 +2,14 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Head from 'next/head';
 import Footer from '../../components/Footer';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ServiceForm from '../../components/ServiceForm';
 
-function ServicePage() {
+function ServicePage() { 
   const [state, setState] = useState({
     name: '',
     description: '',
@@ -19,9 +19,10 @@ function ServicePage() {
     errors: {},
     message: '',
   });
-
+  
   const router = useRouter();
   const title = 'Crear un Servicio Nuevo';
+  const [hover, setHover] = useState(false);
 
   const handleChange = (e, field) => {
     setState({
@@ -55,22 +56,22 @@ function ServicePage() {
         break;
 
       case 'price':
-        if (!state.price.trim()) {
+        if (!state.price) {
           errorMessage = 'El precio es obligatorio.';
-        } else if (!/^\d+$/.test(state.price)) {
-          errorMessage = 'El precio debe ser un valor númerico.';
         } else if (parseFloat(state.price) <= 0) {
           errorMessage = 'El precio debe ser mayor que cero.';
+        } else if (!/^\d+$/.test(state.price)) {
+          errorMessage = 'El precio debe ser un valor númerico.';
         }
         break;
 
       case 'duration':
-        if (!state.duration.trim()) {
+        if (!state.duration) {
           errorMessage = 'La duración es obligatoria.';
-        } else if (!/^\d+$/.test(state.duration)) {
-          errorMessage = 'La duración debe ser un valor númerico.';
         } else if (parseFloat(state.duration) <= 0) {
           errorMessage = 'La duración debe ser mayor que cero.';
+        } else if (!/^\d+$/.test(state.duration)) {
+          errorMessage = 'La duración debe ser un valor númerico.';
         }
         break;
 
@@ -85,6 +86,18 @@ function ServicePage() {
         [field]: errorMessage,
       },
     }));
+  };
+
+  const clearMessages = () => {
+    setState((prevState) => ({
+      ...prevState,
+      error: '',
+      message: '',
+    }));
+  };
+
+  const handleHover = (state) => {
+    setHover(state);
   };
 
   const handleSubmit = async (e) => {
@@ -105,12 +118,22 @@ function ServicePage() {
       if (res.ok) {
         const mess = await res.json();
         setState({ ...state, message: mess.message });
-        toast.success('¡Servicio creado exitosamente!');
-        setTimeout(() => router.push('/servicesList'), 3000);
+        await toast.success('¡Se ha dado de alta un servicio!');
+
       } else {
         const error = await res.json();
         setState({ ...state, error: error.error });
       }
+
+      // Limpia el mensaje de error después de 3 segundos
+      setTimeout(() => {
+        clearMessages();
+      }, 3000);
+
+      setTimeout(() => {
+        router.push('/servicesList');
+      }, 5000);
+
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setState({
@@ -153,6 +176,8 @@ function ServicePage() {
             onChange={handleChange}
             onSubmit={handleSubmit}
             onBlur={handleBlur}
+            onHover={handleHover}
+            hover={hover}
             error={state.error}
             errors={state.errors}
             message={state.message}
@@ -161,7 +186,6 @@ function ServicePage() {
         </div>
 
         <Footer />
-        <ToastContainer position="bottom-center" />
       </div>
     </>
   );

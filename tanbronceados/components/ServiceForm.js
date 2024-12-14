@@ -1,7 +1,7 @@
 // components/ServiceForm.js
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ToastContainer } from 'react-toastify';
-import { Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, Slide } from 'react-toastify';
 
 function ServiceForm({
   name,
@@ -11,6 +11,8 @@ function ServiceForm({
   onChange,
   onSubmit,
   onBlur,
+  onHover,
+  hover,
   error,
   errors,
   message,
@@ -56,11 +58,9 @@ function ServiceForm({
 
         {/* Description Field */}
         <div className="form-floating mb-3">
-          <input
+          <textarea
             type="text"
-            className={`form-control ${
-              errors.description ? 'is-invalid' : ''
-            }`}
+            className={`form-control ${errors.description ? 'is-invalid' : ''}`}
             placeholder="Descripción"
             value={description || ''}
             onChange={(e) => onChange(e, 'description')}
@@ -69,6 +69,7 @@ function ServiceForm({
               backgroundColor: '#F9F9F9',
               borderColor: '#D6D6D6',
               borderRadius: '8px',
+              height: '120px',
             }}
           />
           <label>Descripción</label>
@@ -127,15 +128,18 @@ function ServiceForm({
             type="submit"
             className="btn"
             style={{
-              backgroundColor: '#795D4F',
+              // backgroundColor: '#795D4F',
+              backgroundColor: hover ? '#92766A' : '#795D4F',
               color: '#FFF',
               borderRadius: '8px',
             }}
             disabled={
               !name.trim() || !description.trim() || !price || !duration
             }
+            onMouseEnter={() => onHover(true)}
+            onMouseLeave={() => onHover(false)}
           >
-            Confirmar
+            Guardar Cambios
           </button>
         </div>
 
@@ -147,7 +151,7 @@ function ServiceForm({
           <div className="text-success text-center mt-3">{message}</div>
         )}
       </form>
-      <ToastContainer theme="dark" transition={Slide} position="bottom-center" />
+      <ToastContainer transition={Slide} position="bottom-center" />
     </div>
   );
 }
