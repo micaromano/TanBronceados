@@ -2262,6 +2262,12 @@
 		.box.features .features-row {
 			border-top: solid 2px #e5e5e5;
 			position: relative;
+			display: grid;
+    		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Crea columnas dinámicas */
+    		column-gap: 0; /* Sin espacio entre columnas */
+			row-gap: 2em; /* Espacio de 2em entre filas */
+    		justify-items: center; /* Centra los elementos dentro de las celdas */
+
 		}
 
 			.box.features .features-row:after {
@@ -2271,33 +2277,39 @@
 			}
 
 			.box.features .features-row section {
-				float: left;
+				/*float: left;
 				padding: 3em;
-				width: 50%;
+				width: 50%;*/
+				text-align: center; /* Centra el contenido del servicio */
+				display: flex; /* Activa Flexbox */
+				flex-direction: column; /* Asegura que los elementos estén en columna */
+				justify-content: space-between; /* Espacia el contenido y alinea el botón abajo */
+				height: 100%; /* Asegura que todas las secciones tengan la misma altura */
+				padding: 2em; /* Opcional: Ajusta el espacio interno */
+				padding-left: 0;
+				padding-right: 0;
+
+				
 			}
 
-				.box.features .features-row section :last-child {
-					margin-bottom: 0;
+				.box.features .features-row section:first-child {
+					border-left: none; /* Elimina la línea del primer elemento */
 				}
 
-				.box.features .features-row section:nth-child(2n) {
-					padding-right: 0;
-				}
+				
 
 					.box.features .features-row section:nth-child(2n):before {
-						background: #e5e5e5;
+						/*background: #e5e5e5;
 						content: '';
 						display: block;
 						height: 100%;
 						margin-left: -3em;
 						position: absolute;
 						top: 0;
-						width: 2px;
+						width: 2px;*/
+						display: none;
 					}
 
-				.box.features .features-row section:nth-child(2n-1) {
-					padding-left: 0;
-				}
 
 			.box.features .features-row:first-child {
 				border-top: 0;
@@ -2314,6 +2326,13 @@
 				.box.features .features-row:last-child section {
 					padding-bottom: 0;
 				}
+
+		
+			.box.features .features-row li {
+				margin-top: auto; /* Empuja el botón hacia abajo */
+				list-style: none;
+			  }
+			  
 
 		.box.special {
 			text-align: center;
@@ -2391,15 +2410,17 @@
 		}
 
 		.icon.major {
-			background: #666;
-			border-radius: 100%;
-			color: #ffffff;
 			cursor: default;
-			display: inline-block;
-			height: 5.5em;
-			line-height: 5.5em;
-			margin: 0 0 2em 0;
-			width: 5.5em;
+			display: flex; /* Habilita flexbox para centrar */
+			justify-content: center; /* Centra horizontalmente */
+			align-items: center; /* Centra verticalmente */
+			background: #666;
+			border-radius: 50%; /* Forma circular */
+			color: #ffffff;
+			height: 4em; /* Altura específica */
+			width: 4em; /* Ancho específico */
+			margin: 0 auto 1.5em auto; /* Centrado en el contenedor */
+			line-height: normal; /* Asegura que no afecte el contenido interno */
 		}
 
 			.icon.major:before {
