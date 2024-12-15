@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Main = () => {
+const Main = ({isLoggedIn}) => {
+    const [services, setServices] = useState([]);
+    
+    useEffect(()=> {  
+      const fetchServices = async () => {
+        try {
+          const response = await fetch('/api/getServicesList');
+          if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.statusText}`);
+          }
+          const dataServices = await response.json();
+          setServices(dataServices);
+        } catch (error) {
+          console.error('Error al obtener servicios:', error);
+        }
+      };
+  
+      fetchServices();
+    }, []);
+
     return (
         <>
             <div id="nosotras">
@@ -19,16 +38,14 @@ const Main = () => {
           <div id="servicios" className="container">
             <section className="box special features">
               <div className="features-row">
-                <section>
-                  <span className="icon solid major fa-bolt accent2"></span>
-                  <h3>Cuidado Orgánico Total</h3>
-                  <p>Nuestro servicio y productos son 100% orgánicos, libres de crueldad animal, aptos para la piel, aprobados por PETA y no contienen gluten. No tienen contraindicaciones. Incluso mujeres embarazadas y en período de lactancia los utilizan sin problemas.</p>
-                </section>
-                <section>
-                  <span className="icon solid major fa-chart-area accent3"></span>
-                  <h3>Bronceado Exprés Duradero</h3>
-                  <p>Con solo una sesión de 15 minutos, podrás tener un mega bronceado. Este bronceado permanecerá en tu piel entre 5 y 10 días aproximadamente</p>
-                </section>
+              {services.map((service) => (
+                  <section key={service.ServiceID}>
+                    <span className="icon solid major fa-bolt accent2"></span>
+                    <h3>{service.ServiceName}</h3>
+                    <p>{service.ServiceDescription}</p>
+                    <li><a href={isLoggedIn ? `/comprar` : '/login'} className="button primary">Comprar</a></li>
+                  </section>
+              ))}    
               </div>
             </section>
           </div>
