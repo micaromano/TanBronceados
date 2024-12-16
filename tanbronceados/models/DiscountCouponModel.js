@@ -29,7 +29,7 @@ class DiscountCouponModel {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      type: {
+      CouponType: {
         type: DataTypes.ENUM('Unico', 'Multiple'),
         allowNull: false,
       },
