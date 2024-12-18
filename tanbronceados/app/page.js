@@ -51,9 +51,9 @@ export default function Home() {
           {/* Mostrar componentes condicionales */}
           {isLoggedIn ? (
             <div>
-              <MisSesiones />
-              <MisReservas />
-              <Main />
+              <MisSesiones user={user}/>
+              <MisReservas user={user}/>
+              <Main isLoggedIn={isLoggedIn} />
             </div>
           ) : (
             <div>

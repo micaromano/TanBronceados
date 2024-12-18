@@ -1,19 +1,19 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 
-export default function MisSesiones() {
+export default function MisSesiones({ user }) {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [stickers, setStickers] = useState(Array(7).fill(null)); // Inicializar con 7 celdas vacías
 
   useEffect(() => {
-    // Obtener el ID del cliente desde el token o sesión activa
-    const clientId = getClientIdFromToken(); // TODO Implementar esta función para extraer el ID del cliente
 
-    fetch(`/api/sessionsByClient/${clientId}`, { credentials: 'include' })
+    fetch(`/api/sessionsByClient/${user.email}`, { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setSessions(data);
         setLoading(false);
+        cargarStickers(data); // Cargar stickers según las compras
       })
       .catch((error) => {
         console.error('Error al obtener sesiones:', error);
@@ -21,9 +21,13 @@ export default function MisSesiones() {
       });
   }, []);
 
-  const getClientIdFromToken = () => {
-    // TDDO Implementar la lógica para obtener el ClientID desde el token o sesión
-    return '1'; // ID de prueba
+  // Función para cargar los stickers según las compras realizadas
+  const cargarStickers = (sessions) => {
+    const newStickers = [...stickers];
+    sessions.slice(0, 7).forEach((session, index) => {
+      newStickers[index] = `Sticker #${session.SessionID}`; // Simula un sticker por compra
+    });
+    setStickers(newStickers);
   };
 
   return (
@@ -54,6 +58,27 @@ export default function MisSesiones() {
         ) : (
           <p>No tienes sesiones compradas.</p>
         )}
+
+        {/* Tabla de Stickers */}
+        <div className="stickers-container">
+          <h3>Stickers Acumulados</h3>
+          <table>
+            <tbody>
+              <tr>
+                {stickers.map((sticker, index) => (
+                  <td key={index}>
+                  <img
+                    src="/images/logoNegro.jpg" // Ruta del logo
+                    alt="Logo"
+                    className={sticker ? "active" : ""}
+                  />
+                </td>
+              ))}
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
       </section>
     </div>
   );
