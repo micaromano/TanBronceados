@@ -22,7 +22,7 @@ const getSessionsByClient = async (req, res) => {
     res.status(200).json(sessions);
   } catch (error) {
     console.error('Error al obtener sesiones:', error);
-    res.status(500).json({ message: 'Error al obtener sesiones.' });
+    res.status(500).json({ message: 'Error al obtener sesiones.', error: error.message });
   }
 };
 

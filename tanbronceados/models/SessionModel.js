@@ -29,6 +29,11 @@ class SessionModel {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      SessionState: {
+        type: DataTypes.ENUM('Pendiente de agenda', 'Agendada', 'Cancelada', 'Usada'),
+        allowNull: false,
+        defaultValue: 'Pendiente de agenda',
+      }
     }, {
       tableName: 'SessionServices',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
@@ -36,6 +41,8 @@ class SessionModel {
     });
     // Relacion con Service
     this.raw.belongsTo(ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
+
+    his.raw.belongsTo(models.ClientModel.raw, { foreignKey: 'ClientID', as: 'client' });
   }
 
   get raw() {
@@ -46,11 +53,11 @@ class SessionModel {
       // Relacion con Client
       this.raw.belongsTo(models.ClientModel.raw, { foreignKey: 'ClientID', as: 'client' });
       // Relacion con Service
-      //this.raw.belongsTo(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
+      this.raw.belongsTo(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
       // Relacion con Payment
-      this.raw.belongsTo(models.PaymentModel.raw, { foreignKey: 'SessionID', as: 'payment' });
+      this.raw.belongsTo(models.PaymentModel.raw, { foreignKey: 'PaymentID', as: 'payment' });
       // Relacion con Booking
-      this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'SessionID', as: 'bookings' });
+      this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'BookingID', as: 'bookings' });
   }
 
 }

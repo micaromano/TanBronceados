@@ -30,6 +30,7 @@ export default async function handler(req, res) {
   const response = await preference.create({
       body: {
       items: items.map(item => ({
+          idService: item.idService,
           title: item.title,
           quantity: item.quantity,
           unit_price: item.unit_price,
@@ -43,7 +44,7 @@ export default async function handler(req, res) {
           failure: `https://www.google.com/`, // Cambiar URL en producción
           pending: `https://www.google.com/`, // Cambiar URL en producción
       },
-      //notification_url: `${url}/api/webhook`, // URL del webhook en Next.js
+      notification_url: `${url}/api/webhook`, // URL del webhook en Next.js
       auto_return: 'approved',
       },
     });
