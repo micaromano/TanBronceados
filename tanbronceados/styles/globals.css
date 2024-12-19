@@ -2270,11 +2270,7 @@
 
 		}
 
-			.box.features .features-row:after {
-				clear: both;
-				content: '';
-				display: block;
-			}
+			
 
 			.box.features .features-row section {
 				/*float: left;
@@ -3911,3 +3907,42 @@
   html {
     scroll-behavior: smooth;
   }
+
+/* Contenedor general de stickers */
+.stickers-container {
+	margin-top: 2rem; /* Espaciado superior */
+	border-top: solid 2px #e5e5e5; /* Borde igual al de header.major p */
+	padding-top: 1.5rem;
+	text-align: center;
+  }
+  
+  /* Tabla de stickers */
+  .stickers-container table {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+	margin-top: 1rem;
+  }
+  
+  /* Celdas de la tabla */
+  .stickers-container table td {
+	padding: 0.5rem;
+	border: 1px solid #e5e5e5; /* Borde de las celdas */
+	text-align: center;
+	vertical-align: middle;
+  }
+  
+  /* Imágenes dentro de las celdas */
+  .stickers-container table img {
+	width: 100%; /* Se ajusta al ancho de la celda */
+	max-width: 50px; /* Límite máximo de tamaño */
+	opacity: 0.3; /* Opacidad predeterminada para stickers vacíos */
+	transition: opacity 0.3s ease; /* Transición suave */
+  }
+  
+  /* Imágenes activas (sticker disponible) */
+  .stickers-container table img.active {
+	opacity: 1; /* Sticker visible */
+  }
+  
+  

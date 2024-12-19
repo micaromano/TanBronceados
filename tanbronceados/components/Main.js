@@ -11,7 +11,7 @@ const Main = ({isLoggedIn}) => {
             throw new Error(`Error en la solicitud: ${response.statusText}`);
           }
           const dataServices = await response.json();
-          setServices(dataServices);
+          setServices(dataServices.filter((s) => s.isActive == 1)); // se filtran los servicios activos
         } catch (error) {
           console.error('Error al obtener servicios:', error);
         }
@@ -43,7 +43,7 @@ const Main = ({isLoggedIn}) => {
                     <span className="icon solid major fa-bolt accent2"></span>
                     <h3>{service.ServiceName}</h3>
                     <p>{service.ServiceDescription}</p>
-                    <li><a href={isLoggedIn ? `/comprar` : '/login'} className="button primary">Comprar</a></li>
+                    <li><a href={isLoggedIn ? `/purchase` : '/login'} className="button primary">Comprar</a></li>
                   </section>
               ))}    
               </div>
