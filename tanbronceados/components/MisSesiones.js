@@ -8,7 +8,7 @@ export default function MisSesiones({ user }) {
   const [stickerCount, setStickerCount] = useState(0); // Contador de stickers acumulados
 
   useEffect(() => {
-
+    cargarStickers([]);
     fetch(`/api/sessionsByClient/${user.email}`, { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
@@ -42,11 +42,14 @@ export default function MisSesiones({ user }) {
       newStickerCount = 0; // Resetear el contador
       newStickers = Array(7).fill(null); // Reiniciar stickers
     }
-
+    
+    // Descomentar si se quieren simular sesiones
+    // newStickers[0] = `Sticker #1`;
+    
     // Actualizar estados
     setStickers(newStickers);
     setStickerCount(newStickerCount);
-
+  }
     // Generar sesión gratis
   const generarSesionGratis = () => {
     alert("¡Felicitaciones! Has acumulado 7 stickers y ganaste una sesión gratis.");
@@ -115,5 +118,4 @@ export default function MisSesiones({ user }) {
       </section>
     </div>
   );
-}
 }
