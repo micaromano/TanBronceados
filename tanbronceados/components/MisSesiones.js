@@ -44,7 +44,7 @@ export default function MisSesiones({ user }) {
     }
     
     // Descomentar si se quieren simular sesiones
-    // newStickers[0] = `Sticker #1`;
+    newStickers[0] = `Sticker #1`;
     
     // Actualizar estados
     setStickers(newStickers);

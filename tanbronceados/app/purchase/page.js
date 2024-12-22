@@ -91,7 +91,7 @@ function ComprarServicio() {
             clientEmail: "cliente.ficticio@example.com",
             items: [
               {
-                idService: service.ServiceID,
+                //idService: service.ServiceID,
                 title: service.ServiceName,
                 unit_price: couponSuccess != null ? service.Price*(1 - couponSuccess.DiscountPercentage/100) : service.Price,
                 quantity: 1,
@@ -100,23 +100,23 @@ function ComprarServicio() {
         }
         try {
             const response = await fetch('/api/mercadoPagoCreatePreference', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(testRequest),
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(testRequest),
             });
 
             if (!response.ok) {
                 const errorDetails = await response.json();
                 console.error("Detalles del error:", errorDetails);
                 throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-              }
+            }
 
             const { id } = await response.json();
             console.log('id', id);
 
             if (!id) {
                 throw new Error('El ID de la preferencia no se recibió correctamente.');
-              }
+            }
 
             const mp = new window.MercadoPago('APP_USR-c8e57905-9559-4486-876c-69a70bfbbc8b', {
                 locale: 'es-UY', // Cambia según el país
