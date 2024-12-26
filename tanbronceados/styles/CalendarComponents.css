@@ -1,0 +1,239 @@
+/* Fondo global para toda la página */
+body {
+    background-color: #4b3429; /* Marrón para todo el fondo */
+    margin: 0; /* Quitar márgenes por defecto */
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+.main-header {
+    padding: 20px;
+    text-align: center;
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.main-nav {
+    margin-top: 10px;
+}
+
+.main-nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: 1rem;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.main-footer {
+    width: 100%; /* Ocupa todo el ancho */
+    background-color: #4b3429; /* Mismo color que el fondo global */
+    color: whitesmoke;
+    padding: 20px;
+    text-align: center;
+    border-top: 3px solid #a1877a;
+    box-sizing: border-box;
+}
+
+.main-footer p {
+    margin: 0;
+    font-size: 1rem; /* Tamaño del texto */
+}
+
+.footer-nav {
+    margin-top: 10px;
+}
+
+.footer-nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: 0.9rem;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor principal */
+.calendar-container {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background: #ebe1dc; /* Fondo claro para destacar el contenido */
+    max-width: 1200px;
+    width: 90%; /* Adaptable a pantallas pequeñas */
+    margin: 40px auto; /* Centrar y dar espacio superior/inferior */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header h2 {
+    font-size: 2rem; /* Título destacado */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Botón general */
+.btn-book {
+    font-size: 1rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    background-color: #795D4F;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-book:hover {
+    background-color: #a1877a;
+    color: whitesmoke;
+}
+
+/* Selector de servicios */
+.service-selector {
+    margin-bottom: 40px;
+}
+
+.service-selector select {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+/* Selección de día y hora */
+.date-selector, .time-selector {
+    margin-bottom: 40px;
+}
+
+.time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Espaciado entre botones */
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.time-slot {
+    padding: 15px;
+    font-size: 1rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    min-width: 100px; /* Botones más grandes */
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.time-slot:hover {
+    background-color: #f0f0f0;
+}
+
+.time-slot.selected {
+    background-color: #6699cc;
+    color: #fff;
+}
+
+/* Botón de confirmación */
+.confirm-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.confirm-button {
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    background-color: #795D4F;
+    color: whitesmoke;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirm-button:hover {
+    background-color: #a1877a;
+}
+
+/* Botón genérico */
+button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #d0d0d0;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #6699cc;
+}
+
+/* Remover imagen extra del selector */
+#service {
+    background-image: none !important;
+}
+
+
+
+.react-calendar__tile--now {
+    background-color: #e4b89b !important; 
+    color: #4b3429 !important;
+}
+
+.react-calendar__tile--now:hover {
+    background-color: #d6c5b5 !important; 
+    color: #4b3429 !important;
+}
+
+/*Boton de dia seleccionado */
+.react-calendar__tile--active {
+    background-color: #795D4F !important;
+    color: whitesmoke !important;
+    border-radius: 50%;
+}
+
+.react-calendar__tile--active:hover {
+    background-color: #a1877a !important;
+    color: whitesmoke !important;
+}
+
+/* Boton de horario seleccionado */
+.time-slot.selected {
+    background-color: #795D4F; /* Marrón oscuro */
+    color: whitesmoke; /* Texto blanco */
+    border: none; /* Quitar borde */
+    font-weight: bold; /* Opcional: texto en negrita */
+}
+
+.time-slot.selected:hover {
+    background-color: #a1877a; /* Marrón más claro al pasar el mouse */
+    color: whitesmoke; /* Texto blanco */
+}

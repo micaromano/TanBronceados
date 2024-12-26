@@ -10,7 +10,7 @@ const Banner = ({ isLoggedIn, user }) => {
         {isLoggedIn ? (
           <>
             <li><a href="/compraSesiones" className="button primary">Comprar Sesiones</a></li>
-            <li><a href="/agendar" className="button">Agendar Cita</a></li>
+            <li><a href="/book" className="button">Agendar Cita</a></li>
           </>
         ) : (
           <>
