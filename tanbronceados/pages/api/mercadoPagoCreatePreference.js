@@ -44,7 +44,7 @@ export default async function handler(req, res) {
               failure: `https://www.google.com/`, // Cambiar URL en producción
               pending: `https://www.google.com/`, // Cambiar URL en producción
           },
-          notification_url: `${url}/api/webhook`, // URL del webhook en Next.js
+          //notification_url: `${url}/api/webhook`, // URL del webhook en Next.js
           auto_return: 'approved',
         },
       });

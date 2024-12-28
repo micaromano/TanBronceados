@@ -17,16 +17,8 @@ class SessionModel {
         primaryKey: true,
         autoIncrement: true,
       },
-      SessionName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       SessionPurchaseDate: {
         type: DataTypes.DATE,
-        allowNull: false,
-      },
-      Price: {
-        type: DataTypes.INTEGER,
         allowNull: false,
       },
       SessionState: {
@@ -39,10 +31,6 @@ class SessionModel {
       timestamps: true,  // Activa las columnas createdAt y updatedAt
       freezeTableName: true,
     });
-    // Relacion con Service
-    this.raw.belongsTo(ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
-
-    his.raw.belongsTo(models.ClientModel.raw, { foreignKey: 'ClientID', as: 'client' });
   }
 
   get raw() {

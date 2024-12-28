@@ -9,7 +9,7 @@ export default function MisSesiones({ user }) {
 
   useEffect(() => {
     cargarStickers([]);
-    fetch(`/api/sessionsByClient/${user.email}`, { credentials: 'include' })
+    fetch(`/api/getSessionsByClient/${user.email}`, { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setSessions(data);
@@ -21,6 +21,9 @@ export default function MisSesiones({ user }) {
         setLoading(false);
       });
   }, [user.email]);
+
+  console.log(sessions)
+  
 
   // Cargar stickers y manejar la lógica de sesión gratis
   const cargarStickers = (sessions) => {
