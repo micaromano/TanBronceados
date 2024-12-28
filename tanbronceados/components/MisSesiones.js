@@ -9,7 +9,7 @@ export default function MisSesiones({ user }) {
 
   useEffect(() => {
     cargarStickers([]);
-    fetch(`/api/getSessionsByClient/${user.email}`, { credentials: 'include' })
+    fetch(`/api/getSessionsByClient?id=${user.id}`, { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setSessions(data);
@@ -20,7 +20,7 @@ export default function MisSesiones({ user }) {
         console.error('Error al obtener sesiones:', error);
         setLoading(false);
       });
-  }, [user.email]);
+  }, [user.id]);
 
   console.log(sessions)
   
