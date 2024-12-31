@@ -479,20 +479,20 @@ const Dashboard = () => {
                             <Col xs={12}>
                                 <p className={styles.title}>Dashboard</p>
                                 <div className={styles.top}>
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas para hoy</p><p className={styles.cardNumber}>{bookingsToday.length}</p></div>  {/* 5*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas esta semana</p><p className={styles.cardNumber}>{bookingsWeek.length}</p></div>  {/* 35*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas del mes</p><p className={styles.cardNumber}>{bookingsMonth.length}</p></div>  {/* 80*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Clientes registrados</p><p className={styles.cardNumber}>{clients.length}</p></div>  {/* 75*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Ingresos</p><p className={styles.cardNumber}>$ {totalSales}</p><div className={styles.percentageWrapper}><p className={styles.numberPercent}>{percentSales} </p><p className={styles.textPercent}>respecto al ultimo mes</p></div></div>  {/* $125.000*/}
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas para hoy</p><p className={styles.cardNumber}>{bookingsToday.length}</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas esta semana</p><p className={styles.cardNumber}>{bookingsWeek.length}</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas del mes</p><p className={styles.cardNumber}>{bookingsMonth.length}</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Clientes registrados</p><p className={styles.cardNumber}>{clients.length}</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Ingresos</p><p className={styles.cardNumber}>$ {totalSales}</p><div className={styles.percentageWrapper}><p className={styles.numberPercent}>{percentSales} </p><p className={styles.textPercent}>respecto al ultimo mes</p></div></div>
                                 </div>
                             </Col>
                             <Col xs={12}>
                                 <div className={styles.top}>
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas pendientes</p><p className={styles.cardNumber}>{pendingBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>  {/* 30*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas finalizadas</p><p className={styles.cardNumber}>{completedBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>  {/* 75*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas canceladas</p><p className={styles.cardNumber}>{cancelledBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>  {/* 10*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas con ausencia</p><p className={styles.cardNumber}>{noShowBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>  {/* 5*/}
-                                    <div className={styles.card}><p className={styles.cardTitle}>Cantidad de ventas</p><p className={styles.cardNumber}>{totalSalesCurrentMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>  {/* 152*/}
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas pendientes</p><p className={styles.cardNumber}>{pendingBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas finalizadas</p><p className={styles.cardNumber}>{completedBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas canceladas</p><p className={styles.cardNumber}>{cancelledBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Reservas con ausencia</p><p className={styles.cardNumber}>{noShowBookingsMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>
+                                    <div className={styles.card}><p className={styles.cardTitle}>Cantidad de ventas</p><p className={styles.cardNumber}>{totalSalesCurrentMonth.length}</p><p className={styles.textPercent}>mes actual</p></div>
                                 </div>
                             </Col>
                         </Row >
