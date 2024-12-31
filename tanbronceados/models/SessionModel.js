@@ -17,10 +17,10 @@ class SessionModel {
         primaryKey: true,
         autoIncrement: true,
       },
-      SessionName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // SessionName: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       SessionPurchaseDate: {
         type: DataTypes.DATE,
         allowNull: false,
