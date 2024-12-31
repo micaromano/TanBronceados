@@ -9,7 +9,6 @@ import '../../styles/Purchase.css';
 
 function ComprarServicio() {
     const [selectedService, setSelectedService] = useState('');
-    const [purchaseType, setPurchaseType] = useState(''); // Single session or package
     const [showSummary, setShowSummary] = useState(false);
     const [coupon, setCoupon] = useState('');
     const [couponSuccess, setCouponSuccess] = useState(null);
@@ -18,9 +17,6 @@ function ComprarServicio() {
     const [message, setMessage] = useState('');
     const [service, setService] = useState(null);
     const [services, setServices] = useState([]);
-    const [session, setSession] = useState(null);
-    const [sessions, setSessions] = useState([]);
-    const [sessionsFilter, setSessionsFilter] = useState([]);
     const router = useRouter();
 
     // Traer lista de servicios
@@ -32,20 +28,6 @@ function ComprarServicio() {
           }
           const dataServices = await response.json();
           setServices(dataServices.filter((s) => s.isActive == 1));
-        } catch (error) {
-          console.error('Error al obtener servicios:', error);
-        }
-    };
-    
-    // Traer lista de sesiones
-    const fetchSessions = async () => {
-        try {
-          const response = await fetch('/api/getSessionsList');
-          if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.statusText}`);
-          }
-          const dataSessions = await response.json();
-          setSessions(dataSessions);
         } catch (error) {
           console.error('Error al obtener servicios:', error);
         }
@@ -68,7 +50,6 @@ function ComprarServicio() {
     useEffect(() => {
       
         fetchServices();
-        fetchSessions();
         fetchDiscountCoupons();
 
         // Inicializar Mercado Pago
@@ -103,29 +84,15 @@ function ComprarServicio() {
         let service = services.find(service => service.ServiceID === +selectedService);
         setService(service);
 
-        if (selectedService){
-            setSessionsFilter(sessions.filter(session => session.ServiceID === +selectedService));
-        } else {
-            setSessionsFilter([]);
-        }
-
       }, [selectedService])
-
-      useEffect(() => {
-
-        let session = sessions.find(session => session.SessionID === +purchaseType);
-        console.log('session', session);
-        setSession(session);
-
-      }, [purchaseType])
 
       const sendTestRequest  = async () => {
         const testRequest = {
             clientEmail: "cliente.ficticio@example.com",
             items: [
               {
-                title: service.ServiceName + ' - ' + session.SessionName,
-                unit_price: couponSuccess != null ? session.Price*(1 - couponSuccess.DiscountPercentage/100) : session.Price,
+                title: service.ServiceName, //+ ' - ' + session.SessionName,
+                unit_price: couponSuccess != null ? service.Price*(1 - couponSuccess.DiscountPercentage/100) : service.Price,
                 quantity: 1,
               }
             ]
@@ -168,12 +135,8 @@ function ComprarServicio() {
         setSelectedService(event.target.value);
     };
 
-    const handlePurchaseTypeChange = (event) => {
-        setPurchaseType(event.target.value);
-    };
-
     const handleProceedToSummary = () => {
-        if (selectedService && purchaseType) {
+        if (selectedService) {
             setShowSummary(true);
         } else {
             alert('Por favor, selecciona un servicio y el tipo de compra.');
@@ -188,8 +151,9 @@ function ComprarServicio() {
         let cuponFound = coupons.find(coup => coup.Code === coupon);
         const dateToday = new Date();
         const formattedDateToday = dateToday.toISOString().split('T')[0];
+        const formattedCouponDate = new Date(cuponFound.ExpirationDate).toISOString().split("T")[0];
         
-        if (cuponFound && (cuponFound.ExpirationDate == null || (cuponFound.ExpirationDate != null && cuponFound.ExpirationDate > formattedDateToday))) {
+        if (cuponFound && (cuponFound.ExpirationDate == null || (cuponFound.ExpirationDate != null && formattedCouponDate >= formattedDateToday))) {
             setCouponSuccess(cuponFound);
             setMessage(`Se aplico el codigo con ${cuponFound.DiscountPercentage}% de descuento.`);
             console.log('couponSuccess', couponSuccess);
@@ -220,24 +184,11 @@ function ComprarServicio() {
                     <option value="">-- Selecciona un servicio --</option>
                     {
                         services.map(
-                            service => <option key={service.ServiceID} value={service.ServiceID}>{service.ServiceName}</option>
+                            service => <option key={service.ServiceID} value={service.ServiceID}>{service.ServiceName} - ${service.Price}</option>
                         )
                     }
                 </select>
             </div>
-
-            <div className="purchase-type-selection">
-                <label htmlFor="purchase-type">Selecciona el tipo de compra:</label>
-                <select id="purchase-type" value={purchaseType} onChange={handlePurchaseTypeChange}>
-                    <option value="">-- Selecciona el tipo de compra --</option>
-                    {
-                        sessionsFilter.map(
-                            session => <option key={session.SessionID} value={session.SessionID}>{session.SessionName} - ${session.Price}</option>
-                        )
-                    }
-                </select>
-            </div>
-
 
             {/* Discount Coupon Field */}
             <div className="discount-coupon-input form-floating mb-3" style={{ position: 'relative' }}>
@@ -294,8 +245,7 @@ function ComprarServicio() {
                 <div className="purchase-summary">
                     <h3>Resumen de la Compra</h3>
                     <p>Servicio: {service ? service.ServiceName : ''}</p>
-                    <p>Tipo de compra: {session ? session.SessionName : ''}</p>
-                    <p>Precio: ${couponSuccess != null ? session.Price*(1 - couponSuccess.DiscountPercentage/100) : session.Price}</p>
+                    <p>Precio: ${couponSuccess != null ? service.Price*(1 - couponSuccess.DiscountPercentage/100) : service.Price}</p>
                     <p>Descuento: {couponSuccess ? `${couponSuccess.DiscountPercentage}%` : 'No aplica'}</p>
                     <button onClick={sendTestRequest} className="proceed-to-booking-button">Comprar</button>
                 </div>
