@@ -1,0 +1,81 @@
+  .top {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Espaciado uniforme entre las cards */
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    flex: 1; /* Permite que todas las cards ocupen el mismo espacio */
+    padding: 10px; /* Ajusta el relleno para una apariencia consistente */
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-height: 150px; /* Asegura una altura mínima uniforme */
+    display: flex;
+    flex-direction: column; /* Organiza el contenido verticalmente */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: column; /* Organiza contenido de gráficos verticalmente */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: auto; /* Permite que los gráficos se ajusten automáticamente */
+    max-width: 600px; /* Controla el ancho máximo */
+    margin: 0 auto;
+  }
+  
+  .cardTitle {
+    font-weight: 500;
+    font-size: medium;
+    color: #A3AED0;
+    margin: 10px 0;
+  }
+  
+  .cardNumber {
+    font-weight: bold;
+    font-size: xx-large;
+    color: black;
+    margin: 0;
+  }
+  
+  .numberPercent,
+  .textPercent {
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
+  
+  .numberPercent {
+    color: rgb(39, 211, 119);
+    font-weight: 700;
+  }
+  
+  .textPercent {
+    color: #A3AED0;
+    font-weight: 300;
+  }
+
+  .percentageWrapper {
+    display: inline-flex; /* Alinea los elementos horizontalmente */
+    align-items: baseline; /* Asegura que los textos estén alineados correctamente */
+    gap: 5px; /* Espaciado entre los elementos */
+  }
+
+  .title {
+    font-weight: 500;
+    font-size: 35px;
+    color:black;
+    margin: 0px 15px 30px;
+  }
+
