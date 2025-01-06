@@ -5,30 +5,40 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/CalendarComponents.css';
 
-const services = [
-    {
-        name: "Bronceado Orgánico",
-        duration: 15, // Duración en minutos
-        startHour: 11,
-        endHour: 18,
-    },
-    {
-        name: "Uñas Esculpidas",
-        duration: 60, // Duración en minutos
-        startHour: 10,
-        endHour: 18,
-    },
-];
-
 function CalendarComponent() {
-    const [selectedService, setSelectedService] = useState(services[0]); // Servicio inicial
+    const [services, setServices] = useState([]);
+    const [selectedService, setSelectedService] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [timeSlots, setTimeSlots] = useState([]);
 
+    // TODO: Cambiar el horario hardcodeado, aca se va a poner la info que de lo de horas habilitadas
+    const startHour = 9;
+    const endHour = 18;
+
+    // Fetch services from the backend
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const response = await fetch('/api/getServicesList');
+                if (response.ok) {
+                    const data = await response.json();
+                    setServices(data);
+                    setSelectedService(data[0]);
+                } else {
+                    console.error('Error fetching services:', await response.text());
+                }
+            } catch (error) {
+                console.error('Server error:', error);
+            }
+        };
+
+        fetchServices();
+    }, []);
+
     useEffect(() => {
         if (selectedDate && selectedService) {
-            generateTimeSlots(selectedService.startHour, selectedService.endHour, selectedService.duration);
+            generateTimeSlots(startHour, endHour, selectedService.Duration);
         }
     }, [selectedDate, selectedService]);
 
@@ -45,9 +55,11 @@ function CalendarComponent() {
     };
 
     const handleServiceChange = (event) => {
-        const selected = services.find(service => service.name === event.target.value);
+        const selected = services.find(
+            (service) => service.ServiceName === event.target.value
+        );
         setSelectedService(selected);
-        setSelectedDate(null); // Reinicia la selección de fecha y hora
+        setSelectedDate(null);
         setSelectedTime(null);
     };
 
@@ -63,13 +75,13 @@ function CalendarComponent() {
     const handleBooking = async () => {
         if (selectedDate && selectedTime) {
             const appointment = {
-                service: selectedService.name,
-                date: selectedDate.toISOString().split('T')[0], // Convertir a formato 'YYYY-MM-DD'
+                service: selectedService.ServiceName,
+                date: selectedDate.toISOString().split('T')[0],
                 time: selectedTime,
                 client: {
-                    email: "cliente@ejemplo.com" // TODO: Cambiar
+                    email: 'cliente@ejemplo.com', // TODO: Cambiar
                 },
-                state: "PENDING" // Estado inicial
+                state: 'PENDING', // Estado inicial
             };
 
             try {
@@ -83,7 +95,11 @@ function CalendarComponent() {
 
                 if (response.ok) {
                     const result = await response.json();
-                    alert(`Cita reservada exitosamente: ${JSON.stringify(result.result)}`);
+                    alert(
+                        `Cita reservada exitosamente: ${JSON.stringify(
+                            result.result
+                        )}`
+                    );
                 } else {
                     const errorData = await response.json();
                     alert(`Error al reservar la cita: ${errorData.msg}`);
@@ -96,27 +112,27 @@ function CalendarComponent() {
 
     return (
         <div className="calendar-container">
-            {/* Botón "Volver" centrado */}
             <button className="back-button" onClick={() => window.history.back()}>
                 Volver
             </button>
-
-            {/* Header */}
             <header className="main-header">
                 <h1>Reservar Servicio</h1>
             </header>
-
-            {/* Contenido principal */}
             <main>
                 <div className="service-selector">
                     <label htmlFor="service">Seleccionar servicio</label>
-                    <select id="service" onChange={handleServiceChange} value={selectedService.name}>
-                        {services.map((service, index) => (
-                            <option key={index} value={service.name}>{service.name}</option>
+                    <select
+                        id="service"
+                        onChange={handleServiceChange}
+                        value={selectedService?.ServiceName || ''}
+                    >
+                        {services.map((service) => (
+                            <option key={service.ServiceID} value={service.ServiceName}>
+                                {service.ServiceName} - {service.Duration} min
+                            </option>
                         ))}
                     </select>
                 </div>
-
                 <div className="date-selector">
                     <label>Seleccionar día</label>
                     <Calendar
@@ -126,15 +142,19 @@ function CalendarComponent() {
                         minDate={new Date()}
                     />
                 </div>
-
                 {selectedDate && (
                     <div className="time-selector">
-                        <label>Horarios disponibles para {selectedDate.toLocaleDateString('es-ES')}</label>
+                        <label>
+                            Horarios disponibles para{' '}
+                            {selectedDate.toLocaleDateString('es-ES')}
+                        </label>
                         <div className="time-slots">
                             {timeSlots.map((time, index) => (
                                 <button
                                     key={index}
-                                    className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
+                                    className={`time-slot ${
+                                        selectedTime === time ? 'selected' : ''
+                                    }`}
                                     onClick={() => handleTimeClick(time)}
                                 >
                                     {time}
@@ -143,19 +163,15 @@ function CalendarComponent() {
                         </div>
                     </div>
                 )}
-
                 {selectedTime && (
                     <div className="confirm-button-container">
-                        {/* <button className="btn-book" onClick={handleBooking}>
+                        <a href="/bookConfirmed" className="btn-book">
                             Reservar
-                        </button> */}
-                        <a href="/bookConfirmed" className="btn-book">Reservar</a>
+                        </a>
                     </div>
                 )}
             </main>
         </div>
-
-
     );
 }
 

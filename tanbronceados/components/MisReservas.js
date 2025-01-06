@@ -45,14 +45,16 @@ export default function MisReservas() {
                 <h3>Reserva #{booking.BookingID}</h3>
                 <p>
                   Fecha de compra:{" "}
-                  {new Date(booking.SessionPurchaseDate).toLocaleDateString()}
+                  {new Date(booking.SessionPurchaseDate).toLocaleDateString()} //TODO: ver si agarra bien esto
                 </p>
                 <p>Precio: {booking.State} UYU</p>
               </li>
             ))}
           </ul>
         ) : (
-          <p>No tienes sesiones compradas.</p>
+          <>
+            <p>No tienes sesiones compradas.</p>
+          </>
         )}
       </section>
     </div>
