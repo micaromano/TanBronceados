@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function MisSesiones({ user }) {
   const [sessions, setSessions] = useState([]);
@@ -8,8 +9,8 @@ export default function MisSesiones({ user }) {
   const [stickerCount, setStickerCount] = useState(0); // Contador de stickers acumulados
 
   useEffect(() => {
-
-    fetch(`/api/sessionsByClient/${user.email}`, { credentials: 'include' })
+    cargarStickers([]);
+    fetch(`/api/getSessionsByClient?id=${user.id}`, { credentials: 'include' })
       .then((response) => response.json())
       .then((data) => {
         setSessions(data);
@@ -20,7 +21,10 @@ export default function MisSesiones({ user }) {
         console.error('Error al obtener sesiones:', error);
         setLoading(false);
       });
-  }, [user.email]);
+  }, [user.id]);
+
+  console.log(sessions)
+  
 
   // Cargar stickers y manejar la lógica de sesión gratis
   const cargarStickers = (sessions) => {
@@ -42,11 +46,14 @@ export default function MisSesiones({ user }) {
       newStickerCount = 0; // Resetear el contador
       newStickers = Array(7).fill(null); // Reiniciar stickers
     }
-
+    
+    // Descomentar si se quieren simular sesiones
+    newStickers[0] = `Sticker #1`;
+    
     // Actualizar estados
     setStickers(newStickers);
     setStickerCount(newStickerCount);
-
+  }
     // Generar sesión gratis
   const generarSesionGratis = () => {
     alert("¡Felicitaciones! Has acumulado 7 stickers y ganaste una sesión gratis.");
@@ -75,19 +82,35 @@ export default function MisSesiones({ user }) {
         {loading ? (
           <p>Cargando tus sesiones...</p>
         ) : sessions.length > 0 ? (
-          <ul className="features">
+          <div className="features sessions-table">
+            {/* Encabezado de la tabla */}
+            <div className="table-header">
+              <div className="session-cell"><strong>Sesión Id</strong></div>
+              <div className="session-cell"><strong>Fecha de Compra</strong></div>
+              <div className="session-cell"><strong>Estado</strong></div>
+              <div className="session-cell"></div>
+            </div>
+            {/* Filas de la tabla */}
             {sessions.map((session) => (
-              <li key={session.SessionID} className="feature">
-                <span className="icon solid major fa-calendar-check accent2"></span>
-                <h3>Sesión #{session.SessionID}</h3>
-                <p>
-                  Fecha de compra:{" "}
+              <div key={session.SessionID} className="table-row">
+                <div className="session-cell">{session.SessionID}</div>
+                <div className="session-cell">
                   {new Date(session.SessionPurchaseDate).toLocaleDateString()}
-                </p>
-                <p>Precio: {session.Price} UYU</p>
-              </li>
+                </div>
+                <div className="session-cell">
+                  {session.SessionState}
+                </div>
+                <div className="session-cell">
+                  <button
+                    className="session-button"
+                    onClick={() => agendarSesion(session.SessionID)}
+                    >
+                    Agendar
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         ) : (
           <p>No tienes sesiones compradas.</p>
         )}
@@ -115,5 +138,4 @@ export default function MisSesiones({ user }) {
       </section>
     </div>
   );
-}
 }

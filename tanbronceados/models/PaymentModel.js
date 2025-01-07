@@ -41,7 +41,7 @@ class PaymentModel {
 
   associate(models) {
       //Relacion con Session
-      this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'PaymentID', as: 'sessions' });
+      this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'SessionID', as: 'sessions' });
       //Relacion con Booking
       this.raw.belongsTo(models.BookingModel.raw, { foreignKey: 'BookingID', as: 'booking' });
       //Relacion con DiscountCoupon
