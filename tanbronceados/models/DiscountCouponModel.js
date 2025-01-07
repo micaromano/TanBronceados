@@ -35,7 +35,7 @@ class DiscountCouponModel {
       },
       // Campo adicional solo para "Unico"
       ExpirationDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true, // Solo se usa si el tipo es 'Unico'
       },
       isActive: {

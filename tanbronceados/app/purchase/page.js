@@ -32,7 +32,6 @@ function ComprarServicio() {
           console.error('Error al obtener servicios:', error);
         }
     };
-    
     // Traer lista de cupones
     const fetchDiscountCoupons = async () => {
         try {
@@ -152,8 +151,9 @@ function ComprarServicio() {
         let cuponFound = coupons.find(coup => coup.Code === coupon);
         const dateToday = new Date();
         const formattedDateToday = dateToday.toISOString().split('T')[0];
+        const formattedCouponDate = new Date(cuponFound.ExpirationDate).toISOString().split("T")[0];
         
-        if (cuponFound && (cuponFound.ExpirationDate == null || (cuponFound.ExpirationDate != null && cuponFound.ExpirationDate > formattedDateToday))) {
+        if (cuponFound && (cuponFound.ExpirationDate == null || (cuponFound.ExpirationDate != null && formattedCouponDate >= formattedDateToday))) {
             setCouponSuccess(cuponFound);
             setMessage(`Se aplico el codigo con ${cuponFound.DiscountPercentage}% de descuento.`);
             console.log('couponSuccess', couponSuccess);
@@ -184,12 +184,11 @@ function ComprarServicio() {
                     <option value="">-- Selecciona un servicio --</option>
                     {
                         services.map(
-                            service => <option key={service.ServiceID} value={service.ServiceID}>{service.ServiceName}</option>
+                            service => <option key={service.ServiceID} value={service.ServiceID}>{service.ServiceName} - ${service.Price}</option>
                         )
                     }
                 </select>
             </div>
-
 
             {/* Discount Coupon Field */}
             <div className="discount-coupon-input form-floating mb-3" style={{ position: 'relative' }}>
