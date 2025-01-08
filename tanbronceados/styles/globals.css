@@ -2368,6 +2368,126 @@
 					border-radius: 0 0 6px 6px;
 				}
 
+/* Estilo General de la Tabla */
+/* ========================= */
+.features.sessions-table {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr); 
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	overflow: hidden;
+	margin-top: 1em;
+	border-collapse: collapse;
+	overflow: hidden;
+	margin-bottom: 2.5em;
+  }
+  
+  /* ========================= */
+  /* Encabezado de la Tabla */
+  /* ========================= */
+  .features.sessions-table .table-header {
+	display: contents; /* Los encabezados forman parte del grid */
+	font-weight: bold;
+	text-align: center;
+  }
+  
+  .features.sessions-table .table-header .session-cell {
+	background-color: #f4f4f4;
+	padding: 12px 15px;
+	text-align: center;
+	font-weight: bold;
+  }
+
+  /* Formato de celdas */
+.features.sessions-table .session-cell {
+	padding: 10px 15px; /* Espaciado interno */
+	text-align: center; /* Centrado horizontal */
+	vertical-align: middle; /* Centrado vertical */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  }
+  
+  /* ========================= */
+  /* Filas de la Tabla */
+  /* ========================= */
+  .features.sessions-table .table-row {
+	display: contents; /* Cada fila sigue el grid */
+  }
+  
+  .features.sessions-table .table-row:nth-child(even) .session-cell {
+	background-color: #f9f9f9; /* Filas pares */
+  }
+  
+  .features.sessions-table .table-row:nth-child(odd) .session-cell {
+	background-color: #fff; /* Filas impares */
+  }
+
+  .features.sessions-table .session-button {
+	font-size: 13px;
+	padding: 8px 16px;
+	/*margin: 8px 0;*/
+	background-color: rgb(179, 155, 142);
+	color: #FFFFFF;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+
+  .features.sessions-table .session-button:hover {
+	background-color: #cbb7aa;
+  }
+  
+   /* Responsividad */
+  
+  
+  /* Tablets */
+  @media (max-width: 768px) {
+	.features.sessions-table {
+	  grid-template-columns: 1fr; /* Una sola columna */
+	}
+  
+	.features.sessions-table .table-header {
+	  display: none; /* Oculta encabezados en móviles */
+	}
+  
+	.features.sessions-table .table-row {
+	  display: flex;
+	  flex-direction: column;
+	  border: 1px solid #ddd;
+	  margin-bottom: 10px;
+	  border-radius: 6px;
+	  overflow: hidden;
+	}
+  
+	.features.sessions-table .session-cell {
+	  display: flex;
+	  justify-content: space-between;
+	  padding: 10px;
+	  border-right: none;
+	  border-bottom: 1px solid #ddd;
+	}
+  
+	.features.sessions-table .session-cell:last-child {
+	  border-bottom: none;
+	}
+  
+	.features.sessions-table .session-cell::before {
+	  content: attr(data-label);
+	  font-weight: bold;
+	  margin-right: 8px;
+	}
+  }
+  
+  /* Móviles */
+  @media (max-width: 480px) {
+	.features.sessions-table .session-cell {
+	  padding: 8px;
+	  font-size: 14px;
+	}
+  }
+
 /* Icon */
 
 	.icon {

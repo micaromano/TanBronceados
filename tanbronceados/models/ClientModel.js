@@ -72,8 +72,8 @@ class ClientModel {
 
   associate(models) {
     // Relacion con Booking
-    this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'ClientID', as: 'bookings' });
-    this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'ClientID', as: 'sessions' });
+    this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'BookingID', as: 'bookings' });
+    this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'SessionID', as: 'sessions' });
   }
 
 }

@@ -36,9 +36,9 @@ async function handler(req, res) {
       console.error('Password does not match');
       return res.status(401).json({ error: 'Usuario y/o contraseña inválido' });
     }
-
+    
     // Configura la cookie usando la función centralizada
-    setTokenCookie(res, { id: client.id, email: client.Email, fullName: client.FullName });
+    setTokenCookie(res, { id: client.ClientID, email: client.Email, fullName: client.FullName });
 
     // Enviar respuesta exitosa
     return res.status(200).json({ message: 'Login successful' });
