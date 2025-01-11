@@ -24,6 +24,10 @@ class BookingModel {
         type: DataTypes.TIME,
         allowNull: false,
       },
+      BookingDateTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       Deposit: {
         type: DataTypes.INTEGER,
         allowNull: false,

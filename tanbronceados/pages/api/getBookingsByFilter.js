@@ -14,6 +14,14 @@ export default async function handler(req, res) {
       where: queryParams,
     });
 
+    bookings.forEach(booking => {
+      const dateOnly = booking.BookingDateTime.toISOString().split("T")[0]; // "2025-01-12"
+      booking.BookingDate = dateOnly
+      
+      const timeOnly = booking.BookingDateTime.toTimeString().split(" ")[0]; // "10:00:00"
+      booking.BookingTime = timeOnly
+    });
+ 
     res.status(200).json({queryParams, bookings});
   } catch (error) {
     console.error('Error al obtener reservas:', error);

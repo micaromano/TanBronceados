@@ -8,7 +8,26 @@ function ViewBookings() {
     const [bookings, setBookings] = useState([]);
     const [filters, setFilters] = useState({ client: '', date: '', state: ''});
     const [ isLoading, setIsLoading] = useState(false);
-    
+    const [bookingStates, setBookingStates] = useState([]);
+
+    useEffect(() => {
+      fetchBookingStates();
+    }, []);
+
+    const fetchBookingStates = async () => {
+      try {
+        const res = await fetch('/api/getBookingStates'); // Endpoint para obtener los estados
+        if (res.ok) {
+          const data = await res.json();
+          setBookingStates(data.states);
+        } else {
+          toast.error('Error al cargar los estados de reservas');
+        }
+      } catch (error) {
+        console.error('Error al obtener los estados de reservas:', error);
+      }
+    };
+
       // Manejar cambios en los filtros
     const handleFilterChange = (e, field) => {
       setFilters({
@@ -83,10 +102,13 @@ function ViewBookings() {
           value={filters.date}
           onChange={(e) => handleFilterChange(e, 'date')}
         />
-        <select value={filters.status} onChange={(e) => handleFilterChange(e, 'status')}>
+        <select value={filters.state} onChange={(e) => handleFilterChange(e, 'state')}>
           <option value="">Todos los estados</option>
-          <option value="attended">Asistió</option>
-          <option value="not_attended">No asistió</option>
+          {bookingStates.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
         </select>
         <button onClick={fetchBookings}>Ver Reservas</button>
       </div>
