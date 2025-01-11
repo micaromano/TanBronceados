@@ -1,7 +1,4 @@
-//const SessionModel = require('../models/SessionModel');
-//const ClientModel = require('../models/ClientModel');
-import ClientModel from '../../models/ClientModel';
-import ServiceModel from '../../models/ServiceModel';
+
 import SessionModel from '../../models/SessionModel';
 
 
