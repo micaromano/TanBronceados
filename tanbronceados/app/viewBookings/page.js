@@ -131,7 +131,7 @@ function ViewBookings() {
             <tbody>
               {bookings.map((booking) => (
                 <tr key={booking.BookingID}>
-                  <td>{booking.ClientID}</td>
+                  <td>{booking.client.FullName}</td>
                   <td>{booking.BookingDate}</td>
                   <td>{booking.BookingTime}</td>
                   <td>{booking.BookingState === 'attended' ? 'Asistió' : 'No asistió'}</td>

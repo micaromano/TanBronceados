@@ -1,4 +1,6 @@
-import BookingModel from '../../models/BookingModel';
+import { BookingModel, ClientModel } from '../../models';
+//import ClientModel from '../../models/ClientModel';
+//import models from '../../models';
 
 
 export default async function handler(req, res) {
@@ -8,10 +10,16 @@ export default async function handler(req, res) {
     if (Object.keys(queryParams).length === 0) {
         return res.status(400).json({ message: 'Se requiere al menos un parámetro de consulta.' });
     }
-
+    
     // Obtener reservas con los filtros recibidos
     const bookings = await BookingModel.raw.findAll({
       where: queryParams,
+      include: [
+        {
+          model: ClientModel.raw, // Relación con ClientModel
+          as: 'client', // Alias definido en la asociación
+        }
+      ]
     });
 
     bookings.forEach(booking => {
