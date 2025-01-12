@@ -34,7 +34,7 @@ class BookingModel {
         allowNull: true,
       },
       BookingType: {
-        type: DataTypes.ENUM('ReservaPagada', 'ReservaConSena', 'HorarioNoDisponible'),
+        type: DataTypes.ENUM('ReservaPagada', 'ReservaPedientePago', 'HorarioNoDisponible'),
         allowNull: false,
       },
       BookingState: {
