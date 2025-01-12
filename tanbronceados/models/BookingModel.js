@@ -16,11 +16,11 @@ class BookingModel {
         primaryKey: true,
         autoIncrement: true,
       },
-      Date: {
+      BookingDate: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
-      Time: {
+      BookingTime: {
         type: DataTypes.TIME,
         allowNull: false,
       },
@@ -28,12 +28,12 @@ class BookingModel {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      State: {
-        type: DataTypes.BOOLEAN,
+      BookingState: {
+        type: DataTypes.ENUM('Pendiente', 'Finalizada', 'Cancelada', 'No show'),
         allowNull: false,
       },
     }, {
-      tableName: 'Booking',  // Nombre de la tabla
+      tableName: 'Bookings',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
       freezeTableName: true,
     });
@@ -49,7 +49,7 @@ class BookingModel {
       // Relacion con Session (0..N a 1..1)
       this.raw.belongsTo(models.SessionModel.raw, { foreignKey: 'SessionID', as: 'session' });
       // Relacion con Payment
-      this.raw.hasOne(models.PaymentModel.raw, { foreignKey: 'BookingID', as: 'payment' });
+      this.raw.hasOne(models.PaymentModel.raw, { foreignKey: 'PaymentID', as: 'payment' });
   }
 
 }

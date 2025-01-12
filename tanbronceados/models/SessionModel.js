@@ -17,25 +17,20 @@ class SessionModel {
         primaryKey: true,
         autoIncrement: true,
       },
-      SessionName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       SessionPurchaseDate: {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      Price: {
-        type: DataTypes.INTEGER,
+      SessionState: {
+        type: DataTypes.ENUM('Pendiente de agenda', 'Agendada', 'Cancelada', 'Usada'),
         allowNull: false,
-      },
+        defaultValue: 'Pendiente de agenda',
+      }
     }, {
       tableName: 'SessionServices',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
       freezeTableName: true,
     });
-    // Relacion con Service
-    this.raw.belongsTo(ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
   }
 
   get raw() {
@@ -46,11 +41,11 @@ class SessionModel {
       // Relacion con Client
       this.raw.belongsTo(models.ClientModel.raw, { foreignKey: 'ClientID', as: 'client' });
       // Relacion con Service
-      //this.raw.belongsTo(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
+      this.raw.belongsTo(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
       // Relacion con Payment
-      this.raw.belongsTo(models.PaymentModel.raw, { foreignKey: 'SessionID', as: 'payment' });
+      this.raw.belongsTo(models.PaymentModel.raw, { foreignKey: 'PaymentID', as: 'payment' });
       // Relacion con Booking
-      this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'SessionID', as: 'bookings' });
+      this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'BookingID', as: 'bookings' });
   }
 
 }

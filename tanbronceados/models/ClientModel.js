@@ -49,6 +49,16 @@ class ClientModel {
         type: DataTypes.BOOLEAN,
         defaultValue: false, // La cuenta estará inactiva por defecto
       },
+      createdAt: {
+        type: DataTypes.DATE, // Se asegura usar un tipo DATE sin zona horaria
+        allowNull: false,
+        defaultValue: db.literal('GETDATE()'), // Usa la fecha actual del servidor
+      },
+      updatedAt: {
+        type: DataTypes.DATE, // Se asegura usar un tipo DATE sin zona horaria
+        allowNull: false,
+        defaultValue: db.literal('GETDATE()'), // Usa la fecha actual del servidor
+      },
     }, {
       tableName: 'Clients',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
@@ -62,8 +72,8 @@ class ClientModel {
 
   associate(models) {
     // Relacion con Booking
-    this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'ClientID', as: 'bookings' });
-    this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'ClientID', as: 'sessions' });
+    this.raw.hasMany(models.BookingModel.raw, { foreignKey: 'BookingID', as: 'bookings' });
+    this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'SessionID', as: 'sessions' });
   }
 
 }
