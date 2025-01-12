@@ -17,7 +17,7 @@ class PaymentModel {
         autoIncrement: true,
       },
       AmountPaid: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       PaymentDate: {

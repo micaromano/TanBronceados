@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class BookingModel {
+  
   #rawModel;
 
   constructor() {
@@ -24,12 +25,20 @@ class BookingModel {
         type: DataTypes.TIME,
         allowNull: false,
       },
+      BookingDateTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       Deposit: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      BookingType: {
+        type: DataTypes.ENUM('ReservaPagada', 'ReservaConSena', 'HorarioNoDisponible'),
+        allowNull: false,
+      },
       BookingState: {
-        type: DataTypes.ENUM('Pendiente', 'Finalizada', 'Cancelada', 'No show'),
+        type: DataTypes.ENUM('Pendiente', 'Finalizada', 'Cancelada', 'NoShow'),
         allowNull: false,
       },
     }, {
