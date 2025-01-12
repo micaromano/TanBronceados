@@ -36,17 +36,14 @@ class ServiceModel {
         type: DataTypes.BOOLEAN,
         defaultValue: true, // El servicio estará activo por defecto
       },
-      createdAt: {
-        type: DataTypes.DATE, // Se asegura usar un tipo DATE sin zona horaria
+      horaDesde:  {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: db.literal('GETDATE()'), // Usa la fecha actual del servidor
       },
-      updatedAt: {
-        type: DataTypes.DATE, // Se asegura usar un tipo DATE sin zona horaria
+      horaHasta:  {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: db.literal('GETDATE()'), // Usa la fecha actual del servidor
-      },
-
+      }
     }, {
       tableName: 'BusinessServices',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
