@@ -92,9 +92,9 @@ function BookingPage() {
         const requestBody = {
             Date: formattedDate, // Fecha en formato correcto
             Time: selectedTime,  // Hora como string en formato "HH:mm"
-            State: true,         // Booleano para el estado
+            State: 'Pendiente',         // Booleano para el estado
             ClientID: clientId,  // ID del cliente
-            SessionID: sessionId // ID de la sesión
+            SessionID: sessionId //TODO: cambiar a que sea servicio
         };
     
         const response = await fetch('/api/bookAppointment', {
