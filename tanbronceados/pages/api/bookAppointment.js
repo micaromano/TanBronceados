@@ -6,26 +6,27 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { date, time, state, clientId, sessionId } = req.body; //TODO: session y un servicio
+    const { BookingDateTime, BookingType, BookingState, clientID, sessionID, serviceID } = req.body; //TODO: session y un servicio
 
     console.log('req.body = ', req.body); //TODO: Borrar console.log
-    if (!date || !time || state === undefined || !clientId || !sessionId) { //TODO: sesion puede ser null y agregar servicio
+    if (!BookingDateTime || BookingState === undefined || BookingType === undefined || !clientID || !sessionID || !serviceID) { //TODO: sesion puede ser null y agregar servicio
       return res.status(400).json({
         success: false,
         error: 'Faltan datos requeridos para crear la reserva',
       });
     }
 
-    const formattedDate = new Date(date).toISOString().split('T')[0];
-    const formattedTime = time;
+    // const formattedDate = new Date(date).toISOString().split('T')[0];
+    // const formattedTime = time;
 
     // Crear la reserva en la BD con Sequelize
     const newBooking = await BookingModel.raw.create({
-      Date: formattedDate,
-      Time: formattedTime,
-      State: state,
-      ClientID: clientId,
-      SessionID: sessionId,
+      DateTime: BookingDateTime,
+      Type: BookingType,
+      State: BookingState,
+      ClientID: clientID,
+      SessionID: sessionID,
+      ServiceID: serviceID
     });
 
     return res.status(201).json({
@@ -35,7 +36,7 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('Error al crear la reserva:', {
-      input: { date, time, state, clientId, sessionId },
+      input: { BookingDateTime, BookingType, BookingState, clientID, sessionID, serviceID },
       error,
     });
 
