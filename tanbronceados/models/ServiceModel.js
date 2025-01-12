@@ -62,11 +62,15 @@ class ServiceModel {
     //Relacion con Session
     this.raw.hasMany(models.SessionModel.raw, { foreignKey: 'ServiceID', as: 'sessions' });
     //Relacion con Service Creado
-    this.raw.belongsTo(models.AdminModel.raw, { foreignKey: 'CreateByID', as: 'creator' });
-    //Relacion con Service Editado
-    this.belongsToMany(models.AdminModel.raw, { through: 'Modifications', foreignKey: 'ServiceID', as: 'modifierAdministrators' });
-    //Relacion con Service Dado de baja
-    this.belongsTo(models.AdminModel.raw, { foreignKey: 'DischargedID', as: 'administratorDischarge' });
+    this.raw.belongsTo(models.AdminModel.raw, { foreignKey: 'AdminID', as: 'creator' });
+
+    /** 
+    * TODO: Se comenta porque estan mal definidas estas relaciones - VER y BORRAR (aszegers)
+    **/
+    // //Relacion con Service Editado
+    // this.raw.belongsToMany(models.AdminModel.raw, { through: 'Modifications', foreignKey: 'ServiceID', as: 'modifierAdministrators' });
+    // //Relacion con Service Dado de baja
+    // this.raw.belongsTo(models.AdminModel.raw, { foreignKey: 'DischargedID', as: 'administratorDischarge' });
 
 }
    

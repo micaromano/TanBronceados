@@ -46,12 +46,16 @@ class AdminModel {
   }
 
   associate(models) {
-    // Relacion con Service Creado
-    this.hasMany(models.ServiceModel.raw, { as: 'CreatedServices', foreignKey: 'CreateByID' });
-    // Relacion con Service Editado
-    this.belongsToMany(models.ServiceModel.raw, { through: 'Modifications', as: 'ModifiedServices', foreignKey: 'AdminID' });
-    // Relacion con Service Dado de baja
-    this.hasMany(models.ServiceModel.raw, { as: 'ServicesTerminated', foreignKey: 'DischargedID' });
+    
+    /** 
+    * TODO: Se comenta porque estan mal definidas estas relaciones - VER y BORRAR (aszegers)
+    **/
+    // // Relacion con Service Creado
+    // this.raw.hasMany(models.ServiceModel.raw, { as: 'CreatedServices', foreignKey: 'CreateByID' });
+    // // Relacion con Service Editado
+    // this.raw.belongsToMany(models.ServiceModel.raw, { through: 'Modifications', as: 'ModifiedServices', foreignKey: 'AdminID' });
+    // // Relacion con Service Dado de baja
+    // this.raw.hasMany(models.ServiceModel.raw, { as: 'ServicesTerminated', foreignKey: 'DischargedID' });
   }
 
 }
