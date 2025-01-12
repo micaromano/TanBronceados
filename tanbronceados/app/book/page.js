@@ -18,8 +18,11 @@ function BookingPage() {
     const loadServices = async () => {
       try {
         const data = await fetchServices();
-        setServices(data);
-        setSelectedService(data[0]);
+  
+        const activeServices = data.filter((s) => s.isActive === true);
+  
+        setServices(activeServices);
+        setSelectedService(activeServices[0]);
       } catch (error) {
         console.error(error);
       }
@@ -29,14 +32,23 @@ function BookingPage() {
 
   const generateTimeSlots = (startHour, endHour, duration) => {
     const slots = [];
-    for (let hour = startHour; hour < endHour; hour++) {
-      for (let minute = 0; minute < 60; minute += duration) {
-        const formattedTime = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-        slots.push(formattedTime);
-      }
+  
+    const startInMinutes = startHour * 60;
+    const endInMinutes = endHour * 60;
+  
+    for (let current = startInMinutes; current < endInMinutes; current += duration) {
+      const hour = Math.floor(current / 60);
+      const minute = current % 60;
+  
+      const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
+        .toString()
+        .padStart(2, '0')}`;
+  
+      slots.push(formattedTime);
     }
+  
     setTimeSlots(slots);
-  };
+  };  
 
   useEffect(() => {
     if (selectedDate && selectedService) {
