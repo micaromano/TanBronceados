@@ -23,4 +23,17 @@ Object.values(models).forEach((model) => {
   }
 });
 
+// Sincroniza los modelos con la base de datos
+// (async () => {
+//     try {
+        
+//       await sequelize.authenticate();
+//       console.log('Conexión a la base de datos establecida correctamente.');
+//       await sequelize.sync({ alter: false }); // Cambiar a true en desarrollo si se necesita actualizar las tablas sin perder datos
+//       console.log('Tablas sincronizadas correctamente.');
+//     } catch (error) {
+//       console.error('Error al sincronizar las tablas:', error);
+//     }
+//   })();
+
 module.exports = models;

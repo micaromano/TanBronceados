@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
-const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
+const db = require('../config/db'); 
 
 class BookingModel {
-  
+
   #rawModel;
 
   constructor() {
@@ -31,7 +31,7 @@ class BookingModel {
       },
       Deposit: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       BookingType: {
         type: DataTypes.ENUM('ReservaPagada', 'ReservaConSena', 'HorarioNoDisponible'),
@@ -59,6 +59,8 @@ class BookingModel {
       this.raw.belongsTo(models.SessionModel.raw, { foreignKey: 'SessionID', as: 'session' });
       // Relacion con Payment
       this.raw.hasOne(models.PaymentModel.raw, { foreignKey: 'PaymentID', as: 'payment' });
+      // Relacion con Service
+      this.raw.hasOne(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
   }
 
 }
