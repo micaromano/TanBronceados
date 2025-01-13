@@ -29,10 +29,6 @@ class BookingModel {
         type: DataTypes.ENUM('Pendiente', 'Finalizada', 'Cancelada', 'NoShow'),
         allowNull: false,
       },
-      BookingType: {
-        type: DataTypes.ENUM('ReservaPagada', 'ReservaPedientePago', 'HorarioNoDisponible'),
-        allowNull: false,
-      },
       ClientID: {
         type: DataTypes.INTEGER,
         allowNull: false,
