@@ -15,6 +15,8 @@ function ServicePage() {
     description: '',
     price: '',
     duration: '',
+    horaDesde: '',
+    horaHasta: '',
     error: '',
     errors: {},
     message: '',
@@ -74,6 +76,30 @@ function ServicePage() {
           errorMessage = 'La duración debe ser un valor númerico.';
         }
         break;
+        
+      case 'horaDesde':
+        if (!state.horaDesde) {
+          errorMessage = 'La horaDesde es obligatoria.';
+        } else if (parseFloat(state.horaDesde) <= 0) {
+          errorMessage = 'La horaDesde debe ser mayor que cero.';
+        } else if (!/^\d+$/.test(state.horaDesde)) {
+          errorMessage = 'La horaDesde debe ser un valor númerico.';
+        } else if (parseFloat(state.horaDesde) >= 24) {
+          errorMessage = 'La horaDesde debe ser menor a 24.';
+        }
+        break;
+
+      case 'horaHasta':
+        if (!state.horaHasta) {
+          errorMessage = 'La horaHasta es obligatoria.';
+        } else if (parseFloat(state.horaHasta) <= 0) {
+          errorMessage = 'La horaHasta debe ser mayor que cero.';
+        } else if (!/^\d+$/.test(state.horaHasta)) {
+          errorMessage = 'La horaHasta debe ser un valor númerico.';
+        } else if (parseFloat(state.horaHasta) <= parseFloat(state.horaDesde)) {
+          errorMessage = 'La horaHasta debe ser mayor a la horaDesde.';
+        }
+        break;
 
       default:
         break;
@@ -112,6 +138,8 @@ function ServicePage() {
           description: state.description,
           price: state.price,
           duration: state.duration,
+          horaDesde: state.horaDesde,
+          horaHasta: state.horaHasta,
         }),
       });
 
@@ -173,6 +201,8 @@ function ServicePage() {
             description={state.description}
             price={state.price}
             duration={state.duration}
+            horaDesde={state.horaDesde}
+            horaHasta={state.horaHasta}
             onChange={handleChange}
             onSubmit={handleSubmit}
             onBlur={handleBlur}
