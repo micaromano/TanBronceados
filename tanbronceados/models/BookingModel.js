@@ -17,30 +17,42 @@ class BookingModel {
         primaryKey: true,
         autoIncrement: true,
       },
-      BookingDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      BookingTime: {
-        type: DataTypes.TIME,
-        allowNull: false,
-      },
       BookingDateTime: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      Deposit: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      BookingType: {
-        type: DataTypes.ENUM('ReservaPagada', 'ReservaPedientePago', 'HorarioNoDisponible'),
+        type: DataTypes.DATETIME,
         allowNull: false,
       },
       BookingState: {
         type: DataTypes.ENUM('Pendiente', 'Finalizada', 'Cancelada', 'NoShow'),
         allowNull: false,
       },
+      BookingType: {
+        type: DataTypes.ENUM('ReservaPagada', 'ReservaPedientePago', 'HorarioNoDisponible'),
+        allowNull: false,
+      },
+      ClientID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Clients',      
+          key: 'ClientID',
+        },
+      },
+      SessionID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'SessionServices',
+          key: 'SessionID',
+        },
+      },
+      ServiceID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'BusinessServices',    
+          key: 'ServiceID',
+        },
+      }
     }, {
       tableName: 'Bookings',  // Nombre de la tabla
       timestamps: true,  // Activa las columnas createdAt y updatedAt
@@ -57,10 +69,6 @@ class BookingModel {
       this.raw.belongsTo(models.ClientModel.raw, { foreignKey: 'ClientID', as: 'client' });
       // Relacion con Session (0..N a 1..1)
       this.raw.belongsTo(models.SessionModel.raw, { foreignKey: 'SessionID', as: 'session' });
-      // Relacion con Payment
-      this.raw.hasOne(models.PaymentModel.raw, { foreignKey: 'PaymentID', as: 'payment' });
-      // Relacion con Service
-      this.raw.hasOne(models.ServiceModel.raw, { foreignKey: 'ServiceID', as: 'service' });
   }
 
 }
