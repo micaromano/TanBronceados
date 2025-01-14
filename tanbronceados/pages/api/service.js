@@ -7,9 +7,9 @@ async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { name, description, price, duration } = req.body;
+  const { name, description, price, duration, horaDesde, horaHasta } = req.body;
 
-  console.log('name, description, price, duration', name, description, price, duration);
+  console.log('name, description, price, duration, horaDesde, horaHasta', name, description, price, duration, horaDesde, horaHasta);
 
     // Se validan campos antes de procesarlos
     // name
@@ -44,6 +44,26 @@ async function handler(req, res) {
       return res.status(404).json({ error: 'La duración debe ser mayor que cero.' });
     }
 
+    if (!horaDesde.trim()) {
+      return res.status(404).json({ error: 'La horaDesde es obligatoria.'});
+    } else if (parseFloat(horaDesde) <= 0) {
+      return res.status(404).json({ error: 'La horaDesde debe ser mayor que cero.'});
+    } else if (!/^\d+$/.test(horaDesde)) {
+      return res.status(404).json({ error: 'La horaDesde debe ser un valor númerico.'});
+    } else if (parseFloat(horaDesde) >= 24) {
+      return res.status(404).json({ error: 'La horaDesde debe ser menor a 24.'});
+    }
+
+    if (!horaHasta.trim()) {
+      return res.status(404).json({ error: 'La horaHasta es obligatoria.'});
+    } else if (parseFloat(horaHasta) <= 0) {
+      return res.status(404).json({ error: 'La horaHasta debe ser mayor que cero.'});
+    } else if (!/^\d+$/.test(horaHasta)) {
+      return res.status(404).json({ error: 'La horaHasta debe ser un valor númerico.'});
+    } else if (parseFloat(horaHasta) <= parseFloat(horaDesde)) {
+      return res.status(404).json({ error: 'La horaHasta debe ser mayor a la horaDesde.'});
+    }
+
     //TODO: Verificar que no exista el servicio por el nombre
 
     try{
@@ -54,6 +74,8 @@ async function handler(req, res) {
         ServiceDescription: description,
         Price: price,
         Duration: duration,
+        HoraDesde: horaDesde,
+        HoraHasta: horaHasta,
       });
 
     console.log('newService', newService);

@@ -17,6 +17,8 @@ function EditServicePage({ params }) {
     description: '',
     price: '',
     duration: '',
+    horaDesde: '',
+    horaHasta: '',
     error: '',
     errors: {},
     message: '',
@@ -42,6 +44,8 @@ function EditServicePage({ params }) {
                   description: data.ServiceDescription,
                   price: data.Price,
                   duration: data.Duration,
+                  horaDesde: data.HoraDesde,
+                  horaHasta: data.HoraHasta,
               }));
           } else {
               console.error('Error al obtener datos del servicio.');
@@ -110,6 +114,30 @@ function EditServicePage({ params }) {
         }
         break;
 
+        case 'horaDesde':
+          if (!state.horaDesde) {
+            errorMessage = 'La horaDesde es obligatoria.';
+          } else if (parseFloat(state.horaDesde) <= 0) {
+            errorMessage = 'La horaDesde debe ser mayor que cero.';
+          } else if (!/^\d+$/.test(state.horaDesde)) {
+            errorMessage = 'La horaDesde debe ser un valor númerico.';
+          } else if (parseFloat(state.horaDesde) >= 24) {
+            errorMessage = 'La horaDesde debe ser menor a 24.';
+          }
+          break;
+  
+        case 'horaHasta':
+          if (!state.horaHasta) {
+            errorMessage = 'La horaHasta es obligatoria.';
+          } else if (parseFloat(state.horaHasta) <= 0) {
+            errorMessage = 'La horaHasta debe ser mayor que cero.';
+          } else if (!/^\d+$/.test(state.horaHasta)) {
+            errorMessage = 'La horaHasta debe ser un valor númerico.';
+          } else if (parseFloat(state.horaHasta) <= parseFloat(state.horaDesde)) {
+            errorMessage = 'La horaHasta debe ser mayor a la horaDesde.';
+          }
+          break;
+
       default:
         break;
     }
@@ -139,7 +167,7 @@ function EditServicePage({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('id, name, description, price, duration', state.id, state.name, state.description, state.price, state.duration);
+    console.log('id, name, description, price, duration, horaDesde, horaHasta', state.id, state.name, state.description, state.price, state.duration, state.horaDesde, state.horaHasta);
 
     // Se envía solicitud de edición con los datos del formulario
 
@@ -147,7 +175,7 @@ function EditServicePage({ params }) {
       const res = await fetch('/api/editService', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ serviceID: state.id, serviceName: state.name, serviceDescription: state.description, price: state.price, duration: state.duration }),
+        body: JSON.stringify({ serviceID: state.id, serviceName: state.name, serviceDescription: state.description, price: state.price, duration: state.duration, horaDesde: state.horaDesde, horaDesde: state.horaHasta }),
       });
 
       if (res.ok) {
@@ -209,6 +237,8 @@ function EditServicePage({ params }) {
             description={state.description}
             price={state.price}
             duration={state.duration}
+            horaDesde={state.horaDesde}
+            horaHasta={state.horaHasta}
             onChange={handleChange}
             onSubmit={handleSubmit}
             onBlur={handleBlur}
