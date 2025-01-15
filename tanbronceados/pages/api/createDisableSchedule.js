@@ -7,10 +7,10 @@ export default async function disableTimeSlotHandler(req, res) {
     return res.status(405).json({ error: 'Only POST requests are allowed' });
   }
 
-  const { fechaDesde, horarioDesde, fechaHasta, horarioHasta, servicioID } = req.body;
+  const { fechaDesde, horarioDesde, fechaHasta, horarioHasta, serviceID } = req.body;
 
   // Validación de los parámetros
-  if (!fechaDesde || !horarioDesde || !fechaHasta || !horarioHasta || !servicioID) {
+  if (!fechaDesde || !horarioDesde || !fechaHasta || !horarioHasta || !serviceID) {
     return res.status(400).json({ error: 'Todos los campos son requeridos' });
   }
 
@@ -29,7 +29,7 @@ export default async function disableTimeSlotHandler(req, res) {
     }
 
     // Obtener la duración del servicio
-    const service = await ServiceModel.raw.findByPk(servicioID);
+    const service = await ServiceModel.raw.findByPk(serviceID);
     if (!service) {
       return res.status(404).json({ error: 'El servicio especificado no existe' });
     }
@@ -77,12 +77,10 @@ export default async function disableTimeSlotHandler(req, res) {
       if (reservationEnd > toDateTime) break;
 
       const newBooking = await BookingModel.raw.create({
-        BookingDate: reservationStart.toISOString().split('T')[0],
-        BookingTime: reservationStart.toTimeString().split(' ')[0],
         BookingDateTime: reservationStart,
         BookingType: 'HorarioNoDisponible',
         BookingState: 'Finalizado',
-        service: servicio,
+        ServiceID: serviceID,
       });
 
       reservations.push(newBooking);
