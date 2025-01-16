@@ -22,12 +22,12 @@ function ComprarServicio() {
     // Traer lista de servicios
     const fetchServices = async () => {
         try {
-          const response = await fetch('/api/getServicesList');
+          const response = await fetch('/api/getServicesList?isActive=true');
           if (!response.ok) {
             throw new Error(`Error en la solicitud: ${response.statusText}`);
           }
           const dataServices = await response.json();
-          setServices(dataServices.filter((s) => s.isActive == 1));
+          setServices(dataServices);
         } catch (error) {
           console.error('Error al obtener servicios:', error);
         }

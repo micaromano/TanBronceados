@@ -4,14 +4,20 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { isActive } = req.query;
     console.log('isActive', isActive);
+
     try {
       // const services = await ServiceModel.raw.findAll({
       //   where: {
       //     isActive: 1, // Filtrar servicios activos
       //   }
-
-      const services = await ServiceModel.raw.findAll({ where: { isActive: isActive }});  // Esto devuelve un arreglo con todos los servicios
-      if (!services) {
+      let services;
+      if(!isActive){
+        services = await ServiceModel.raw.findAll();
+      } else {
+        const isActiveBit = isActive === 'true' ? 1 : 0
+        services = await ServiceModel.raw.findAll({ where: { isActive: isActiveBit }});
+      }
+      if (!services || services.lenght ===0) {
         return res.status(404).json({ error: 'Servicio no encontrado.' });
     }
       res.status(200).json(services);

@@ -21,14 +21,21 @@ const ServicesList = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await fetch('/api/getServicesList');
-      if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      const responseActiveServ = await fetch('/api/getServicesList?isActive=true');
+      if (!responseActiveServ.ok) {
+        throw new Error(`Error en la solicitud: ${responseActiveServ.statusText}`);
       }
-      const dataServices = await response.json();
-      console.log('dataServices', dataServices);
-      setActiveServices(dataServices.filter((s) => s.isActive == 1));
-      setInactiveServices(dataServices.filter((s) => s.isActive == 0));
+      const dataActiveServices = await responseActiveServ.json();
+      console.log('dataActiveServices', dataActiveServices);
+      setActiveServices(dataActiveServices);
+      
+      const responseInactiveServ = await fetch('/api/getServicesList?isActive=false');
+      if (!responseInactiveServ.ok) {
+        throw new Error(`Error en la solicitud: ${responseInactiveServ.statusText}`);
+      }
+      const dataInactiveServices = await responseInactiveServ.json();
+      console.log('dataInactiveServices', dataInactiveServices);
+      setInactiveServices(dataInactiveServices);
     } catch (error) {
       console.error('Error al obtener servicios:', error);
     }
