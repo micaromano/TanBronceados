@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import CouponForm from '../../components/CouponForm';
 
 function CouponsPage() {
   const [coupons, setCoupons] = useState([]);
@@ -11,11 +12,11 @@ function CouponsPage() {
     ValidTo: '',
     MinPurchaseAmount: '',
     isActive: true,
+    CouponType: 'Promoción TAN', // Valor predeterminado
   });
   const [error, setError] = useState('');
   const router = useRouter();
 
-  // 1. Cargar cupones al montar el componente
   useEffect(() => {
     fetchCoupons();
   }, []);
@@ -32,7 +33,6 @@ function CouponsPage() {
     }
   };
 
-  // 2. Manejar inputs del formulario
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -40,7 +40,6 @@ function CouponsPage() {
     });
   };
 
-  // 3. Crear cupón
   const handleCreateCoupon = async (e) => {
     e.preventDefault();
     setError('');
@@ -56,9 +55,9 @@ function CouponsPage() {
         const { error } = await res.json();
         throw new Error(error || 'Error al crear el cupón');
       }
-      // Cupón creado con éxito
-      await fetchCoupons();  // Recargamos la lista
-      // Limpia formulario
+
+      await fetchCoupons();
+
       setFormData({
         Code: '',
         DiscountPercentage: '',
@@ -73,7 +72,6 @@ function CouponsPage() {
     }
   };
 
-  // 4. Eliminar cupón
   const handleDeleteCoupon = async (couponId) => {
     try {
       const res = await fetch('/api/createCoupons', {
@@ -95,105 +93,14 @@ function CouponsPage() {
   };
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h1>Gestión de Cupones</h1>
-
-      {/* Formulario para crear un nuevo cupón */}
-      <form onSubmit={handleCreateCoupon} style={{ marginBottom: '2rem' }}>
-        <h2>Crear Cupón</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-
-        <div>
-          <label>Code: </label>
-          <input
-            type="text"
-            name="Code"
-            value={formData.Code}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label>DiscountPercentage: </label>
-          <input
-            type="number"
-            step="0.01"
-            name="DiscountPercentage"
-            value={formData.DiscountPercentage}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label>ValidFrom: </label>
-          <input
-            type="date"
-            name="ValidFrom"
-            value={formData.ValidFrom}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label>ValidTo: </label>
-          <input
-            type="date"
-            name="ValidTo"
-            value={formData.ValidTo}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label>Mínimo de Compra: </label>
-          <input
-            type="number"
-            step="0.01"
-            name="MinPurchaseAmount"
-            value={formData.MinPurchaseAmount}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label>Activo: </label>
-          <input
-            type="checkbox"
-            name="isActive"
-            checked={formData.isActive}
-            onChange={(e) =>
-              setFormData({ ...formData, isActive: e.target.checked })
-            }
-          />
-        </div>
-
-        <button type="submit">Crear</button>
-      </form>
-
-      {/* Listar cupones existentes */}
-      <h2>Lista de Cupones</h2>
-      {coupons.length === 0 ? (
-        <p>No hay cupones disponibles.</p>
-      ) : (
-        <ul>
-          {coupons.map((coupon) => (
-            <li key={coupon.CouponID}>
-              <strong>{coupon.Code}</strong> - 
-              {coupon.DiscountPercentage}% - Válido desde {coupon.ValidFrom} hasta{' '}
-              {coupon.ValidTo} - Activo: {coupon.isActive ? 'Sí' : 'No'} - Mínimo de compra: 
-              {coupon.MinPurchaseAmount}
-              <button
-                style={{ marginLeft: '1rem', cursor: 'pointer' }}
-                onClick={() => handleDeleteCoupon(coupon.CouponID)}
-              >
-                Eliminar
-              </button>
-              {/* Podrías agregar un botón de "Editar" si deseas */}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <CouponForm
+      formData={formData}
+      coupons={coupons}
+      error={error}
+      handleChange={handleChange}
+      handleCreateCoupon={handleCreateCoupon}
+      handleDeleteCoupon={handleDeleteCoupon}
+    />
   );
 }
 

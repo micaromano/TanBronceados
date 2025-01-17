@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const db = require('../config/db'); // Ajusta la ruta a tu archivo de configuración
+const db = require('../config/db');
 
 class CouponModel {
   #rawModel;
@@ -40,6 +40,18 @@ class CouponModel {
         isActive: {
           type: DataTypes.BOOLEAN,
           defaultValue: true,
+        },
+        CouponType: {
+          type: DataTypes.ENUM,
+          values: [
+            'Novias - Vestido',
+            'Novias - Maquillaje',
+            'Promoción TAN',
+            'Influencer',
+            'Otros',
+          ],
+          allowNull: false,
+          defaultValue: 'Otros',
         },        
       },
       {
@@ -61,3 +73,27 @@ class CouponModel {
 }
 
 module.exports = new CouponModel();
+
+
+
+
+//TODO: Chequear esto
+// module.exports = {
+//   up: async (queryInterface, Sequelize) => {
+//     await queryInterface.addColumn('Coupons', 'CouponType', {
+//       type: Sequelize.ENUM(
+//         'Novias - Vestido',
+//         'Novias - Maquillaje',
+//         'Promoción TAN',
+//         'Influencer',
+//         'Otros'
+//       ),
+//       allowNull: false,
+//       defaultValue: 'Promoción TAN', // Valor predeterminado para cupones existentes
+//     });
+//   },
+//   down: async (queryInterface) => {
+//     await queryInterface.removeColumn('Coupons', 'CouponType');
+//     await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_Coupons_CouponType";');
+//   },
+// };

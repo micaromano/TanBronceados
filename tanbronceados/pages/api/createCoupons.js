@@ -5,7 +5,6 @@ export default async function handler(req, res) {
   const { method } = req;
 
   try {
-    // Asegúrate de conectar la DB (si todavía no está conectada en algún middleware).
     await db.authenticate();
 
     switch (method) {
@@ -31,10 +30,11 @@ export default async function handler(req, res) {
           ValidTo,
           MinPurchaseAmount,
           isActive = true,
+          CouponType,
         } = req.body;
 
         // Puedes validar campos aquí
-        if (!Code || !DiscountPercentage || !ValidFrom || !ValidTo || !MinPurchaseAmount) {
+        if (!Code || !DiscountPercentage || !ValidFrom || !ValidTo || !MinPurchaseAmount || !CouponType) {
           return res
             .status(400)
             .json({ error: 'Faltan campos requeridos para crear el cupón' });
@@ -47,6 +47,7 @@ export default async function handler(req, res) {
           ValidTo,
           MinPurchaseAmount,
           isActive,
+          CouponType,
         });
 
         return res.status(201).json(newCoupon);
@@ -66,6 +67,7 @@ export default async function handler(req, res) {
           ValidTo,
           MinPurchaseAmount,
           isActive,
+          CouponType,
         } = req.body;
 
         if (!CouponID) {
@@ -86,6 +88,7 @@ export default async function handler(req, res) {
         if (MinPurchaseAmount !== undefined)
           coupon.MinPurchaseAmount = MinPurchaseAmount;
         if (isActive !== undefined) coupon.isActive = isActive;
+        if (CouponType !== undefined) coupon.CouponType = CouponType;
 
         await coupon.save();
         return res.status(200).json(coupon);
