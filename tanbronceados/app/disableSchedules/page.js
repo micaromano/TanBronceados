@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { toast } from 'react-toastify';
 import Head from 'next/head';
-import Footer from '../../../components/Footer';
+import Footer from '../../components/Footer';
+import DisableForm from '@/components/DisableForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -134,7 +135,7 @@ function DisableSchedules() {
           style={{ backgroundColor: '#795D4F', color: '#FFF' }}
         >
           <div className="container d-flex justify-content-between">
-            <a href="/servicesList" className="text-white text-decoration-none">
+            <a href="/" className="text-white text-decoration-none">
               Volver
             </a>
           </div>
@@ -155,7 +156,7 @@ function DisableSchedules() {
               error={state.error}
               errors={state.errors}
               message={state.message}
-              title={title}
+
             />
         </div>
         <Footer />

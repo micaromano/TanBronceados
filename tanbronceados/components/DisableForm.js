@@ -8,6 +8,7 @@ function DisableForm({
   fechaHasta,
   horarioHasta,
   serviceID,
+  servicesList = [],
   onChange,
   onSubmit,
   onBlur,
@@ -16,7 +17,7 @@ function DisableForm({
   error,
   errors,
   message,
-  title,
+
 }) {
   return (
     <div
@@ -32,7 +33,7 @@ function DisableForm({
         className="text-center mb-4"
         style={{ color: '#795D4F', fontWeight: 'bold' }}
       >
-        {title}
+        Deshabilitar horas
       </h5>
       <form onSubmit={onSubmit}>
         {/* FechaDesde Field */}
@@ -58,7 +59,7 @@ function DisableForm({
 
         {/* HorarioDesde Field */}
         <div className="form-floating mb-3">
-          <textarea
+          <input
             type="int"
             className={`form-control ${errors.horarioDesde ? 'is-invalid' : ''}`}
             placeholder="Horario Desde"
@@ -69,7 +70,6 @@ function DisableForm({
               backgroundColor: '#F9F9F9',
               borderColor: '#D6D6D6',
               borderRadius: '8px',
-              height: '120px',
             }}
           />
           <label>Horario Desde</label>
@@ -122,12 +122,10 @@ function DisableForm({
           )}
         </div>
 
-        {/* ServiceID Field */}
+        {/* ServiceID Field (Select) */}
         <div className="form-floating mb-3">
-          <input
-            type="int"
-            className={`form-control ${errors.serviceID ? 'is-invalid' : ''}`}
-            placeholder="ServiceID"
+          <select
+            className={`form-select ${errors.serviceID ? 'is-invalid' : ''}`}
             value={serviceID || ''}
             onChange={(e) => onChange(e, 'serviceID')}
             onBlur={() => onBlur('serviceID')}
@@ -136,12 +134,20 @@ function DisableForm({
               borderColor: '#D6D6D6',
               borderRadius: '8px',
             }}
-          />
+          >
+            <option value="">Seleccione un servicio</option>
+            {servicesList.map(service => (
+              <option key={service.ServiceID} value={service.ServiceID}>
+                {service.ServiceName}
+              </option>
+            ))}
+          </select>
           <label>Servicio</label>
           {errors.serviceID && (
             <div className="invalid-feedback d-block">{errors.serviceID}</div>
           )}
         </div>
+
 
         {/* Submit Button */}
         <div className="d-grid">
