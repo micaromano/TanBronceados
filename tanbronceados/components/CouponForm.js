@@ -15,7 +15,6 @@ function CouponForm({
 
       <form onSubmit={handleCreateCoupon} className={styles.form}>
         <h2>Crear Cupón</h2>
-        {error && <p className={styles.error}>{error}</p>}
 
         <label className={styles.label}>Code: </label>
         <input
@@ -64,7 +63,8 @@ function CouponForm({
           className={styles.input}
         />
 
-        <label className={styles.label}>Activo: </label>
+{/* TODO: Ver que onda esto de activo */}
+        {/* <label className={styles.label}>Activo: </label>
         <input
           type="checkbox"
           name="isActive"
@@ -73,7 +73,7 @@ function CouponForm({
             handleChange({ target: { name: 'isActive', value: e.target.checked } })
           }
           className={styles.input}
-        />
+        /> */}
 
         <label className={styles.label}>Tipo de Cupón: </label>
         <select
@@ -94,6 +94,8 @@ function CouponForm({
         </button>
       </form>
 
+      {error && <p className={styles.error}>{error}</p>}
+
       <h2>Lista de Cupones</h2>
       <div className={styles['coupons-list']}>
         {coupons.length === 0 ? (
@@ -104,7 +106,7 @@ function CouponForm({
               <li key={coupon.CouponID} className={styles['coupons-list-item']}>
                 <strong>{coupon.Code}</strong> - 
                 {coupon.DiscountPercentage}% - Válido desde {coupon.ValidFrom} hasta{' '}
-                {coupon.ValidTo} - Activo: {coupon.isActive ? 'Sí' : 'No'} - Mínimo de compra: 
+                 {coupon.ValidTo} {/*- Activo: {coupon.isActive ? 'Sí' : 'No'}*/} - Mínimo de compra:
                 {coupon.MinPurchaseAmount}
                 <button
                   className={styles['delete-button']}

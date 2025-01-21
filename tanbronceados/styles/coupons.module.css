@@ -1,7 +1,7 @@
 .coupons-container {
     font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f6f0e7;
+    background-color: #ded0c1;
     max-width: 800px;
     margin: 0 auto;
     border-radius: 10px;
@@ -70,6 +70,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 10px;
   }
   
   .delete-button:hover {

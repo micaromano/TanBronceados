@@ -118,6 +118,10 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
   } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      // Responder que el código ya existe
+      return res.status(400).json({ error: 'Este código de cupón ya está en uso. Por favor, elige otro.' });
+    }
     console.error('Error in /api/coupons:', error);
     return res.status(500).json({ error: 'Error del servidor' });
   }
