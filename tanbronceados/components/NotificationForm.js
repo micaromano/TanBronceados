@@ -63,12 +63,6 @@ function NotificationForm({
                         placeholder="Buscar por nombre..."
                         value={searchTerm}
                         onChange={(e) => onChange(e, "searchTerm")}
-                        // style={{
-                        //   padding: '8px',
-                        //   width: '100%',
-                        //   maxWidth: '400px',
-                        //   fontSize: '16px',
-                        // }}
                       />
                   </Form.Group>
                      
