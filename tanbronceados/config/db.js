@@ -8,7 +8,6 @@ const sequelize = new Sequelize(globals.db_name, globals.db_user, globals.db_pas
   timezone: '-03:00', // UTC
   port: globals.db_port,
   dialectOptions: {
-    useUTC: false,
     dateStrings: true, // Recupera las fechas como cadenas
     options: {
       encrypt: true, // Para usar autenticación de SQL Server
