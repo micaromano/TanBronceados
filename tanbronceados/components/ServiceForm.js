@@ -8,6 +8,8 @@ function ServiceForm({
   description,
   price,
   duration,
+  horaDesde,
+  horaHasta,
   onChange,
   onSubmit,
   onBlur,
@@ -122,6 +124,48 @@ function ServiceForm({
           )}
         </div>
 
+        {/* horaDesde Field */}
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className={`form-control ${errors.horaDesde ? 'is-invalid' : ''}`}
+            placeholder="Horario desde"
+            value={horaDesde || ''}
+            onChange={(e) => onChange(e, 'horaDesde')}
+            onBlur={() => onBlur('horaDesde')}
+            style={{
+              backgroundColor: '#F9F9F9',
+              borderColor: '#D6D6D6',
+              borderRadius: '8px',
+            }}
+          />
+          <label>Horario desde</label>
+          {errors.horaDesde && (
+            <div className="invalid-feedback d-block">{errors.horaDesde}</div>
+          )}
+        </div>
+
+        {/* horaHasta Field */}
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className={`form-control ${errors.horaHasta ? 'is-invalid' : ''}`}
+            placeholder="Horario hasta"
+            value={horaHasta || ''}
+            onChange={(e) => onChange(e, 'horaHasta')}
+            onBlur={() => onBlur('horaHasta')}
+            style={{
+              backgroundColor: '#F9F9F9',
+              borderColor: '#D6D6D6',
+              borderRadius: '8px',
+            }}
+          />
+          <label>Horario hasta</label>
+          {errors.horaHasta && (
+            <div className="invalid-feedback d-block">{errors.horaHasta}</div>
+          )}
+        </div>
+
         {/* Submit Button */}
         <div className="d-grid">
           <button
@@ -134,7 +178,7 @@ function ServiceForm({
               borderRadius: '8px',
             }}
             disabled={
-              !name.trim() || !description.trim() || !price || !duration
+              !name.trim() || !description.trim() || !price || !duration || !horaDesde || !horaHasta 
             }
             onMouseEnter={() => onHover(true)}
             onMouseLeave={() => onHover(false)}

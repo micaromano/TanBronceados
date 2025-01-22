@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { ClientModel } = require('../../../models/ClientModel'); // Modelo del cliente
+const ClientModel = require('../../../models/ClientModel'); // Modelo del cliente
 const db = require('../../../config/db');
 const globals = require('../../../config/globals');
 
@@ -17,29 +17,24 @@ async function handler(req, res) {
     const decoded = jwt.verify(token, jwtSecret);
     const email = decoded.email;
 
-    // Busca al usuario en la base de datos
-    const [results, metadata] = await db.query(
-      'SELECT * FROM Clients WHERE Email = :email',
-      {
-        replacements: { email: email },
-        type: db.QueryTypes.SELECT,
-      }
-    );
+    console.log('decoded', decoded);
+    console.log('email', email);
 
-    const cliente = results;
+    // Se busca el cliente que se quiere dar de alta
+    const client = await ClientModel.raw.findOne({ where: { Email: email } });
+    console.log('client', client);
 
-    if (!cliente) {
+    //const cliente = results;
+
+    if (!client) {
       return res.status(404).json({ error: 'Usuario no encontrado.' });
     }
 
-    // Activa la cuenta del usuario
-    const result = await db.query(
-      `UPDATE Clients SET isActive = :newValue WHERE Email = :email`,
-      {
-        replacements: { newValue: true, email },
-        type: db.QueryTypes.UPDATE,
-      }
-    );
+    // Activa la cuenta del cliente
+    const result = await ClientModel.raw.update(
+      { isActive: true }, // Cambiar estado a activado
+      { where: { Email: email } } // Condición para encontrar el cliente
+      );
 
     //res.send('Cuenta confirmada con exito. Ahora puedes iniciar sesion.');
     res.redirect('/confirmAccountSuccess');

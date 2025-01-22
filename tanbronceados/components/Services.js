@@ -35,6 +35,8 @@ function Services({
                                         <th>Descripción</th>
                                         <th>Precio</th>
                                         <th>Duración</th>
+                                        <th>Hora Desde</th>
+                                        <th>Hora Hasta</th>
                                         <th colSpan="2">Acciones</th>
                                     </tr>
                                 </thead>
