@@ -43,10 +43,6 @@ class ServiceModel {
       HoraHasta:  {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      cantidadEmpleados: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
       }
     }, {
       tableName: 'BusinessServices',  // Nombre de la tabla

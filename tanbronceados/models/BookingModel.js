@@ -18,11 +18,11 @@ class BookingModel {
         autoIncrement: true,
       },
       BookingDateTime: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       BookingType: {
-        type: DataTypes.ENUM('ReservaPagada', 'ReservaConSena', 'HorarioNoDisponible'),
+        type: DataTypes.ENUM('ReservaPagada', 'ReservaPendientePago', 'HorarioNoDisponible'),
         allowNull: false,
       },
       BookingState: {

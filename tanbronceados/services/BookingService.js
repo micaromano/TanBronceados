@@ -41,4 +41,20 @@ export const fetchServices = async () => {
       throw error;
     }
   };
+
+  export const fetchBookedSlots = async (serviceId, dateString) => {
+    try {
+      const response = await fetch(
+        `/api/getBookedSlots?serviceId=${serviceId}&date=${dateString}`
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al obtener horarios ocupados');
+      }
+      return data.slots; // array de ["09:15", "10:00", ...]
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
   
