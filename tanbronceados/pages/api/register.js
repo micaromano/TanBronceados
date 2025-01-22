@@ -1,14 +1,12 @@
+const { sendEmail } = require('../api/utils/notification');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const ClientModel = require('../../models/ClientModel');
-const db = require('../../config/db');
 const globals = require('../../config/globals');
-const nodemailer = require('nodemailer');
 
 const jwtSecret = globals.jwt_secret;
 const secretKey = globals.secret_key;
 const emailUser = globals.email_user;
-const passUser = globals.pass_user;
 
 async function handler(req, res) {
 
@@ -133,9 +131,27 @@ async function handler(req, res) {
     // Notificar éxito del registro al cliente
     res.status(201).json({ message: 'Registro enviado correctamente.' });
 
+    const linkConfirmacion = `http://localhost:3000/api/confirmAccount/${token}`;
+    const title = 'Confirmación de cuenta TANBronceados';
+    //const message = "Prueba";
+    const message = `<div align="center">
+                        <img src="cid:imagenUnica"/>
+                        <h1>¡Bienvenido a Tan. Bronceado orgánico!</h1></br>
+                        <p>Gracias por registrarte. Estás a solo un clic de comenzar con Tan bronceado orgánico. Todo lo que necesita hacer es verificar su dirección de correo electrónico para activar su cuenta de Tan.</p>
+                        <p>Haz clic en este enlace de confirmación: </p><a href="${linkConfirmacion}">Confirmar cuenta</a>.
+                        <p>Una vez activada su cuenta, puede comenzar a utilizar todas las funciones de Tan para la gestion de agenda del servicio.</p><p>Estás recibiendo este correo electrónico porque recientemente creaste una nueva cuenta de Tan o agregaste una nueva dirección de correo electrónico. Si no eres tú, ignora este correo electrónico.</p>
+                    </div>`;
+    const attachments = [
+      {
+        filename: 'TAN.png', // El nombre de la imagen
+        path: 'public/TAN.png', // Ruta local a la imagen
+        cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
+      }
+    ];
+
     // Enviar el correo después de completar el registro
     try {
-      await enviarCorreoConfirmacion(email, token);
+      await sendEmail(emailUser, email, title, message, attachments)
     } catch (correoError) {
       console.error('Error al enviar el correo de confirmación:', correoError);
       // No se interrumpe el proceso ni se envía error al cliente
@@ -146,47 +162,5 @@ async function handler(req, res) {
     return res.status(500).json({ error: 'Ocurrió un error interno en el servidor.' });
   }
 }
-
-// Configura el transporte de correo
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // o el servicio SMTP que quieramos
-  auth: {
-    user: emailUser, // correo de la empresa
-    pass: passUser   // contraseña de la empresa
-  }
-});
-
-// Función para enviar el correo
-const enviarCorreoConfirmacion = async (emailCliente, token) => {
-  const linkConfirmacion = `http://localhost:3000/api/confirmAccount/${token}`;
-
-  const opcionesCorreo = {
-    from: emailUser,
-    to: emailCliente,
-    subject: 'Confirmación de cuenta TANBronceados',
-    html: `<div align="center">
-              <img src="cid:imagenUnica"/>
-              <h1>¡Bienvenido a Tan. Bronceado orgánico!</h1></br>
-              <p>Gracias por registrarte. Estás a solo un clic de comenzar con Tan bronceado orgánico. Todo lo que necesita hacer es verificar su dirección de correo electrónico para activar su cuenta de Tan.</p>
-              <p>Haz clic en este enlace de confirmación: </p><a href="${linkConfirmacion}">Confirmar cuenta</a>.
-              <p>Una vez activada su cuenta, puede comenzar a utilizar todas las funciones de Tan para la gestion de agenda del servicio.</p><p>Estás recibiendo este correo electrónico porque recientemente creaste una nueva cuenta de Tan o agregaste una nueva dirección de correo electrónico. Si no eres tú, ignora este correo electrónico.</p>
-              </div>`
-    ,
-    attachments: [
-      {
-        filename: 'TAN.png', // El nombre de la imagen
-        path: 'public/TAN.png', // Ruta local a la imagen
-        cid: 'imagenUnica' // Este CID debe coincidir con el de src en la etiqueta img
-      }
-    ]
-  };
-
-  try {
-    await transporter.sendMail(opcionesCorreo);
-    console.log('Correo de confirmación enviado.');
-  } catch (error) {
-    console.error('Error al enviar el correo:', error);
-  }
-};
 
 module.exports = handler;
