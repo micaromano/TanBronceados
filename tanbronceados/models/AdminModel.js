@@ -1,16 +1,16 @@
 const { DataTypes } = require('sequelize');
-const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class AdminModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Admin', {
+    this.#rawModel = this.#db.define('Admin', {
       AdminID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -56,7 +56,7 @@ class AdminModel {
 
 }
 
-module.exports = new AdminModel();
+module.exports = AdminModel;
 
 
 //   // Método de asociación, si necesitas relacionarlo con otros modelos

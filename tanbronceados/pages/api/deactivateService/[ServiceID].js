@@ -1,4 +1,4 @@
-const ServiceModel = require('../../../models/ServiceModel'); // Modelo del servicio
+const models = require('../../../models/ModelsWrapper'); // Modelo del servicio
 
 async function handler(req, res) {
 
@@ -12,7 +12,7 @@ async function handler(req, res) {
     try{
 
     // Se busca el servicio que se quiere dar de baja
-    const service = await ServiceModel.raw.findOne({ where: { ServiceID: ServiceID } });
+    const service = await models.serviceModel.raw.findOne({ where: { ServiceID: ServiceID } });
     console.log('service', service);
 
     if (!service) {
@@ -20,7 +20,7 @@ async function handler(req, res) {
     }
 
     // Deshabilitar el servicio
-    const result = await ServiceModel.raw.update(
+    const result = await models.serviceModel.raw.update(
     { isActive: false }, // Cambiar estado a desactivado
     { where: { ServiceID: ServiceID } } // Condición para encontrar el servicio
     );

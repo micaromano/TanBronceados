@@ -1,7 +1,7 @@
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const AdminModel = require('../../models/AdminModel'); // Asegúrate de que la ruta es correcta
+const models = require('../../models/ModelsWrapper'); // Asegúrate de que la ruta es correcta
 const db = require('../../config/db');
 const globals = require('../../config/globals');
 const cookie = require('cookie'); // Para manejar las cookies en la respuesta
@@ -23,7 +23,7 @@ async function handler(req, res) {
     console.log(`Searching for admin: ${username}`);
     console.log(`Searching for admin: ${password}`);
     // Cambiar admin.findOne a AdminModel.raw.findOne
-    const admin = await AdminModel.raw.findOne({ where: { Username: username } });
+    const admin = await models.adminModel.raw.findOne({ where: { Username: username } });
 
     if (!admin) {
       console.error('admin not found');

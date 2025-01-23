@@ -1,17 +1,17 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
-const ServiceModel = require('./ServiceModel');
 
 class SessionModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Session', {
+    this.#rawModel = this.#db.define('Session', {
       SessionID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -58,4 +58,4 @@ class SessionModel {
 // //   }
 // // }
 
-module.exports = new SessionModel();
+module.exports = SessionModel;

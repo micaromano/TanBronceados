@@ -1,4 +1,4 @@
-import NotificationModel from '../../models/NotificationModel';
+import models from '../../models/ModelsWrapper';
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         console.log('id', id);
 
         try {
-            const notification = await NotificationModel.raw.findOne({ where: { NotificationID: id } });
+            const notification = await models.notificationModel.raw.findOne({ where: { NotificationID: id } });
             if (!notification) {
                 return res.status(404).json({ error: 'Notificación no encontrada.' });
             }

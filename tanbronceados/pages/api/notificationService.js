@@ -1,6 +1,5 @@
-const NotificationModel = require('../../models/NotificationModel');
-const AutomatedNotificationModel = require('../../models/AutomatedNotificationModel');
-const ClientModel = require('../../models/ClientModel');
+import models from '../../models/ModelsWrapper';
+import models from '../../models/ModelsWrapper';
 const { scheduleNotification, sendEmail } = require('../api/utils/notification');
 const { adjustDate } = require('../api/utils/date');
 
@@ -13,7 +12,7 @@ async function handleFormNotification({ from, to, title, message, isScheduled, s
   if (isScheduled) {
     // Guardar notificación programada en la base de datos
     const [datePart, timePart] = scheduledDate.split('T');
-    const notification = await NotificationModel.raw.create({
+    const notification = await models.notificationModel.raw.create({
       NotificationTo: to,
       NotificationTitle: title,
       NotificationMessage: message,
@@ -33,7 +32,7 @@ async function handleFormNotification({ from, to, title, message, isScheduled, s
 // Manejar notificación basada en reserva
 async function handleBookingNotification(from, bookingObject) {
   //const client = await ClientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
-  const client = await ClientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
+  const client = await models.clientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
   if (!client) throw new Error('Cliente no encontrado.');
 
   const { BookingDate, BookingTime } = bookingObject;
@@ -48,7 +47,7 @@ async function handleBookingNotification(from, bookingObject) {
 
   for (const { event } of notifications) {
 
-    const automatedNotification = await AutomatedNotificationModel.raw.findOne({
+    const automatedNotification = await models.automatedNotificationModel.raw.findOne({
         where: { AutomatedNotificationName: event },
       });
 
@@ -61,7 +60,7 @@ async function handleBookingNotification(from, bookingObject) {
       const dateTime = adjustDate(BookingDate, BookingTime, event);
         
       // Notificación programada
-      const notification = await NotificationModel.raw.create({
+      const notification = await models.notificationModel.raw.create({
         NotificationTo: to,
         NotificationTitle: `${automatedNotification.AutomatedNotificationTitle}`,
         NotificationMessage: `${automatedNotification.AutomatedNotificationMessage}`,

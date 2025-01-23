@@ -3,14 +3,15 @@ const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class DiscountCouponModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('DiscountCoupon', {
+    this.#rawModel = this.#db.define('DiscountCoupon', {
       DiscountCouponID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -68,4 +69,4 @@ class DiscountCouponModel {
 //   }
 // }
 
-module.exports = new DiscountCouponModel();
+module.exports = DiscountCouponModel;

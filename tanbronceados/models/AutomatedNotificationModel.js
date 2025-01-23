@@ -3,14 +3,15 @@ const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class AutomatedNotificationModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('AutomatedNotification', {
+    this.#rawModel = this.#db.define('AutomatedNotification', {
       AutomatedNotificationID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -52,4 +53,4 @@ class AutomatedNotificationModel {
    
 }
 
-module.exports = new AutomatedNotificationModel();
+module.exports = AutomatedNotificationModel;

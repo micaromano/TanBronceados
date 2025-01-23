@@ -1,5 +1,5 @@
 
-const ServiceModel = require('../../models/ServiceModel');
+import models from '../../models/ModelsWrapper';
 
 async function handler(req, res) {
 
@@ -69,7 +69,7 @@ async function handler(req, res) {
     try{
 
     //Crea el servicio en la base de datos
-    const newService = await ServiceModel.raw.create({
+    const newService = await models.serviceModel.raw.create({
         ServiceName: name,
         ServiceDescription: description,
         Price: price,

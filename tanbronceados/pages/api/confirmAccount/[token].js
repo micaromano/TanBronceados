@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ClientModel = require('../../../models/ClientModel'); // Modelo del cliente
+import models from '../../../models/ModelsWrapper';
 const db = require('../../../config/db');
 const globals = require('../../../config/globals');
 
@@ -21,7 +21,7 @@ async function handler(req, res) {
     console.log('email', email);
 
     // Se busca el cliente que se quiere dar de alta
-    const client = await ClientModel.raw.findOne({ where: { Email: email } });
+    const client = await models.clientModel.raw.findOne({ where: { Email: email } });
     console.log('client', client);
 
     //const cliente = results;
@@ -31,7 +31,7 @@ async function handler(req, res) {
     }
 
     // Activa la cuenta del cliente
-    const result = await ClientModel.raw.update(
+    const result = await models.clientModel.raw.update(
       { isActive: true }, // Cambiar estado a activado
       { where: { Email: email } } // Condición para encontrar el cliente
       );

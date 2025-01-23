@@ -3,14 +3,15 @@ const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class PaymentModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Payment', {
+    this.#rawModel = this.#db.define('Payment', {
       PaymentID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -57,4 +58,4 @@ class PaymentModel {
 // //   this.raw.belongsTo(models.AnotherModel.raw, { foreignKey: 'anotherId' });
 // // }
 
-module.exports = new PaymentModel();
+module.exports = PaymentModel;

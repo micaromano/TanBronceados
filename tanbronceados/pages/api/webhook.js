@@ -6,7 +6,7 @@ const mercadoPagoAccessToken = globals.mercado_pago_access_token;
 // Agrega el access token de Mercado Pago
 const client = new MercadoPagoConfig({ accessToken: mercadoPagoAccessToken });
 
-const SessionModel = require('../../models/SessionModel');
+import models from '../../models/ModelsWrapper';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
             ServiceID: item.id,              // Asociar el servicio usando idService
           };
           // Guardar la sesión en la base de datos
-          const createdSession = await SessionModel.create(newSession);
+          const createdSession = await models.sessionModel.create(newSession);
           console.log('Sesión creada:', createdSession.toJSON());
           
           console.log('Pago aprobado');
