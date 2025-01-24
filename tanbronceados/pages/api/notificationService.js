@@ -23,7 +23,7 @@ async function handleFormNotification({ from, to, title, message, isScheduled, s
     });
 
     // Programar envío con cron
-    await scheduleNotification(from, notification);
+    await scheduleNotification(from, notification, null);
   } else {
     // Enviar notificación inmediata
     await sendEmail(from, to, title, message, '');
@@ -32,7 +32,6 @@ async function handleFormNotification({ from, to, title, message, isScheduled, s
 
 // Manejar notificación basada en reserva
 async function handleBookingNotification(from, bookingObject) {
-  //const client = await ClientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
   const client = await ClientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
   if (!client) throw new Error('Cliente no encontrado.');
 
@@ -54,7 +53,6 @@ async function handleBookingNotification(from, bookingObject) {
 
     if (event === 'Confirmación de cita') {
       // Notificación inmediata
-      //await sendEmail('martinquartino1313@gmail.com', to, `${automatedNotification.AutomatedNotificationTitle}`, `${automatedNotification.AutomatedNotificationMessage}`);
       await sendEmail(from, to, `${automatedNotification.AutomatedNotificationTitle}`, `${automatedNotification.AutomatedNotificationMessage}`);
     } else {
 
@@ -70,7 +68,7 @@ async function handleBookingNotification(from, bookingObject) {
         ScheduledTime: event === 'Recomendación post sesion' ? dateTime : BookingTime,
       });
 
-      await scheduleNotification(from, notification);
+      await scheduleNotification(from, notification, automatedNotification);
     }
   }
 }
