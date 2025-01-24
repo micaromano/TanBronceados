@@ -1,10 +1,9 @@
 import models from '../../models/ModelsWrapper';
-import models from '../../models/ModelsWrapper';
-const { scheduleNotification, sendEmail } = require('../api/utils/notification');
-const { adjustDate } = require('../api/utils/date');
+import { scheduleNotification, sendEmail } from './utils/notification';
+import { adjustDate } from './utils/date';
 
 // Manejar notificación basada en formulario
-async function handleFormNotification({ from, to, title, message, isScheduled, scheduledDate }) {
+export async function handleFormNotification({ from, to, title, message, isScheduled, scheduledDate }) {
   if (!title.trim() || !message.trim()) {
     throw new Error('Título y mensaje son obligatorios.');
   }
@@ -30,7 +29,7 @@ async function handleFormNotification({ from, to, title, message, isScheduled, s
 }
 
 // Manejar notificación basada en reserva
-async function handleBookingNotification(from, bookingObject) {
+export async function handleBookingNotification(from, bookingObject) {
   //const client = await ClientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
   const client = await models.clientModel.raw.findOne({ where: { ClientID: bookingObject.ClientID } });
   if (!client) throw new Error('Cliente no encontrado.');
@@ -72,5 +71,3 @@ async function handleBookingNotification(from, bookingObject) {
     }
   }
 }
-
-module.exports = { handleFormNotification, handleBookingNotification };

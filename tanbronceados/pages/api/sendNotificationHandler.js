@@ -1,6 +1,6 @@
-const { handleFormNotification, handleBookingNotification } = require('../api/notificationService');
+import { handleFormNotification, handleBookingNotification } from './notificationService';
 
-async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
