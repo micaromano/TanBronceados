@@ -1,5 +1,4 @@
-const AutomatedNotificationModel = require('../../models/AutomatedNotificationModel'); // Modelo del notificacion
-const { scheduleEditAutomaticNotification } = require('../api/utils/notification');
+import models from '../../models/ModelsWrapper';
 
 async function handler(req, res) {
 //function handler(req, res) {
@@ -30,14 +29,20 @@ async function handler(req, res) {
     try{
 
     // Se busca la notificación que se quiere editar
-    const notification = await AutomatedNotificationModel.raw.findOne({ where: { AutomatedNotificationID: notificationID } });
+    const notification = await models.automatedNotificationModel.raw.findOne({ where: { AutomatedNotificationID: notificationID } });
     console.log('notification', notification);
 
     if (!notification) {
       return res.status(404).json({ error: 'Notification no encontrada.' });
     }
 
-    //let result;
+    // Edita la notificacion
+     const result = await models.automatedNotificationModel.raw.update(
+       { AutomatedNotificationTitle: notificationTitle, AutomatedNotificationMessage: notificationMessage }, // Campos a actualizar
+       { where: { AutomatedNotificationID: notificationID } } // Condición para encontrar la notificacion
+     );
+    
+    console.log('result', result);
 
     if(isScheduled){
       await scheduleEditAutomaticNotification(notificationID, notificationTitle, notificationMessage, scheduledDate);

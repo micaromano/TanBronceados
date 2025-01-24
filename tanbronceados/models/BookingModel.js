@@ -3,21 +3,22 @@ const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class BookingModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Booking', {
+    this.#rawModel = this.#db.define('Booking', {
       BookingID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
       BookingDateTime: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       BookingState: {
@@ -80,4 +81,4 @@ class BookingModel {
 // //   }
 // // }
 
-module.exports = new BookingModel();
+module.exports = BookingModel;

@@ -1,4 +1,4 @@
-const ServiceModel = require('../../models/ServiceModel');
+import models from '../../models/ModelsWrapper';
 
 async function handler(req, res) {
 
@@ -68,7 +68,7 @@ async function handler(req, res) {
     try{
 
     // Se busca el servicio que se quiere editar
-    const service = await ServiceModel.raw.findOne({ where: { ServiceId: serviceID } });
+    const service = await models.serviceModel.raw.findOne({ where: { ServiceId: serviceID } });
     console.log('service', service);
 
     if (!service) {
@@ -76,7 +76,7 @@ async function handler(req, res) {
     }
 
     // Edita el servicio
-    const result = await ServiceModel.raw.update(
+    const result = await models.serviceModel.raw.update(
       { ServiceName: serviceName, ServiceDescription: serviceDescription, Price: price, Duration: duration, HoraDesde: horaDesde, HoraHasta: horaHasta }, // Campos a actualizar
       { where: { ServiceID: serviceID } } // Condición para encontrar el servicio
     );

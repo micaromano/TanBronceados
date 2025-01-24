@@ -1,7 +1,7 @@
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const ClientModel = require('../../models/ClientModel'); // Asegúrate de que la ruta es correcta
+import models from '../../models/ModelsWrapper';
 const db = require('../../config/db');
 const globals = require('../../config/globals');
 import { setTokenCookie } from './utils/auth';
@@ -21,7 +21,7 @@ async function handler(req, res) {
     await db.authenticate();
 
     console.log(`Searching for client: ${email}`);
-    const client = await ClientModel.raw.findOne({ where: { Email: email } });
+    const client = await models.clientModel.raw.findOne({ where: { Email: email } });
 
     if (!client) {
       console.error('client not found');

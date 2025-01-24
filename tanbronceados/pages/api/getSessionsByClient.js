@@ -1,8 +1,4 @@
-//const SessionModel = require('../models/SessionModel');
-//const ClientModel = require('../models/ClientModel');
-import ClientModel from '../../models/ClientModel';
-import ServiceModel from '../../models/ServiceModel';
-import SessionModel from '../../models/SessionModel';
+import models from '../../models/ModelsWrapper';
 
 
 export default async function handler(req, res) {
@@ -13,7 +9,7 @@ export default async function handler(req, res) {
     }
 
     // Obtener sesiones asociadas al cliente
-    const sessions = await SessionModel.raw.findAll({
+    const sessions = await models.sessionModel.raw.findAll({
       where: { clientId: id }
     });
 

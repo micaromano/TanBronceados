@@ -1,7 +1,6 @@
 
-const ServiceModel = require('../../models/ServiceModel');
-
-async function handler(req, res) {
+import models from '../../models/ModelsWrapper';
+export default async function handler(req, res) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -69,7 +68,7 @@ async function handler(req, res) {
     try{
 
     //Crea el servicio en la base de datos
-    const newService = await ServiceModel.raw.create({
+    const newService = await models.serviceModel.raw.create({
         ServiceName: name,
         ServiceDescription: description,
         Price: price,

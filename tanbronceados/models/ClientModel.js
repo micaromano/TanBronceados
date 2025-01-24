@@ -3,14 +3,15 @@ const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class ClientModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Client', {
+    this.#rawModel = this.#db.define('Client', {
       ClientID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -76,4 +77,4 @@ class ClientModel {
 //   }
 // }
 
-module.exports = new ClientModel();
+module.exports = ClientModel;

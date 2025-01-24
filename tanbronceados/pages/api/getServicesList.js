@@ -1,4 +1,4 @@
-import ServiceModel from '../../models/ServiceModel';
+import models from '../../models/ModelsWrapper';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       //   where: {
       //     isActive: 1, // Filtrar servicios activos
       //   },
-      const services = await ServiceModel.raw.findAll();  // Esto devuelve un arreglo con todos los servicios
+      const services = await models.serviceModel.raw.findAll();  // Esto devuelve un arreglo con todos los servicios
       res.status(200).json(services);
     } catch (error) {
       console.error('No se pudo obtener los servicios', error)

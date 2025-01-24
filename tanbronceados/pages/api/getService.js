@@ -1,4 +1,4 @@
-import ServiceModel from '../../models/ServiceModel';
+import models from '../../models/ModelsWrapper';
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         console.log('id', id);
 
         try {
-            const service = await ServiceModel.raw.findOne({ where: { ServiceID: id } });
+            const service = await models.serviceModel.raw.findOne({ where: { ServiceID: id } });
             if (!service) {
                 return res.status(404).json({ error: 'Servicio no encontrado.' });
             }

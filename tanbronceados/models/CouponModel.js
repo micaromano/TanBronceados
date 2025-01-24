@@ -3,14 +3,15 @@ const db = require('../config/db');
 
 class CouponModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Coupon',{
+    this.#rawModel = this.#db.define('Coupon',{
         CouponID: {
           type: DataTypes.INTEGER,
           primaryKey: true,
@@ -72,7 +73,7 @@ class CouponModel {
   }
 }
 
-module.exports = new CouponModel();
+module.exports = CouponModel;
 
 
 

@@ -1,4 +1,4 @@
-import AdminModel from '../../models/AdminModel';
+import models from '../../models/ModelsWrapper';
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         console.log('username', username);
 
         try {
-            const admin = await AdminModel.raw.findOne({ where: { Username: username } });
+            const admin = await models.adminModel.raw.findOne({ where: { Username: username } });
             if (!admin) {
                 return res.status(404).json({ error: 'Admin no encontrado.' });
             }

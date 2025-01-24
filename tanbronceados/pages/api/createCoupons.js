@@ -1,4 +1,4 @@
-import CouponModel from '../../models/CouponModel';
+import models from '../../models/ModelsWrapper';
 import db from '../../config/db';
 
 export default async function handler(req, res) {
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
        * Obtiene la lista de todos los cupones
        */
       case 'GET': {
-        const coupons = await CouponModel.raw.findAll();
+        const coupons = await models.couponModel.raw.findAll();
         return res.status(200).json(coupons);
       }
 
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             .json({ error: 'Faltan campos requeridos para crear el cupón' });
         }
 
-        const newCoupon = await CouponModel.raw.create({
+        const newCoupon = await models.couponModel.raw.create({
           Code,
           DiscountPercentage,
           ValidFrom,
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
           return res.status(400).json({ error: 'Se requiere CouponID para actualizar' });
         }
 
-        const coupon = await CouponModel.raw.findByPk(CouponID);
+        const coupon = await models.couponModel.raw.findByPk(CouponID);
         if (!coupon) {
           return res.status(404).json({ error: 'Cupón no encontrado' });
         }
@@ -105,7 +105,7 @@ export default async function handler(req, res) {
           return res.status(400).json({ error: 'Se requiere CouponID para eliminar' });
         }
 
-        const coupon = await CouponModel.raw.findByPk(CouponID);
+        const coupon = await models.couponModel.raw.findByPk(CouponID);
         if (!coupon) {
           return res.status(404).json({ error: 'Cupón no encontrado' });
         }

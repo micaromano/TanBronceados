@@ -1,14 +1,14 @@
 const { sendEmail } = require('../api/utils/notification');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const ClientModel = require('../../models/ClientModel');
+import models from '../../models/ModelsWrapper';
 const globals = require('../../config/globals');
 
 const jwtSecret = globals.jwt_secret;
 const secretKey = globals.secret_key;
 const emailUser = globals.email_user;
 
-async function handler(req, res) {
+export default async function handler(req, res) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -81,7 +81,7 @@ async function handler(req, res) {
   }
 
   // Se verifica que el usuario no exista
-  const client = await ClientModel.raw.findOne({ where: { Email: email } });
+  const client = await models.clientModel.raw.findOne({ where: { Email: email } });
 
   if (client) {
     return res.status(404).json({ error: 'Este email ya se encuentra registrado.' });
@@ -117,7 +117,7 @@ async function handler(req, res) {
     const token = jwt.sign({ email: email }, jwtSecret, { expiresIn: '1h' });
 
     //Crea el servicio en la base de datos
-    const newClient = await ClientModel.raw.create({
+    const newClient = await models.clientModel.raw.create({
       FullName: fullName,
       Email: email,
       PasswordHash: hashedPassword,

@@ -3,14 +3,15 @@ const db = require('../config/db'); // Asegúrate de que la ruta sea correcta
 
 class ServiceModel {
   #rawModel;
-
-  constructor() {
+  #db;
+  constructor(db) {
+    this.#db = db;
     this.#initModel();
     Object.freeze(this);
   }
 
   #initModel() {
-    this.#rawModel = db.define('Service', {
+    this.#rawModel = this.#db.define('Service', {
       ServiceID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -76,4 +77,4 @@ class ServiceModel {
 // //   this.raw.belongsTo(models.AnotherModel.raw, { foreignKey: 'anotherId' });
 // // }
 
-module.exports = new ServiceModel();
+module.exports = ServiceModel;
