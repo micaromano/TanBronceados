@@ -240,7 +240,7 @@ function NotificationPage() {
       const res = await fetch('/api/sendNotificationHandler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ from: state.from, to: '', title: '', message: '', isScheduled: 0, scheduledDate: '', bookingObject: { BookingDate: "2025-01-20", BookingTime: "19:50:00", ClientID: "109"} }),
+        body: JSON.stringify({ from: state.from, to: '', title: '', message: '', isScheduled: 0, scheduledDate: '', bookingObject: { BookingDate: "2025-01-25", BookingTime: "00:40:00", ClientID: "110"} }),
       });
 
       if (res.ok) {

@@ -7,9 +7,9 @@ async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { notificationID, notificationTitle, notificationMessage } = req.body;
+  const { notificationID, notificationTitle, notificationMessage, isScheduled, scheduledDate } = req.body;
 
-  console.log('notificationID, notificationTitle, notificationMessage', notificationID, notificationTitle, notificationMessage);
+  console.log('notificationID, notificationTitle, notificationMessage', notificationID, notificationTitle, notificationMessage, isScheduled, scheduledDate);
 
     // Se validan campos antes de procesarlos
     // title
@@ -44,11 +44,21 @@ async function handler(req, res) {
     
     console.log('result', result);
 
-    if (result[0] === 0) {
-      return res.status(400).json({ error: 'No se pudo editar la notificación.' });
+    if(isScheduled){
+      await scheduleEditAutomaticNotification(notificationID, notificationTitle, notificationMessage, scheduledDate);
+      return res.status(201).json({ message: 'Notificación programada para ser editada correctamente.' });
+    } else {
+      // Edita la notificacion
+      await AutomatedNotificationModel.raw.update(
+        { AutomatedNotificationTitle: notificationTitle, AutomatedNotificationMessage: notificationMessage }, // Campos a actualizar
+        { where: { AutomatedNotificationID: notificationID } } // Condición para encontrar la notificacion
+      );
+      return res.status(201).json({ message: 'Notificación editada correctamente.' });
     }
 
-    return res.status(201).json({ message: 'Notificación editada correctamente.' });
+    // if (result[0] === 0) {
+    //   return res.status(400).json({ error: 'No se pudo editar la notificación.' });
+    // }
   
     } catch (error) {
       console.error('Error during notification editing:', error);

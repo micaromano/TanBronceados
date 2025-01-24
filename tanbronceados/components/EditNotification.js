@@ -8,6 +8,8 @@ import { Slide } from "react-toastify";
 function EditNotification({
   title,
   message,
+  isScheduled,
+  scheduledDate,
   selectedNotificationOption,
   notifications,
   onChange,
@@ -84,6 +86,25 @@ function EditNotification({
                     </div>
                 )}
                 </div>
+
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicScheduled"
+                >
+                <div className="service-selection">
+                <label htmlFor="scheduled">
+                Programar cambios:
+                </label>
+                <input id="scheduled" type="checkbox" checked={isScheduled} onChange={(e) => onChange(e, "isScheduled")} />
+                {isScheduled && (
+                  <>
+                  <br></br>
+                  <input type="datetime-local" value={scheduledDate} onChange={(e) => onChange(e, "scheduledDate")} />
+                  <br></br>
+                  </>
+                )}
+                </div>
+                </Form.Group>
 
                 <Button
                   variant="primary"

@@ -22,7 +22,7 @@ async function handleFormNotification({ from, to, title, message, isScheduled, s
     });
 
     // Programar envío con cron
-    await scheduleNotification(from, notification);
+    await scheduleNotification(from, notification, null);
   } else {
     // Enviar notificación inmediata
     await sendEmail(from, to, title, message, '');
@@ -53,7 +53,6 @@ async function handleBookingNotification(from, bookingObject) {
 
     if (event === 'Confirmación de cita') {
       // Notificación inmediata
-      //await sendEmail('martinquartino1313@gmail.com', to, `${automatedNotification.AutomatedNotificationTitle}`, `${automatedNotification.AutomatedNotificationMessage}`);
       await sendEmail(from, to, `${automatedNotification.AutomatedNotificationTitle}`, `${automatedNotification.AutomatedNotificationMessage}`);
     } else {
 
@@ -69,7 +68,7 @@ async function handleBookingNotification(from, bookingObject) {
         ScheduledTime: event === 'Recomendación post sesion' ? dateTime : BookingTime,
       });
 
-      await scheduleNotification(from, notification);
+      await scheduleNotification(from, notification, automatedNotification);
     }
   }
 }
