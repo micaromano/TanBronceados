@@ -18,7 +18,7 @@ class BookingModel {
         autoIncrement: true,
       },
       BookingDateTime: {
-        type: DataTypes.DATETIME,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       BookingState: {

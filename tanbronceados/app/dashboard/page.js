@@ -71,7 +71,7 @@ const Dashboard = () => {
 
           setBookingsWeek(
             dataBookings.filter((b) => {
-              const updatedDate = b.BookingDate.replace('Z', '');
+              const updatedDate = b.BookingDate.replace('Z', ''); //TODO: ESTO ESTA MAL, NO EXITE BOOKING DATE
               const bookingDate = new Date(updatedDate); // Convertir BookingDate a Date
               return isWithinInterval(bookingDate, {
                 start: startOfCurrentWeek,
